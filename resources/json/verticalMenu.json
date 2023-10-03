@@ -109,7 +109,7 @@
     
     {
       "for" :["superadmin"],
-      "url": "superadmin/decease-user-create",
+      "url": "superadmin/decease-list",
       "name": "deceasemaster",
       "i18n": "Profile",
       "class": "waves-effect waves-cyan",

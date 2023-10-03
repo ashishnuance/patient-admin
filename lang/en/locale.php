@@ -19,6 +19,10 @@ return [
     "Registration"=>"Registration",
     "List"=>"List",
     "Channel"=>"Channel",
+    "decease"=>"Decease",
+    "symptoms"=>"Symptoms",
+    "note"=>"Note",
+    "disease_created_successfully"=> "Disease created successfully",
 
     "Profile"=>"Profile",
     "Profile Edit"=>"Create",

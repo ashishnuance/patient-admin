@@ -105,6 +105,15 @@ Route::group(['middleware' => ['auth']], function () {
 
         /** new route for manager **/
         Route::get('/manager-list',[UserController::class,'managerList'])->name('superadmin.manager-list');
+
+        /* new route for decease*/
+        Route::get('/decease-list', [DeceaseController::class, 'index'])->name('decease-list');
+        Route::get('/decease-create', [DeceaseController::class, 'create'])->name('decease-create');
+        Route::post('/decease-create', [DeceaseController::class, 'store'])->name('decease-create');
+        Route::get('/decease-edit/{id?}', [DeceaseController::class, 'create'])->name('decease-edit');
+        Route::post('/decease-update/{id?}', [DeceaseController::class, 'update'])->name('decease-update');
+        Route::get('/decease-delete/{id}', [DeceaseController::class, 'destroy'])->name('decease-delete');
+
         
 
         /** new buyer routes start **/
