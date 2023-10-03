@@ -1,0 +1,203 @@
+{
+  "menu": [
+    {
+      "for" :["superadmin"],
+      "url": "/superadmin",
+      "name": "Dashboard",
+      "i18n": "superadmin",
+      "class": "waves-effect waves-cyan",
+      "slug": "dashboard",
+      "icon": "settings_input_svideo"
+    },
+    {
+      "for" :["admin"],
+      "url": "/",
+      "name": "Dashboard",
+      "i18n": "superadmin",
+      "permission_name":"Dashboard",
+      "class": "waves-effect waves-cyan",
+      "slug": "dashboard",
+      "icon": "settings_input_svideo"
+    },
+    {
+      "navheader": "Applications",
+      "icon": "more_horiz"
+    },
+    
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/company",
+      "name": "Companies",
+      "i18n": "Companies",
+      "class": "",
+      "slug": "companies",
+      "icon": "format_list_bulleted"
+    },
+
+    {
+      "for" :["superadmin"], 
+      "url": "superadmin/company-admin-list",
+      "name": "Company Admin",
+      "i18n": "Company Admin",
+      "class": "",
+      "slug": "company-admin",
+      "icon": "person_outline"
+    },
+
+
+    
+
+
+    {
+      "for" :["admin"],
+      "url": "javascript:void(0)",
+      "name": "Company User",
+      "i18n": "Company User",
+      "permission_name":"company_user",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "company-user",
+      "icon": "person_outline",
+      "submenu": [
+        {
+          "url": "company-user-create",
+          "name": "Add Company User",
+          "i18n": "Add Company User",
+          "permission_guard_name":"create",
+          "slug": "add-company-user"
+        },
+        {
+          "url": "company-user-list",
+          "name": "Company-user List",
+          "i18n": "Company-user List",
+          "permission_guard_name":"read",
+          "slug": "company-user-list"
+        }
+      ]
+    },
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/patient-list",
+      "name": "patient",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    },
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/carer-list",
+      "name": "carer",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    },
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/manager-list",
+      "name": "manager",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    },
+    
+
+    
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/decease-user-create",
+      "name": "deceasemaster",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "healing"
+    },
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/inventory-create",
+      "name": "inventorymaster",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "add_box"
+    },
+    
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/mapping-create",
+      "name": "decease-inventory-mapping",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "healing"
+    },
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/paitent-create",
+      "name": "patientSchedule",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "av_timer"
+    },
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/supplier-create",
+      "name": "supplierMaster",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "assignment_turned_in"
+    },
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/stockin-create",
+      "name": "stockIn",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "assignment_turned_in"
+    },
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/stockout-create",
+      "name": "stockOut",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "assignment_returned"
+    },
+
+
+
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/profile-edit",
+      "name": "Profile",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    },
+    {
+      "for" :["admin","user"],
+      "url": "superadmin/profile-edit",
+      "name": "Profile",
+      "i18n": "Profile",
+      "permission_name":"Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    }
+  ]
+}
