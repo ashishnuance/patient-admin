@@ -26,6 +26,7 @@ use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\BuyerUserController;
+use App\Http\Controllers\DeceaseInventoryController;
 
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
@@ -114,6 +115,19 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/decease-update/{id?}', [DeceaseController::class, 'update'])->name('decease-update');
         Route::get('/decease-delete/{id}', [DeceaseController::class, 'destroy'])->name('decease-delete');
 
+        /* new route for inventory */
+        Route::get('/inventory-list', [InventoryController::class, 'index'])->name('inventory-list');
+        Route::get('/inventory-create', [InventoryController::class, 'create'])->name('inventory-create');
+        Route::post('/inventory-create', [InventoryController::class, 'store'])->name('inventory-create');
+        Route::get('/inventory-edit/{id?}', [InventoryController::class, 'create'])->name('inventory-edit');
+        Route::post('/inventory-update/{id?}', [InventoryController::class, 'update'])->name('inventory-update');
+        Route::get('/inventory-delete/{id}', [InventoryController::class, 'destroy'])->name('inventory-delete');
+
+        /* new route for decease inventory mapping */
+
+        Route::resource('/inventory-mapping',DeceaseInventoryController::class);
+        Route::get('/inventory-mapping/destroy/{id}',[DeceaseInventoryController::class,'destroy'])->name('inventory-mapping.delete');
+
         
 
         /** new buyer routes start **/
@@ -124,10 +138,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/decease-user-create', [DeceaseController::class, 'decease'])->name('superadmin.decease-user-create');
 
         /** Inventory routes  */
-        Route::get('/inventory-create', [InventoryController::class, 'inventory'])->name('superadmin.inventory-create');
+        //Route::get('/inventory-create', [InventoryController::class, 'inventory'])->name('superadmin.inventory-create');
 
         /** Mapping routes  */
-        Route::get('/mapping-create', [DeceaseMappingController::class, 'mapping'])->name('superadmin.mapping-create');
+        //Route::get('/mapping-create', [DeceaseMappingController::class, 'mapping'])->name('superadmin.mapping-create');
 
         /** Paitent routes  */
         Route::get('/paitent-create', [PaitentController::class, 'paitent'])->name('superadmin.paitent-create');

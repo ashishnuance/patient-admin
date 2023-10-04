@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 use Auth;
 use Closure;
 use App\Models\User;
+use App\Models\DeceaseInventoryMapping;
 use Illuminate\Http\Request;
 
 class SuperAdminMiddleware

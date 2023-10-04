@@ -29,7 +29,7 @@
           <!-- users edit media object ends -->
           <!-- users edit account form start -->
           @include('panels.flashMessages')
-          @if(isset($user_result->id))
+          @if(isset($deceaseResult->id))
           <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-update'; ?>
             <form class="formValidate" action="{{route($formUrl,$deceaseResult->id)}}" id="formValidateCompany" method="post">
             {!! method_field('post') !!}
@@ -42,8 +42,8 @@
 
             <div class="input-field col m12 s12">
                   <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : $companyCode}}">
-                  <?php isset($companyCode)?"readonly":""?>
+                  <input id="name" class="" name="code" type="text" data-error=".errorTxt1" value="{{(isset($deceaseResult->code)) ? $deceaseResult->code : $companyCode}}" 
+                  <?php echo isset($companyCode) ? "readonly" : "" ?> >
                   <small class="errorTxt1"></small>
             </div>
 

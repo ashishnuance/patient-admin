@@ -23,6 +23,9 @@ return [
     "symptoms"=>"Symptoms",
     "note"=>"Note",
     "disease_created_successfully"=> "Disease created successfully",
+    "inventory"=>"Inventory",
+    "option"=>"Option",
+    "inventory_created_successfully"=>"Inventory created successfully",
 
     "Profile"=>"Profile",
     "Profile Edit"=>"Create",

@@ -24,6 +24,7 @@ class ProductCompanyMapping extends Controller
      */
     public function index(Request $request)
     {
+        
         $userType = auth()->user()->role()->first()->name;
         $perpage = config('app.perpage');
         $productResultResponse = [];

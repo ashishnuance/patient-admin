@@ -119,7 +119,7 @@
 
     {
       "for" :["superadmin"],
-      "url": "superadmin/inventory-create",
+      "url": "superadmin/inventory-list",
       "name": "inventorymaster",
       "i18n": "Profile",
       "class": "waves-effect waves-cyan",
@@ -130,7 +130,7 @@
 
     {
       "for" :["superadmin"],
-      "url": "superadmin/mapping-create",
+      "url": "superadmin/inventory-mapping",
       "name": "decease-inventory-mapping",
       "i18n": "Profile",
       "class": "waves-effect waves-cyan",

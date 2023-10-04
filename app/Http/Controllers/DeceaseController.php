@@ -140,7 +140,7 @@ class DeceaseController extends Controller
         return redirect()->route('decease-list')->with('success',__('locale.disease_created_successfully'));
     }
 
-    public function update(Request $request,$id='3'){
+    public function update(Request $request,$id){
 
         $userType = auth()->user()->role()->first()->name;
         $listUrl = 'superadmin.product-subcategory.index';

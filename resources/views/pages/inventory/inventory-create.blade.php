@@ -29,9 +29,9 @@
           <!-- users edit media object ends -->
           <!-- users edit account form start -->
           @include('panels.flashMessages')
-          @if(isset($user_result->id))
+          @if(isset($inventoryResult->id))
           <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-update'; ?>
-            <form class="formValidate" action="{{route($formUrl,$user_result->id)}}" id="formValidateCompany" method="post">
+            <form class="formValidate" action="{{route($formUrl,$inventoryResult->id)}}" id="formValidateCompany" method="post">
             {!! method_field('post') !!}
             @else
             <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-create'; ?>
@@ -42,12 +42,12 @@
 
             <div class="input-field col m12 s12">
                   <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="company_code" type="text" data-error=".errorTxt1" value="{{(isset($user_result->company_code)) ? $user_result->company_code : $companyCode}}" 
+                  <input id="name" class="" name="code" type="text" data-error=".errorTxt1" value="{{(isset($inventoryResult->code)) ? $inventoryResult->code : $companyCode}}" 
                   <?php echo isset($companyCode) ? "readonly" : "" ?> >
                   <small class="errorTxt1"></small>
             </div>
 
-            @if(isset($userType) && $userType!=config('custom.superadminrole'))
+            <!-- @if(isset($userType) && $userType!=config('custom.superadminrole'))
                   <input type="hidden" name="company" value="{{Helper::loginUserCompanyId()}}"/>
                   @else
                   <div class="col s12 input-field">
@@ -62,24 +62,29 @@
                     <label for="company">{{__('locale.Care home code')}}</label>
                     <small class="errorTxt7"></small>
                   </div>
-            @endif
+            @endif -->
            
-                <div class="input-field col m12 s12">
+                <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.name')}}</label>
-                  <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($user_result->name)) ? $user_result->name : old('name')}}">
+                  <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($inventoryResult->name)) ? $inventoryResult->name : old('name')}}">
                   <small class="errorTxt1"></small>
                 </div>
-                <div class="input-field col m4 s12">
-                  <label for="address1">{{__('locale.address1')}}</label>
-                  <input id="address1" type="text" name="address1" data-error=".errorTxt3" value="{{(isset($user_result->address1)) ? $user_result->address1 : old('address1')}}">
+                <div class="input-field col m6 s12">
+                  <label for="address1">{{__('locale.type')}}</label>
+                  <input id="address1" type="text" name="type" data-error=".errorTxt3" value="{{(isset($inventoryResult->type)) ? $inventoryResult->type : old('type')}}">
                   <small class="errorTxt3"></small>
                 </div>
-                <div class="input-field col m4 s12">
-                  <label for="address2">{{__('locale.address2')}}</label>
-                  <input id="address2" type="text" name="address2" data-error=".errorTxt4" value="{{(isset($user_result->address2) && $user_result->address2!='NULL') ? $user_result->address2 : old('address2')}}">
-                  <small class="errorTxt4"></small>
+                <div class="input-field col m12 s12">
+                    <select name="option">
+                    <option value="food"<?php echo(isset($inventoryResult->option) && $inventoryResult->option == 'food') ? 'selected="selected"' : '';?>>{{__('locale.food')}}</option>
+                    <option value="medicine" <?php echo(isset($inventoryResult->option) && $inventoryResult->option == 'medicine') ? 'selected="selected"' : '';?>>{{__('locale.medicine')}}</option>
+                    <option value="vital" <?php echo(isset($inventoryResult->option) && $inventoryResult->option == 'vital') ? 'selected="selected"' : '';?>>{{__('locale.vital')}}</option>
+                    <option value="liquid" <?php echo(isset($inventoryResult->option) && $inventoryResult->option == 'liquid') ? 'selected="selected"' : '';?>>{{__('locale.liquid')}}</option>
+                    <option value="others" <?php echo(isset($inventoryResult->option) && $inventoryResult->option == 'others') ? 'selected="selected"' : '';?>>{{__('locale.others')}}</option>
+                    </select>
+                    <label>{{__('locale.Option')}}</label>
                 </div>
-                <div class="input-field col m4 s12">
+                <!-- <div class="input-field col m4 s12">
                   <label for="address2">{{__('locale.address3')}}</label>
                   <input id="address2" type="text" name="address3" data-error=".errorTxt4" value="{{(isset($user_result->address3) && $user_result->address3!='NULL') ? $user_result->address3 : old('address3')}}">
                   <small class="errorTxt4"></small>
@@ -150,21 +155,21 @@
                   <div class="input-field">
                   <select name="typeselect" id="myselect">
                       <?php 
-                      foreach ($roles as $role) {
-                        $isSelected = (isset($user_result->typeselect) && $user_result->typeselect == $role['name']) ? 'selected' : '';
+                     // foreach ($roles as $role) {
+                       // $isSelected = (isset($user_result->typeselect) && $user_result->typeselect == $role['name']) ? 'selected' : '';
                         ?>
-                        <option value="<?php echo $role['name']; ?>" <?php echo $isSelected; ?>>
-                          <?php echo $role['name']; ?>
+                        <option value="<?php //echo $role['name']; ?>" <?php// echo $isSelected; ?>>
+                          <?php// echo $role['name']; ?>
                         </option>
                         <?php 
-                      }
+                     // }
                       ?>
                     </select>
                     <small class="errorTxt6"></small>
                   </div>
                 </div>
 
-                <!-- <div class="input-field col m6 s12">
+                 <div class="input-field col m6 s12">
                   <label for="userLicense">{{__('locale.userLicense')}}*</label>
                   <input id="userLicense" type="text" name="address1" data-error=".errorTxt3" value="{{(isset($company_result->userLicense)) ? $company_result->userLicense : old('userLicense')}}">
                   <small class="errorTxt3"></small>
@@ -182,16 +187,16 @@
                   <small class="errorTxt3"></small>
                 </div> -->
 
+ 
 
 
-
-                <div class="input-field col m12 s12">
+                <!-- <div class="input-field col m12 s12">
                     <select name="Option">
                     <option value="1" disabled selected>{{__('locale.yes')}}</option>
                     <option value="0">{{__('locale.no')}}</option>
                     </select>
                     <label>{{__('locale.block')}}</label>
-                </div>
+                </div> -->
                 
                 <div class="input-field col s12">
                   <button class="btn waves-effect waves-light right submit" type="submit" name="action">Submit
