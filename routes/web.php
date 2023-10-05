@@ -127,6 +127,11 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::resource('/inventory-mapping',DeceaseInventoryController::class);
         Route::get('/inventory-mapping/destroy/{id}',[DeceaseInventoryController::class,'destroy'])->name('inventory-mapping.delete');
+        
+        /* new route for patient schedule*/
+        Route::get('/patient-schedule-list', [PaitentController::class, 'index'])->name('patient-schedule-list');
+        Route::get('/patient-schedule-create', [PaitentController::class, 'create'])->name('patient-schedule-create');
+        Route::post('/patient-schedule-create', [PaitentController::class, 'store'])->name('patient-schedule-create');
 
         
 
@@ -144,7 +149,7 @@ Route::group(['middleware' => ['auth']], function () {
         //Route::get('/mapping-create', [DeceaseMappingController::class, 'mapping'])->name('superadmin.mapping-create');
 
         /** Paitent routes  */
-        Route::get('/paitent-create', [PaitentController::class, 'paitent'])->name('superadmin.paitent-create');
+       // Route::get('/paitent-create', [PaitentController::class, 'paitent'])->name('superadmin.paitent-create');
 
         /** Supplier routes  */
         Route::get('/supplier-create', [supplierController::class, 'supplier'])->name('superadmin.supplier-create');

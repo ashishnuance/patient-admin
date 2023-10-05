@@ -25,6 +25,7 @@
   <div class="users-list-table">
     <div class="card">
       <div class="card-content">
+      @include('panels.flashMessages')
         <!-- datatable start -->
           <div class="col s12 m6 l3">
             <div class="input-field">
@@ -32,6 +33,14 @@
               <input id="serach" type="text" name="serach" data-error=".errorTxt12">
             </div>
           </div>
+          <div class="col s12 m6 l6 add-btn" style="text-align:end;">
+                  <div class="btn" style="margin-right:-215px;">
+                    <a href="{{route('patient-schedule-create')}}">
+                    <i class="material-icons">add</i>
+                    <span>Add New</span>
+                    </a>
+                  </div>
+           </div>
           <!-- <a class="btn waves-effect waves-light right" href="{{route('company-user-export',[$userType])}}">{{__('locale.export_users')}}
                 <i class="material-icons right"></i>
             </a> -->
@@ -59,7 +68,7 @@
 <script src="{{asset('js/scripts/page-users.js')}}"></script>
 <script>
   $(document).ready(function(){
-    var paginationUrl = '{{(isset($paginationUrl) && $paginationUrl!='') ? route($paginationUrl) : route("company-admin-list") }}';
+    var paginationUrl = '{{(isset($paginationUrl) && $paginationUrl!='') ? route($paginationUrl) : route("patient-schedule-list") }}';
     const fetch_data = (page, status, seach_term) => {
         if(status === undefined){
             status = "";

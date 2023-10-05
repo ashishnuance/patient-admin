@@ -1,31 +1,33 @@
 <table class="table">
   <thead>
     <tr>
-      <th></th>
-      <th>{{__('locale.name')}}</th>
-      <th>{{__('locale.email')}}</th>
-      <th>{{__('locale.phone')}}</th>
-      <th>{{__('locale.address')}}</th>
-      <th>{{__('locale.company_name')}}</th>
-      <th>{{__('locale.status')}}</th>
+      
+      <th>{{__('locale.patient_name')}}</th>
+      <th>{{__('locale.date')}}</th>
+      <th>{{__('locale.time')}}</th>
+      <th>{{__('locale.carer_name')}}</th>
+      <th>{{__('locale.carer_assigned_by')}}</th>
+      <th>{{__('locale.alternate_carer_name')}}</th>
       <th>{{__('locale.action')}}</th>
     </tr>
   </thead>
   <tbody>
-    @if(isset($patientResult))
-    @foreach($patientResult as $user_key => $user_value)
+    @if(isset($patientscheduleResult))
+    @foreach($patientscheduleResult as $user_key => $user_value)
     <tr>
-    <td>{{$user_key+1}}</td>
-    <td>{{$user_value->name}}</td>
-    <td>{{$user_value->email}}</td>
-    <td>{{$user_value->phone}}</td>
-    <td>{{$user_value->address1}}</td>
-    <td>
+    
+    <td>{{$user_value->patientname->name}}</td>
+    <td>{{$user_value->date}}</td>
+    <td>{{$user_value->time}}</td>
+    <td>{{$user_value->carername->name}}</td>
+    <td>{{$user_value->role->name}}</td>
+    <td>{{$user_value->alternatecarername->name}}</td>
+    <!-- <td>
       
       {{ isset($user_value->company[0]->company_name) ? $user_value->company[0]->company_name : '' }}
       
     </td>
-    <td>{{($user_value->blocked==1) ? 'Blocked' : 'Un-blocked'}}</td>
+    <td>{{($user_value->blocked==1) ? 'Blocked' : 'Un-blocked'}}</td> -->
     
     <!--td>
       @if($editUrl=='company-user-edit')
@@ -53,3 +55,6 @@
     @endif
   </tbody>
 </table>
+@if(isset($patientscheduleResult) && !empty($patientscheduleResult))
+{!! $patientscheduleResult->links('panels.paginationCustom') !!}
+@endif

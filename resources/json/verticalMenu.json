@@ -140,7 +140,7 @@
 
     {
       "for" :["superadmin"],
-      "url": "superadmin/paitent-create",
+      "url": "superadmin/patient-schedule-list",
       "name": "patientSchedule",
       "i18n": "Profile",
       "class": "waves-effect waves-cyan",
