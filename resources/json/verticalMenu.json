@@ -160,7 +160,7 @@
 
     {
       "for" :["superadmin"],
-      "url": "superadmin/stockin-create",
+      "url": "superadmin/stockin-list",
       "name": "stockIn",
       "i18n": "Profile",
       "class": "waves-effect waves-cyan",
@@ -170,7 +170,7 @@
 
     {
       "for" :["superadmin"],
-      "url": "superadmin/stockout-create",
+      "url": "superadmin/stockout-list",
       "name": "stockOut",
       "i18n": "Profile",
       "class": "waves-effect waves-cyan",

@@ -328,7 +328,7 @@ class UserController extends Controller
         }
         $countries = Country::get(["name", "id"]);
         $companies = Company::get(["company_name", "id","company_code"]);
-        $pageTitle = __('locale.Company User    '); 
+        $pageTitle = __('locale.Company User'); 
         if($id!=''){
 
             $permission_arr = [];

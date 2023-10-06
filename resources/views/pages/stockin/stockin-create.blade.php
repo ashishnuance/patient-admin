@@ -29,9 +29,9 @@
           <!-- users edit media object ends -->
           <!-- users edit account form start -->
           @include('panels.flashMessages')
-          @if(isset($user_result->id))
+          @if(isset($stockin_result->id))
           <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-update'; ?>
-            <form class="formValidate" action="{{route($formUrl,$user_result->id)}}" id="formValidateCompany" method="post">
+            <form class="formValidate" action="{{route($formUrl,$stockin_result->id)}}" id="formValidateCompany" method="post">
             {!! method_field('post') !!}
             @else
             <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-create'; ?>
@@ -41,43 +41,60 @@
             <div class="row">
                 <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.doc')}}</label>
-                  <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}">
+                  <input id="name" class="validate" name="doc_no" type="text" data-error=".errorTxt1" value="{{(isset($stockin_result->doc_no)) ? $stockin_result->doc_no : old('doc_no')}}">
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.date')}}</label>
-                  <input id="name" class="datepicker" name="name" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}">
-                  <small class="errorTxt1"></small>
-                </div>
-
-                <div class="input-field col m12 s12">
-                  <label for="name">{{__('locale.pcode')}}</label>
-                  <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}">
+                  <input id="name" class="datepick" name="date" type="date" data-error=".errorTxt1" value="{{(isset($stockin_result->date)) ? $stockin_result->date : old('date')}}">
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.Ccode')}}</label>
-                  <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}">
+                  <label for="name">{{__('locale.suppliercode')}}</label>
+                  <input id="name" class="validate" name="supplier_code" type="text" data-error=".errorTxt1" value="{{(isset($stockin_result->supplier_code)) ? $stockin_result->supplier_code : old('supplier_code')}}">
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.inventorycode')}}</label>
-                  <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}">
-                  <small class="errorTxt1"></small>
+                  <!-- <input id="name" class="validate" name="inventory_code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}"> -->
+                  <select name="inventory_code" id="inventory" required>
+                  <option value="Select" disabled selected>{{__('locale.Select inventory name')}}</option>
+                  @if(isset($inventory) && !empty($inventory))
+                  @foreach($inventory as $inventory_val)
+
+                  <option value="{{$inventory_val->id}}">{{$inventory_val->name}}</option>
+                  @endforeach
+                  @endif
+                  </select>
+                  @error('company_id')
+                  <div style="color:red">{{$message}}</div>
+                  @enderror
+                  
                 </div>
 
                 <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.quantity')}}</label>
-                  <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}">
+                  <input id="name" class="validate" name="quantity" min="0" type="number" data-error=".errorTxt1" value="{{(isset($stockin_result->quantity)) ? $stockin_result->quantity : old('quantity')}}">
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.stoby')}}</label>
-                  <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}">
+                  <label for="name">{{__('locale.rate')}}</label>
+                  <input id="name" class="validate" name="rate" type="text" data-error=".errorTxt1" value="{{(isset($stockin_result->rate)) ? $stockin_result->rate : old('rate')}}">
+                  <small class="errorTxt1"></small>
+                </div>
+
+                <div class="input-field col m6 s12">
+                  <label for="name">{{__('locale.stby')}}</label>
+                  <input id="name" class="validate" name="stock_in_by" type="text" data-error=".errorTxt1" value="{{(isset($stockin_result->stock_in_by)) ? $stockin_result->stock_in_by : old('stock_in_by')}}">
+                  <small class="errorTxt1"></small>
+                </div>
+
+                <div class="input-field col m6 s12">
+                  <label for="name">{{__('locale.Sdoc')}}</label>
+                  <input id="name" class="validate" name="supplier_doc_no" type="text" data-error=".errorTxt1" value="{{(isset($stockin_result->supplier_doc_no)) ? $stockin_result->supplier_doc_no : old('supplier_doc_no')}}">
                   <small class="errorTxt1"></small>
                 </div>
                 
@@ -111,23 +128,12 @@
 <script src="{{asset('js/scripts/form-validation.js')}}"></script>
 <script>
   window.onload=function(){
-    var country_value = "{{(isset($user_result->country) && $user_result->country!='NULL') ? $user_result->country : old('country')}}";
-    var country_value_edit = "{{(isset($user_result->country) && $user_result->country!='NULL') ? $user_result->country : ''}}";
-    var state_value = "{{(isset($user_result->state) && $user_result->state!='NULL') ? $user_result->state : old('state')}}";
-    var city_value = "{{(isset($user_result->city) && $user_result->city!='NULL') ? $user_result->city : old('state')}}";
-    var company_value = "{{(isset($user_result->company[0]->id) && $user_result->company[0]->id!='NULL') ? $user_result->company[0]->id : old('company')}}";
-    console.log(state_value);
-    $('#country').val(country_value);
-    $('#country').formSelect();
-    $('#state').val(state_value);
-    $('#state').formSelect();
-    $('#city').val(city_value);
-    $('#city').formSelect();
-    $('#company').val(company_value);
-    if(country_value_edit && country_value_edit!=''){
-      $('#company').attr('disabled',true);
-    }
-    $('#company').formSelect();
+    var inventory_value = "{{(isset($stockin_result->inventory_code) && $stockin_result->inventory_code!='NULL') ? $stockin_result->inventory_code : old('inventory_code')}}";
+    
+    console.log(inventory_value);
+    $('#inventory').val(inventory_value);
+    $('#inventory').formSelect();
+    
   }
     $(document).ready(function () {
       
@@ -178,4 +184,4 @@
         });
     });
 </script>
-@endsection+
+@endsection

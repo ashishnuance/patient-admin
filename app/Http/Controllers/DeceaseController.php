@@ -60,7 +60,7 @@ class DeceaseController extends Controller
         //echo"hi des";die;
         $userType = auth()->user()->role()->first()->name;
         $formUrl = 'decease-create';
-        $user_result=$states=$cities=false;
+        $deceaseResult=$states=$cities=false;
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.decease')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
         //Pageheader set true for breadcrumbs

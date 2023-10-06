@@ -40,7 +40,7 @@ class PaitentController extends Controller
         $roles=Role::get(["id","name"]);
         $patientscheduleResult = Patient_schedule::with(['patientname','carername','alternatecarername','role'])->select(['patient_schedule.id','patient_id','date','time','carer_code','carer_assigned_by','alternate_carer_code'])->orderBy('id','DESC');
        //echo"<pre>";print_r($patientscheduleResult);die;
-        $editUrl = 'company-admin-edit';
+        $editUrl = 'patient-schedule-edit';
         if($request->ajax()){
             // $patientscheduleResult = $patientscheduleResult->when($request->seach_term, function($q)use($request){
             //     $q->where('id', 'like', '%'.$request->seach_term.'%')
@@ -67,7 +67,7 @@ class PaitentController extends Controller
         //echo auth()->user()->id;die;
         $userType = auth()->user()->role()->first()->name;
         $formUrl = 'company-admin-create';
-        $user_result=$states=$cities=false;
+        $patient_schedule_result=$states=$cities=false;
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.patient schedule')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
         //Pageheader set true for breadcrumbs
@@ -78,23 +78,23 @@ class PaitentController extends Controller
         //$companyCode = Helper::setNumber();
         $pageTitle = __('locale.Patient schedule name'); 
         if($id!=''){
-            $permission_arr = [];
-            $user_result = User::with(['company','permission'])->find($id);
-            if($user_result->permission->count()>0){
-                foreach($user_result->permission as $permission_val){
-                    $permission_arr[$permission_val->name][] = $permission_val->guard_name;
-                }
-            }
-            $user_result->permission = $permission_arr;
+            //$permission_arr = [];
+            $patient_schedule_result = Patient_schedule::find($id);
+            // if($user_result->permission->count()>0){
+            //     foreach($user_result->permission as $permission_val){
+            //         $permission_arr[$permission_val->name][] = $permission_val->guard_name;
+            //     }
+            // }
+            // $user_result->permission = $permission_arr;
             // echo '<pre>';print_r($user_result);exit();
-            if($user_result){
-            $states = State::where('country_id',$user_result->country)->get(["name", "id"]);
-            $cities = City::where('state_id',$user_result->state)->get(["name", "id"]);
-            }
-            $formUrl = 'company-admin-update';
+            // if($user_result){
+            // $states = State::where('country_id',$user_result->country)->get(["name", "id"]);
+            // $cities = City::where('state_id',$user_result->state)->get(["name", "id"]);
+            // }
+            $formUrl = 'patient-schedule-update';
         }
-        // dd($user_result);
-        return view('pages.patient.patient-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'patient'=>$patient,'pageTitle'=>$pageTitle,'user_result'=>$user_result,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'carer'=>$carer,'roles'=>$roles]);
+        //dd($patient_schedule_result);
+        return view('pages.patient.patient-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'patient'=>$patient,'pageTitle'=>$pageTitle,'patient_schedule_result'=>$patient_schedule_result,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'carer'=>$carer,'roles'=>$roles]);
     }
 
     public function store(Request $request){
@@ -148,6 +148,39 @@ class PaitentController extends Controller
         
         return redirect()->route('patient-schedule-list')->with('success',__('locale.patient_schedule_create_success'));
     }
+
+    public function update(Request $request, $id)
+    {
+        //echo"update";die;
+       // echo"<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'patient_id' => 'required',
+            "carer_code" => "required",
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+        unset($request['_token']);
+        unset($request['_method']);
+        unset($request['action']);
+
+        $patientscheduleData = Patient_schedule::where('id',$id)->update($request->all());
+        // dd($request->all());
+        // $MappingData = [];
+        // for($p=0;$p<count($request->inventory_id);$p++){
+        //     $MappingData[] = ['decease_id'=>$request->company_id,'inventory_id'=>$request->inventory_id];
+        // }
+        // if(!empty($productMappingData)){
+        //     DeceaseInventoryMapping::where('id',$id)->delete();
+        //     DeceaseInventoryMapping::insert($MappingData);
+        //     return redirect()->route('inventory-mapping.index')->with('success',__('locale.success common update'));
+        // }
+        return redirect()->route('patient-schedule-list')->with('success',__('locale.success common update'));
+    }
+
 
 
 }

@@ -132,6 +132,24 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/patient-schedule-list', [PaitentController::class, 'index'])->name('patient-schedule-list');
         Route::get('/patient-schedule-create', [PaitentController::class, 'create'])->name('patient-schedule-create');
         Route::post('/patient-schedule-create', [PaitentController::class, 'store'])->name('patient-schedule-create');
+        Route::get('/patient-schedule-edit/{id?}',[PaitentController::class, 'create'])->name('patient-schedule-edit');
+        Route::post('/patient-schedule-update/{id?}',[PaitentController::class, 'update'])->name('patient-schedule-update');
+        
+        /* new route for stock in*/
+        Route::get('/stockin-list', [StockInController::class, 'index'])->name('stockin-list');
+        Route::get('/stockin-create', [StockInController::class, 'create'])->name('stockin-create');
+        Route::post('/stockin-create', [StockInController::class, 'store'])->name('stockin-create');
+        Route::get('/stockin-edit/{id?}',[StockInController::class, 'create'])->name('stockin-edit');
+        Route::post('/stockin-update/{id?}',[StockInController::class, 'update'])->name('stockin-update');
+
+        /* new route for stock out*/
+        Route::get('/stockout-list', [StockOutController::class, 'index'])->name('stockout-list');
+        Route::get('/stockout-create', [StockOutController::class, 'create'])->name('stockout-create');
+        Route::post('/stockout-create', [StockOutController::class, 'store'])->name('stockout-create');
+        Route::get('/stockout-edit/{id?}',[StockOutController::class, 'create'])->name('stockout-edit');
+        Route::post('/stockout-update/{id?}',[StockOutController::class, 'update'])->name('stockout-update');
+        
+
 
         
 
@@ -155,10 +173,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/supplier-create', [supplierController::class, 'supplier'])->name('superadmin.supplier-create');
 
          /** StockIn routes  */
-         Route::get('/stockin-create', [StockInController::class, 'stockin'])->name('superadmin.stockin-create');
+         //Route::get('/stockin-create', [StockInController::class, 'stockin'])->name('superadmin.stockin-create');
         
         /** StockOut routes  */
-        Route::get('/stockout-create', [StockOutController::class, 'stockout'])->name('superadmin.stockout-create');
+       // Route::get('/stockout-create', [StockOutController::class, 'stockout'])->name('superadmin.stockout-create');
                
         /** new products routes **/
         Route::resource('/product',ProductsController::class);

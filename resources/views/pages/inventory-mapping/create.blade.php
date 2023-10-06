@@ -50,7 +50,7 @@
                   @if(isset($deceaseResult) && !empty($deceaseResult))
                   @foreach($deceaseResult as $decease_val)
                   
-                  <option value="{{ $decease_val->id }}" <?php echo(isset($decease_val->id)) ? 'selected="selected"' : '';?>>{{ $decease_val->code }}</option>
+                  <option value="{{ $decease_val->id }}" <?php echo(isset($decease_val->id)) ? 'selected="selected"' : '';?>>{{ $decease_val->name}}</option>
                     @endforeach
                   @endif
                 </select>
@@ -67,7 +67,7 @@
                   @if(isset($inventoryResult) && !empty($inventoryResult))
                   @foreach($inventoryResult as $inventory_val)
                   
-                  <option value="{{ $inventory_val->id }}" <?php echo(isset($inventory_val->id)) ? 'selected="selected"' : '';?>>{{ $inventory_val->code }}</option>
+                  <option value="{{ $inventory_val->id }}" <?php echo(isset($inventory_val->id)) ? 'selected="selected"' : '';?>>{{ $inventory_val->name }}</option>
                     @endforeach
                   @endif
                 </select>

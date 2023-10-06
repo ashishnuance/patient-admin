@@ -29,9 +29,9 @@
           <!-- users edit media object ends -->
           <!-- users edit account form start -->
           @include('panels.flashMessages')
-          @if(isset($user_result->id))
+          @if(isset($patient_schedule_result->id))
           <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-update'; ?>
-            <form class="formValidate" action="{{route($formUrl,$user_result->id)}}" id="formValidateCompany" method="post">
+            <form class="formValidate" action="{{route($formUrl,$patient_schedule_result->id)}}" id="formValidateCompany" method="post">
             {!! method_field('post') !!}
             @else
             <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-create'; ?>
@@ -41,12 +41,12 @@
             <div class="row">
             <div class="input-field col s12">
 
-                <select name="patient_id" id="" required>
+                <select name="patient_id" id="patient" required>
                 <option value="Select" disabled selected>{{__('locale.Select patient id')}} *</option>
                 @if(isset($patient) && !empty($patient))
                 @foreach($patient as $patient_val)
                 
-                <option value="{{ $patient_val->id }}" <?php echo(isset($patient_val->id)) ? 'selected="selected"' : '';?>>{{ $patient_val->name }}</option>
+                <option value="{{$patient_val->id}}">{{ $patient_val->name }}</option>
                 @endforeach
                 @endif
                 </select>
@@ -57,24 +57,24 @@
 
                 <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.date')}}</label>
-                  <input id="name" class="validate" name="date" type="date" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}">
+                  <input id="name" class="validate" name="date" type="date" data-error=".errorTxt1" value="{{(isset($patient_schedule_result->date)) ? $patient_schedule_result->date : old('date')}}">
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.time')}}</label>
-                  <input id="name" class="validate" name="time" type="time" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}">
+                  <input id="name" class="validate" name="time" type="time" data-error=".errorTxt1" value="{{(isset($patient_schedule_result->time)) ? $patient_schedule_result->time : old('time')}}">
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
 
-                <select name="carer_code" id="" required>
+                <select name="carer_code" id="carer" required>
                 <option value="Select" disabled selected>{{__('locale.Select carer id')}} *</option>
                 @if(isset($carer) && !empty($carer))
                 @foreach($carer as $carer_val)
                 
-                <option value="{{ $carer_val->id }}" <?php echo(isset($carer_val->id)) ? 'selected="selected"' : '';?>>{{ $carer_val->name }}</option>
+                <option value="{{ $carer_val->id }}">{{ $carer_val->name }}</option>
                 @endforeach
                 @endif
                 </select>
@@ -84,13 +84,13 @@
             </div> 
 
                 <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.assign')}}</label>
-                  <select name="carer_assigned_by" id="myselect">
+                 
+                  <select name="carer_assigned_by" id="carer_assign">
+                  <option value="Select" disabled selected>{{__('locale.assign')}}*</option>
                   <!-- <input id="name" class="validate" name="carer_assigned_by" type="text" data-error=".errorTxt1" value="{{auth()->user()->id}}"> -->
                   <?php 
                       foreach ($roles as $role) {
-                        
-                        ?>
+                  ?>
                         <option value="<?php echo $role['id']; ?>">
                           <?php echo $role['name']; ?>
                         </option>
@@ -103,12 +103,12 @@
 
                 <div class="input-field col s12">
 
-                <select name="alternate_carer_code" id="" required>
+                <select name="alternate_carer_code" id="alternate_carer" required>
                 <option value="Select" disabled selected>{{__('locale.Select alternate carer id')}} *</option>
                 @if(isset($carer) && !empty($carer))
                 @foreach($carer as $carer_val)
                 
-                <option value="{{ $carer_val->id }}" <?php echo(isset($carer_val->id)) ? 'selected="selected"' : '';?>>{{ $carer_val->name }}</option>
+                <option value="{{ $carer_val->id }}">{{ $carer_val->name }}</option>
                 @endforeach
                 @endif
                 </select>
@@ -158,23 +158,27 @@
 <script src="{{asset('js/scripts/form-validation.js')}}"></script>
 <script>
   window.onload=function(){
-    var country_value = "{{(isset($user_result->country) && $user_result->country!='NULL') ? $user_result->country : old('country')}}";
-    var country_value_edit = "{{(isset($user_result->country) && $user_result->country!='NULL') ? $user_result->country : ''}}";
-    var state_value = "{{(isset($user_result->state) && $user_result->state!='NULL') ? $user_result->state : old('state')}}";
-    var city_value = "{{(isset($user_result->city) && $user_result->city!='NULL') ? $user_result->city : old('state')}}";
-    var company_value = "{{(isset($user_result->company[0]->id) && $user_result->company[0]->id!='NULL') ? $user_result->company[0]->id : old('company')}}";
-    console.log(state_value);
-    $('#country').val(country_value);
-    $('#country').formSelect();
-    $('#state').val(state_value);
-    $('#state').formSelect();
-    $('#city').val(city_value);
-    $('#city').formSelect();
-    $('#company').val(company_value);
-    if(country_value_edit && country_value_edit!=''){
-      $('#company').attr('disabled',true);
-    }
-    $('#company').formSelect();
+    var patient_value = "{{(isset($patient_schedule_result->patient_id) && $patient_schedule_result->patient_id!='NULL') ? $patient_schedule_result->patient_id : old('patient_id')}}";
+    
+    var carer_value = "{{(isset($patient_schedule_result->carer_code) && $patient_schedule_result->carer_code!='NULL') ? $patient_schedule_result->carer_code : old('carer_code')}}";
+
+    var carer_assign_value="{{(isset($patient_schedule_result->carer_assigned_by) && $patient_schedule_result->carer_assigned_by!='NULL') ? $patient_schedule_result->carer_assigned_by : old('carer_assigned_by')}}";
+
+    var alternate_carer_value = "{{(isset($patient_schedule_result->alternate_carer_code) && $patient_schedule_result->alternate_carer_code!='NULL') ? $patient_schedule_result->alternate_carer_code : old('alternate_carer_code')}}";
+    
+    console.log(patient_value,carer_value,alternate_carer_value,carer_assign_value);
+    $('#patient').val(patient_value);
+    $('#patient').formSelect();
+
+    $('#carer').val(carer_value);
+    $('#carer').formSelect();
+
+    $('#carer_assign').val(carer_assign_value);
+    $('#carer_assign').formSelect();
+
+    $('#alternate_carer').val(alternate_carer_value);
+    $('#alternate_carer').formSelect();
+    
   }
     $(document).ready(function () {
       
