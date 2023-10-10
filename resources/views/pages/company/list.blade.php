@@ -7,6 +7,9 @@
 {{-- page style --}}
 @section('vendor-style')
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/flag-icon/css/flag-icon.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/css/jquery.dataTables.min.css')}}">
+<link rel="stylesheet" type="text/css"
+  href="{{asset('vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css')}}">
 @endsection
 
 {{-- page content --}}
@@ -76,13 +79,15 @@
             </a>
           <div class="row">
             <div class="col s12">
+            <div class="input-field col m6 s12" style="display:block !important;">
+                      <label for="serach">{{ __('locale.Search') }}</label>
+                      <input id="serach" type="text" name="serach" data-error=".errorTxt12">
+                        <small class="errorTxt12"></small>
+                      </div>
             </div>
             <div class="col s12 table-result">
-                <div class="input-field col m6 s12">
-                  <label for="serach">{{__('locale.Search')}}</label>
-                  <input id="serach" type="text" name="serach" data-error=".errorTxt12">
-                  <small class="errorTxt12"></small>
-                </div>
+                      
+
               <!-- <div class="col m3">
                 <div class="form-group">
                   <input type="text" name="serach" id="serach" class="form-control" />
@@ -104,14 +109,18 @@
 {{-- vendor script --}}
 @section('vendor-script')
 <script src="{{asset('vendors/jquery-validation/jquery.validate.min.js')}}"></script>
+<script src="{{asset('vendors/data-tables/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js')}}"></script>
 
 @endsection
 
 {{-- page script --}}
 @section('page-script')
-
+<script src="{{asset('js/scripts/page-users.js')}}"></script>
 <script>
-  $(document).ready(function(){
+  $(document).ready(function(e){
+    // e.preventDefault();
+    
     const fetch_data = (page, status, seach_term) => {
         if(status === undefined){
             status = "";
@@ -119,6 +128,7 @@
         if(seach_term === undefined){
             seach_term = "";
         }
+        
         $.ajax({ 
             url:"/superadmin/company?page="+page+"&status="+status+"&seach_term="+seach_term,
             success:function(data){
@@ -127,9 +137,11 @@
                 $('.table-result').html(data);
             }
         })
+      
     }
 
     $('body').on('keyup', '#serach', function(){
+      console.log('hi');
         var status = $('#status').val();
         var seach_term = $('#serach').val();
         var page = $('#hidden_page').val();

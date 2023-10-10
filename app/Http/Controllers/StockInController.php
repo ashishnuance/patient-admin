@@ -39,6 +39,7 @@ class StockInController extends Controller
         // )->select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
         $roles=Role::get(["id","name"]);
         $stockResult = Stockin::with('inventoryname')->select('*')->orderBy('id','DESC');
+        //echo"<pre>";print_r($stockResult);die;
         $editUrl = 'stockin-edit';
         if($request->ajax()){
             // $patientscheduleResult = $patientscheduleResult->when($request->seach_term, function($q)use($request){
@@ -56,7 +57,6 @@ class StockInController extends Controller
                     }
                     
                     $stockResult = $stockResult->paginate($perpage);
-                    //echo"<pre>";print_r($stockResult);die;
         
         return view('pages.stockin.stockin-list', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'pageTitle'=>$pageTitle,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl,'roles'=>$roles,'stockResult'=>$stockResult]);
     }

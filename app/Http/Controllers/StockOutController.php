@@ -40,21 +40,21 @@ class StockOutController extends Controller
         // )->select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
         $roles=Role::get(["id","name"]);
         // $stockResult = Stockout::with('inventoryname')->select('*')->orderBy('id','DESC');
-        $stockoutResult = Stockout::with(['patientname','inventoryname','carername'])->select('*')->orderBy('id','DESC');
+        $stockoutResult = Stockout::with(['patientname','inventorynameout','carername'])->select('*')->orderBy('id','DESC');
         $editUrl = 'stockout-edit';
         if($request->ajax()){
-            // $patientscheduleResult = $patientscheduleResult->when($request->seach_term, function($q)use($request){
-                //     $q->where('id', 'like', '%'.$request->seach_term.'%')
-                //                 ->orWhere('name', 'like', '%'.$request->seach_term.'%');
+                // $stockoutResult = $stockoutResult->when($request->seach_term, function($q)use($request){
+                //      $q->where('id', 'like', '%'.$request->seach_term.'%')
+                //                 ->orWhere('doc_no', 'like', '%'.$request->seach_term.'%');
                 
-                // })->paginate($perpage);
-                $stockoutResult = $stockoutResult->whereHas('inventoryname', function($q)use($request){
+                //  })->paginate($perpage);
+                 $stockoutResult = $stockoutResult->whereHas('inventorynameout', function($q)use($request){
                     $q->where('id', 'like', '%'.$request->seach_term.'%')
-                            ->orWhere('doc_no', 'like', '%'.$request->seach_term.'%');
+                             ->orWhere('doc_no', 'like', '%'.$request->seach_term.'%');
                             
-                        })->paginate($perpage);//search in laravel through relationship
+                         })->paginate($perpage);//search in laravel through relationship
                         
-                        return view('pages.stockout.stockout-list-ajax', compact('stockResult','editUrl','deleteUrl'))->render();
+                        return view('pages.stockout.stockout-list-ajax', compact('stockoutResult','editUrl','deleteUrl'))->render();
                     }
                     
                     $stockoutResult = $stockoutResult->paginate($perpage);
@@ -182,7 +182,7 @@ class StockOutController extends Controller
         //     DeceaseInventoryMapping::insert($MappingData);
         //     return redirect()->route('inventory-mapping.index')->with('success',__('locale.success common update'));
         // }
-        return redirect()->route('stockin-list')->with('success',__('locale.success common update'));
+        return redirect()->route('stockout-list')->with('success',__('locale.success common update'));
     }
 
 

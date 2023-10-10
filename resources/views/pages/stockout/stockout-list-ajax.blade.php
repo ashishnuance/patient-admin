@@ -21,7 +21,7 @@
     <td>{{$stock_value->date}}</td>
     <td>{{$stock_value->patientname->name}}</td>
     <td>{{$stock_value->carername->name}}</td>
-    <td>{{$stock_value->inventoryname->name}}</td>
+    <td>{{$stock_value->inventorynameout->name}}</td>
     <td>{{$stock_value->quantity}}</td>
     <td>{{$stock_value->stock_out_by}}</td>
     
@@ -43,7 +43,7 @@
     @endif
   </tbody>
 </table>
-@if(isset($stockResult) && !empty($stockResult))
-{!! $stockResult->links('panels.paginationCustom') !!}
+@if(isset($stockoutResult) && !empty($stockoutResult))
+{!! $stockoutResult->links('panels.paginationCustom') !!}
 @endif
 

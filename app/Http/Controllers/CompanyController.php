@@ -37,15 +37,11 @@ class CompanyController extends Controller
                             $q->where('id', 'like', '%'.$request->seach_term.'%')
                             ->orWhere('company_name', 'like', '%'.$request->seach_term.'%')
                             ->orWhere('company_code', 'like', '%'.$request->seach_term.'%');
-                        })
-                        ->when($request->status, function($q)use($request){
-                            $q->where('status',$request->status);
-                        })
-                        ->paginate($perpage);
+                        })->paginate($perpage);
             return view('pages.company.company-table-list', compact('companyResult'))->render();
         }
         if($companyResult->count()>0){
-            $companyResultResponse = $companyResult->paginate($perpage);;
+            $companyResultResponse = $companyResult->paginate($perpage);
         }
         // dd($companyResultResponse);
         // echo '<pre>';print_r($companyResultResponse[0]->cityname);exit();

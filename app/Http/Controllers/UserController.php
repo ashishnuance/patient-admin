@@ -187,6 +187,7 @@ class UserController extends Controller
         unset($request['action']);
         unset($request['company']);
         unset($request['importcompany']);
+        unset($request['company_code']);
         
         // dd($request->input('permission_allow'));
         if ($request->has('permission_allow')) {
@@ -482,17 +483,24 @@ class UserController extends Controller
      */
     public function destroy($id)
     {   
-        
-        $companyId = companyUserMapping::where('user_id',$id)->first()->company_id;
-        if(companyUserMapping::where('company_id',$companyId)->where('user_id','!=',$id)->count()==0){
-            if(User::where('id',$id)->delete()){
-                return redirect()->back()->with('success',__('locale.delete_message'));
-            }else{
-                return redirect()->back()->with('error',__('locale.try_again'));
-            }
-        }else{
-            return redirect()->back()->with('error',__('locale.company_admin_delete_error_msg'));
+         if(User::where('id',$id)->delete()){
+           return redirect()->back()->with('success',__('locale.delete_message'));
         }
+        else{
+        return redirect()->back()->with('error',__('locale.try_again'));
+        }
+
+        
+        // $companyId = companyUserMapping::where('user_id',$id)->first()->company_id;
+        // if(companyUserMapping::where('company_id',$companyId)->where('user_id','!=',$id)->count()==0){
+        //     if(User::where('id',$id)->delete()){
+        //         return redirect()->back()->with('success',__('locale.delete_message'));
+        //     }else{
+        //         return redirect()->back()->with('error',__('locale.try_again'));
+        //     }
+        // }else{
+        //     return redirect()->back()->with('error',__('locale.company_admin_delete_error_msg'));
+        // }
     }
 
     /**
@@ -510,7 +518,7 @@ class UserController extends Controller
         }
     }
 
-    public function patientList()
+    public function patientList(Request $request)
     {
         //echo"patient list";
 
@@ -522,20 +530,33 @@ class UserController extends Controller
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
         $pageTitle = 'Patient list';
-        $paginationUrl = 'superadmin.company-user-list';
+        $paginationUrl = 'superadmin.paitent-list';
         $editUrl = 'superadmin.company-user-edit';
-
+        
         $patientResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Patient');
-        })->select(['name','email','phone','address1','image','website_url','id','blocked'])->orderBy('id','DESC')->get();
-
+        })->select(['name','email','phone','address1','image','website_url','id','blocked'])->orderBy('id','DESC');
+        if($request->ajax()){
+            
+           // $currentPage = $request->get('page');
+           $patientResult = $patientResult->whereHas('company', function($q)use($request){
+                $q->where('id', 'like', '%'.$request->seach_term.'%')
+                            ->orWhere('name', 'like', '%'.$request->seach_term.'%')
+                            ->orWhere('email', 'like', '%'.$request->seach_term.'%')
+                            ->orWhere('phone', 'like', '%'.$request->seach_term.'%')
+                            ->orWhere('address', 'like', '%'.$request->seach_term.'%');
+                        })->paginate($perpage);
+                        
+            return view('pages.paitent.paitent-list-ajax', compact('patientResult','editUrl','deleteUrl'))->render();
+        }
+        $patientResult = $patientResult->paginate($perpage);
        // echo"<pre>";print_r($patientResult);die;
         // echo $patientResult=User::with('company')->whereHas('role',function($role_q){
         //     $role_q->where('name','Patient');
         // })->select(['name','email','phone','address','image','website_url','id','blocked'])->toSql();
         // die;
 
-        return view('pages.patient.patient-list', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'patientResult'=>$patientResult,'pageTitle'=>$pageTitle,'paginationUrl'=>$paginationUrl,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl]);
+        return view('pages.paitent.paitent-list', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'patientResult'=>$patientResult,'pageTitle'=>$pageTitle,'paginationUrl'=>$paginationUrl,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl]);
     }
 
     public function carerList()

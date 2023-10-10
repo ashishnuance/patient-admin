@@ -99,7 +99,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/company-user-delete/{id}', [UserController::class, 'destroyUser'])->name('superadmin.company-user-delete');
 
         /** new route for patient **/
-        Route::get('/patient-list',[UserController::class,'patientList'])->name('superadmin.patient-list');
+        Route::get('/patient-list',[UserController::class,'patientList'])->name('superadmin.paitent-list');
 
         /** new route for carer **/
         Route::get('/carer-list',[UserController::class,'carerList'])->name('superadmin.carer-list');

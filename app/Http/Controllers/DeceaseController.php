@@ -47,7 +47,7 @@ class DeceaseController extends Controller
                            
                         }) ->paginate($perpage);
                         
-            return view('pages.decease.decease-list-ajax', compact('usersResult','editUrl','deleteUrl'))->render();
+            return view('pages.decease.decease-list-ajax', compact('deceaseResult','editUrl','deleteUrl'))->render();
         }
 
         $deceaseResult = $deceaseResult->paginate($perpage);

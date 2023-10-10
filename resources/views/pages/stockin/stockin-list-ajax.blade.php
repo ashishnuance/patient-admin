@@ -21,7 +21,9 @@
     <td>{{$stock_value->doc_no}}</td>
     <td>{{$stock_value->date}}</td>
     <td>{{$stock_value->supplier_code}}</td>
+    @if(isset($stock_value->inventoryname->name) && $stock_value->inventoryname->name!='')
     <td>{{$stock_value->inventoryname->name}}</td>
+    @endif
     <td>{{$stock_value->quantity}}</td>
     <td>{{$stock_value->rate}}</td>
     <td>{{$stock_value->stock_in_by}}</td>

@@ -50,6 +50,12 @@ return [
     "supplier_doc_no"=>"Supplier doc no",
     "Select inventory name"=>"Select inventory name",
     "stock_created_successfully"=>"Stock created successfully",
+    "stock_out"=>"Stock out",
+    "stock_out_list"=>"Stock out list",
+    "patient_code"=>"Patient code",
+    "carer_code"=>"Carer code",
+    "stock_out_by"=>"Stock out by",
+    
 
     "Profile"=>"Profile",
     "Profile Edit"=>"Create",

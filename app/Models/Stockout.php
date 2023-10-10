@@ -11,7 +11,7 @@ class Stockout extends Model
     protected $table="stock_out";
     protected $fillable=['doc_no','date','patient_code','carer_code','inventory_code','quantity','stock_out_by'];
 
-    public function inventoryname()
+    public function inventorynameout()
     {
         return $this->hasOne(Inventory::class, 'id', 'inventory_code');
     }
