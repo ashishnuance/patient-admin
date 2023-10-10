@@ -25,15 +25,15 @@ class UsersImport implements ToCollection,WithStartRow
 
     public function collection(Collection $collection)
     {
-        //echo"<pre>";print_r($collection);
+       // echo"<pre>";print_r($collection);die;
         foreach ($collection as $row) 
         {
             if(count($row)==17){
                 //echo"17";die;
                 $role = Role::where('name', $row[15])->first();
                 $company = Company::where('id', $row[16])->first();
-                // echo"<pre>";print_r($row[16]);
-                if(!User::where('email', '=', $row[1])->exists() && (isset($company) && $company->id && $company->id>0)) {
+                // echo"<pre>";print_r($company->id);
+                if(!User::where('email', '=', $row[1])->exists() && (isset($company) && !is_null($company) && $company->id && $company->id>0)) {
                     $users = User::create([
                         'name'     => $row[0],
                         'email'    => $row[1], 
@@ -51,7 +51,7 @@ class UsersImport implements ToCollection,WithStartRow
                         'wedsite_url' => $row[13],                
                         'blocked' => (is_int($row[14])) ? $row[14] : 1,                
                     ]);
-                    if(isset($company) && $company->id && $company->id>0){
+                    if(isset($company) && !is_null($company) && $company->id && $company->id>0){
                         $users->company()->attach($company->id);
                     }
                     if(isset($role) && $role->id && $role->id>0){

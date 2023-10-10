@@ -229,6 +229,7 @@ class UserController extends Controller
     
     public function companyUserImport()
     {
+       // echo"hi";die;
         try{
             $import = new UsersImport;
             Excel::import($import, request()->file('importcompany'));
@@ -247,6 +248,7 @@ class UserController extends Controller
 
     public function companyUserExport($type='superadmin') 
     {
+        //echo"export";die;
         if($type=='superadmin'){
             $companyUser = new AdminExport;
             
@@ -254,7 +256,7 @@ class UserController extends Controller
             $type = 'user';
             $companyUser = new UsersExport;
         }
-        
+        //echo"<pre>";print_r($companyUser);die;
         return Excel::download($companyUser, 'company-'.$type.time().'.xlsx');
     }
 

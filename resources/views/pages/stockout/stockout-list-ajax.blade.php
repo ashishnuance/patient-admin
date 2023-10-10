@@ -4,9 +4,9 @@
       
       <th>{{__('locale.doc_number')}}</th>
       <th>{{__('locale.date')}}</th>
-      <th>{{__('locale.patient_code')}}</th>
-      <th>{{__('locale.carer_code')}}</th>
-      <th>{{__('locale.inventory_code')}}</th>
+      <th>{{__('locale.patient_name')}}</th>
+      <th>{{__('locale.carer_name')}}</th>
+      <th>{{__('locale.inventory_name')}}</th>
       <th>{{__('locale.quantity')}}</th>
       <th>{{__('locale.stock_out_by')}}</th>
       <th>{{__('locale.action')}}</th>
@@ -20,7 +20,9 @@
     <td>{{$stock_value->doc_no}}</td>
     <td>{{$stock_value->date}}</td>
     <td>{{$stock_value->patientname->name}}</td>
+    @if(isset($stock_value->carername->name) && $stock_value->carername->name!='')
     <td>{{$stock_value->carername->name}}</td>
+    @endif
     <td>{{$stock_value->inventorynameout->name}}</td>
     <td>{{$stock_value->quantity}}</td>
     <td>{{$stock_value->stock_out_by}}</td>
