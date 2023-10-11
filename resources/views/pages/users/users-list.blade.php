@@ -81,6 +81,9 @@
   
   <div class="users-list-table">
     <div class="card">
+      <div class="col s4 m4 l6">
+                  <h4 class="card-title">{{__('locale.users')}} {{__('locale.list')}}</h4>
+      </div>
       <div class="card-content">
         <!-- datatable start -->
           <div class="col s12 m6 l3">

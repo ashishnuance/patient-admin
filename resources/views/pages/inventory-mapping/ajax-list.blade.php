@@ -16,7 +16,8 @@
     <td>{{ isset($inventory_map_value->inventory->name) ? $inventory_map_value->inventory->name : '' }}</td>
     <td>
     <a href="{{route($editUrl,$inventory_map_value->id)}}"><i class="material-icons">edit</i></a>
-      <a href="{{route($deleteUrl,$inventory_map_value->id)}}" onclick="return confirm('Are you sure?')"><i class="material-icons">delete</i></a>
+      <a href="{{route($deleteUrl,$inventory_map_value->id)}}" onclick="return confirm('Are you sure?')">
+      <i class="material-icons">delete</i></a>
     </td>      
     
     

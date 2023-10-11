@@ -71,13 +71,18 @@
 </div>
   <!-- Responsive Table -->
   <div class="row">
+  
+            
+  <div id="responsive-table" class="card card card-default scrollspy">
     <div class="col s12 m12 l12">
-      <div id="responsive-table" class="card card card-default scrollspy">
         <div class="card-content">
             <a class="btn waves-effect waves-light right" href="{{route('company-export')}}">{{__('locale.export')}}
                 <i class="material-icons right"></i>
             </a>
           <div class="row">
+          <div class="col s12 m6 l6">
+              <h4 class="card-title" style="font-size:18px;">Care home list</h4>
+            </div>
             <div class="col s12">
             <div class="input-field col m6 s12" style="display:block !important;">
                       <label for="serach">{{ __('locale.Search') }}</label>

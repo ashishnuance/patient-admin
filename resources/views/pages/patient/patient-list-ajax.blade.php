@@ -19,9 +19,13 @@
     <td>{{$user_value->patientname->name}}</td>
     <td>{{$user_value->date}}</td>
     <td>{{$user_value->time}}</td>
+    @if(isset($user_value->carername->name)&& $user_value->carername->name!='')
     <td>{{$user_value->carername->name}}</td>
+    @endif
     <td>{{$user_value->role->name}}</td>
+    @if(isset($user_value->alternatecarername->name)&& $user_value->alternatecarername->name!='')
     <td>{{$user_value->alternatecarername->name}}</td>
+    @endif
     <!-- <td>
       
       {{ isset($user_value->company[0]->company_name) ? $user_value->company[0]->company_name : '' }}

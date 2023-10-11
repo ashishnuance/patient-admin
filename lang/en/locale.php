@@ -55,6 +55,16 @@ return [
     "patient_code"=>"Patient code",
     "carer_code"=>"Carer code",
     "stock_out_by"=>"Stock out by",
+    "s.no"=>"S.no.",
+    "Inventory mapping"=>"Inventory mapping",
+    "Decease inventory edit"=>"Decease inventory edit",
+    "diseasemaster"=>"Disease master",
+    "disease-inventory"=>"Disease inventory",
+    "disease"=>"Disease",
+    "Select patient"=>"Select patient",
+    "Select carer name"=>"Select carer name",
+    "Select alternate carer name"=>"Select alternate carer name",
+    "assign_by"=>"Assign by",
     
 
     "Profile"=>"Profile",

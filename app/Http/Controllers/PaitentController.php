@@ -74,7 +74,7 @@ class PaitentController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $patient = User::where('typeselect','=','Patient')->get(["name", "id"]);
         $carer = User::where('typeselect','=','Carer')->get(["name", "id"]);
-        $roles=Role::get(["id","name"]);
+        $roles=Role::where('name','!=','superadmin')->get(["id","name"]);
         //$companyCode = Helper::setNumber();
         $pageTitle = __('locale.Patient schedule name'); 
         if($id!=''){

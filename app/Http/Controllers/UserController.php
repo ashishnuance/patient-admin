@@ -81,7 +81,7 @@ class UserController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $countries = Country::get(["name", "id"]);
         $companies = Company::get(["company_name", "id","company_code"]);
-        $roles=Role::get(["id","name"]);
+        $roles=Role::where('name','!=','superadmin')->get(["id","name"]);
         $companyCode = Helper::setNumber();
         $pageTitle = __('locale.Company Admin'); 
         if($id!=''){

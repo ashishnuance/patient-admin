@@ -110,7 +110,7 @@
     {
       "for" :["superadmin"],
       "url": "superadmin/decease-list",
-      "name": "deceasemaster",
+      "name": "diseasemaster",
       "i18n": "Profile",
       "class": "waves-effect waves-cyan",
       "slug": "Profile",
@@ -131,7 +131,7 @@
     {
       "for" :["superadmin"],
       "url": "superadmin/inventory-mapping",
-      "name": "decease-inventory-mapping",
+      "name": "disease-inventory",
       "i18n": "Profile",
       "class": "waves-effect waves-cyan",
       "slug": "Profile",

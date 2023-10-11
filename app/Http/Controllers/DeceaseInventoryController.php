@@ -29,7 +29,7 @@ class DeceaseInventoryController extends Controller
         
         // Breadcrumbs
         $breadcrumbs = [
-            ['link' => "/superadmin", 'name' => "Home"], ['link' => "superadmin/product-mapping", 'name' => __('locale.inventory mapping')], ['name' => "Add"],
+            ['link' => "/superadmin", 'name' => "Home"], ['link' => "superadmin/inventory-mapping", 'name' => __('locale.inventory mapping')], ['name' => "Add"],
         ];
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
@@ -41,7 +41,7 @@ class DeceaseInventoryController extends Controller
         $inventoryResult = Inventory::select(['id','code','name'])->get();
         $deceaseinventoryMappingResult = DeceaseInventoryMapping::with(['decease','inventory']);
         
-        // dd($productMappingResult->get()); exit();
+        // dd($deceaseinventoryMappingResult->get()); exit();
         if($request->ajax()){
             $deceaseinventoryMappingResult = $deceaseinventoryMappingResult->whereHas('decease',function($query) use ($request) {
                 $query->where('name','like', '%'.$request->seach_term.'%');
@@ -59,7 +59,7 @@ class DeceaseInventoryController extends Controller
         return view('pages.inventory-mapping.list',['breadcrumbs' => $breadcrumbs], ['pageConfigs' => $pageConfigs,'pageTitle'=>$pageTitle,'deceaseinventoryMappingResult'=>$deceaseinventoryMappingResult,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl]);
     }
 
-    public function create()
+    public function create($id='')
     {
         //echo"ji";die;
         $formUrl = 'inventory-mapping.store';
@@ -70,6 +70,7 @@ class DeceaseInventoryController extends Controller
 
         $deceaseResult = Decease::select(['id','name','code'])->get();
         $inventoryResult = Inventory::select(['id','code','name'])->get();
+        
 
         $pageConfigs = ['pageHeader' => true];
         $pageTitle = __('locale.Decease inventory add');

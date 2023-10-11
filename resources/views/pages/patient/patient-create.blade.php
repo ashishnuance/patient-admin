@@ -40,9 +40,9 @@
             @csrf()
             <div class="row">
             <div class="input-field col s12">
-
+            <label for="serach">{{__('locale.Select patient')}}</label>
                 <select name="patient_id" id="patient" required>
-                <option value="Select" disabled selected>{{__('locale.Select patient id')}} *</option>
+                <option value="Select" disabled selected>{{__('locale.Select patient')}} *</option>
                 @if(isset($patient) && !empty($patient))
                 @foreach($patient as $patient_val)
                 
@@ -68,9 +68,9 @@
                 </div>
 
                 <div class="input-field col m6 s12">
-
+                <label for="serach">{{__('locale.Select carer name')}}</label>
                 <select name="carer_code" id="carer" required>
-                <option value="Select" disabled selected>{{__('locale.Select carer id')}} *</option>
+                <option value="Select" disabled selected>{{__('locale.Select carer name')}} *</option>
                 @if(isset($carer) && !empty($carer))
                 @foreach($carer as $carer_val)
                 
@@ -84,9 +84,9 @@
             </div> 
 
                 <div class="input-field col m6 s12">
-                 
+                <label for="serach">{{__('locale.assign_by')}}</label>
                   <select name="carer_assigned_by" id="carer_assign">
-                  <option value="Select" disabled selected>{{__('locale.assign')}}*</option>
+                  <option value="Select" disabled selected>{{__('locale.assign_by')}}*</option>
                   <!-- <input id="name" class="validate" name="carer_assigned_by" type="text" data-error=".errorTxt1" value="{{auth()->user()->id}}"> -->
                   <?php 
                       foreach ($roles as $role) {
@@ -102,9 +102,9 @@
                 </div>
 
                 <div class="input-field col s12">
-
+                <label for="serach">{{__('locale.Select alternate carer name')}}</label>
                 <select name="alternate_carer_code" id="alternate_carer" required>
-                <option value="Select" disabled selected>{{__('locale.Select alternate carer id')}} *</option>
+                <option value="Select" disabled selected>{{__('locale.Select alternate carer name')}} *</option>
                 @if(isset($carer) && !empty($carer))
                 @foreach($carer as $carer_val)
                 

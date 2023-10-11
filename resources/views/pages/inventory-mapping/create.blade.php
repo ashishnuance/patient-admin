@@ -22,16 +22,9 @@
     <div class="col s12">
     @include('panels.flashMessages')
 
-      <div id="validations" class="card card-tabs">
-        <div class="card-content">
-          <div class="card-title">
-            <div class="row">
-              <div class="col s12 m6 l10">
-                
-              </div>
-            </div>
-          </div>
-          <div id="view-validations">
+      <div id="validations" >
+        <div class="">
+          <div id="view-validations" style="padding-top:40px">
          
           <form class="formValidate" method="post" action="{{ isset($mappingResult) ? route($formUrl,$mappingResult[0]->id) : route($formUrl) }}">
 
@@ -44,30 +37,33 @@
             
 
               <div class="input-field col s12">
+                <label for="disease">{{__('locale.Select disease')}}</label>
 
-                 <select name="decease_id" id="" required>
+                 <select name="decease_id" id="disease" required>
                   <option value="Select" disabled selected>{{__('locale.Select disease')}} *</option>
                   @if(isset($deceaseResult) && !empty($deceaseResult))
                   @foreach($deceaseResult as $decease_val)
                   
-                  <option value="{{ $decease_val->id }}" <?php echo(isset($decease_val->id)) ? 'selected="selected"' : '';?>>{{ $decease_val->name}}</option>
+                  <option value="{{ $decease_val->id }}">{{ $decease_val->name}}</option>
                     @endforeach
                   @endif
                 </select>
                 @error('company_id')
                 <div style="color:red">{{$message}}</div>
                 @enderror
-             </div>             
+             </div> 
+                        
               <?php //echo '<pre>';print_r($productIds); exit(); ?>
 
               <div class="input-field col s12">
+                <label for="inventory">{{__('locale.Select inventory')}}</label>
 
-                 <select name="inventory_id" id="" required>
+                 <select name="inventory_id" id="inventory" required>
                   <option value="Select" disabled selected>{{__('locale.Select inventory')}} *</option>
                   @if(isset($inventoryResult) && !empty($inventoryResult))
                   @foreach($inventoryResult as $inventory_val)
                   
-                  <option value="{{ $inventory_val->id }}" <?php echo(isset($inventory_val->id)) ? 'selected="selected"' : '';?>>{{ $inventory_val->name }}</option>
+                  <option value="{{ $inventory_val->id }}">{{ $inventory_val->name }}</option>
                     @endforeach
                   @endif
                 </select>
@@ -99,10 +95,15 @@
 @section('page-script')
 <script>
 window.onload=function(){
-    var company_value = "{{(isset($mappingResult[0]->company_id) && $mappingResult[0]->company_id!='NULL') ? $mappingResult[0]->company_id : old('company_id')}}";
-    console.log('company_value',company_value);
-    $('#company').val(company_value);
-    $('#company').formSelect();
+    var disease_value="{{(isset($mappingResult[0]->decease_id) && $mappingResult[0]->decease_id!='NULL') ? $mappingResult[0]->decease_id : old('decease_id')}}";
+    console.log('disease_value',disease_value);
+    $('#disease').val(disease_value);
+    $('#disease').formSelect();
+
+    var inventory_value="{{(isset($mappingResult[0]->inventory_id) && $mappingResult[0]->inventory_id!='NULL') ? $mappingResult[0]->inventory_id : old('inventory_id')}}";
+    console.log('inventory_value',inventory_value);
+    $('#inventory').val(inventory_value);
+    $('#inventory').formSelect();
   }
   </script>
 @endsection
