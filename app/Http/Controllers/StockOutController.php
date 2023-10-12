@@ -70,7 +70,7 @@ class StockOutController extends Controller
         $formUrl = 'company-admin-create';
         $stockout_result=$states=$cities=false;
         $breadcrumbs = [
-            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.stock_in')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
+            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.stock_out')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
         $patient = User::where('typeselect','=','Patient')->get(["name", "id"]);
@@ -78,7 +78,7 @@ class StockOutController extends Controller
         $roles=Role::get(["id","name"]);
         $inventory=Inventory::get(["id","name"]);
         //$companyCode = Helper::setNumber();
-        $pageTitle = __('locale.stock_in'); 
+        $pageTitle = __('locale.stock_out'); 
         if($id!=''){
             //$permission_arr = [];
             $stockout_result = Stockout::find($id);

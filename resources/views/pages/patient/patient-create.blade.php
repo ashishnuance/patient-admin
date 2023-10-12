@@ -40,7 +40,8 @@
             @csrf()
             <div class="row">
             <div class="input-field col s12">
-            <label for="serach">{{__('locale.Select patient')}}</label>
+            <label for="serach">{{__('locale.Select patient')}}</label><br>
+            <div class="input-field">
                 <select name="patient_id" id="patient" required>
                 <option value="Select" disabled selected>{{__('locale.Select patient')}} *</option>
                 @if(isset($patient) && !empty($patient))
@@ -54,21 +55,22 @@
                 <div style="color:red">{{$message}}</div>
                 @enderror
             </div> 
-
+            </div>
                 <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.date')}}</label>
                   <input id="name" class="validate" name="date" type="date" data-error=".errorTxt1" value="{{(isset($patient_schedule_result->date)) ? $patient_schedule_result->date : old('date')}}">
+                  <label for="name">{{__('locale.date')}}</label>
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.time')}}</label>
                   <input id="name" class="validate" name="time" type="time" data-error=".errorTxt1" value="{{(isset($patient_schedule_result->time)) ? $patient_schedule_result->time : old('time')}}">
+                  <label for="name">{{__('locale.time')}}</label>
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
-                <label for="serach">{{__('locale.Select carer name')}}</label>
+                <label for="serach">{{__('locale.Select carer name')}}</label><br>
+                <div class="input-field">
                 <select name="carer_code" id="carer" required>
                 <option value="Select" disabled selected>{{__('locale.Select carer name')}} *</option>
                 @if(isset($carer) && !empty($carer))
@@ -82,27 +84,27 @@
                 <div style="color:red">{{$message}}</div>
                 @enderror
             </div> 
+            </div>
 
                 <div class="input-field col m6 s12">
-                <label for="serach">{{__('locale.assign_by')}}</label>
+                <label for="serach">{{__('locale.assign_by')}}</label><br>
+                <div class="input-field">
                   <select name="carer_assigned_by" id="carer_assign">
                   <option value="Select" disabled selected>{{__('locale.assign_by')}}*</option>
                   <!-- <input id="name" class="validate" name="carer_assigned_by" type="text" data-error=".errorTxt1" value="{{auth()->user()->id}}"> -->
                   <?php 
-                      foreach ($roles as $role) {
+                  foreach ($roles as $role) {
                   ?>
-                        <option value="<?php echo $role['id']; ?>">
-                          <?php echo $role['name']; ?>
-                        </option>
-                        <?php 
-                      }
-                      ?>
+                  <option value="<?php echo $role['id']; ?>"><?php echo $role['name']; ?></option>
+                  <?php }
+                  ?>
                       </select>
                   <small class="errorTxt1"></small>
                 </div>
-
+                </div>
                 <div class="input-field col s12">
-                <label for="serach">{{__('locale.Select alternate carer name')}}</label>
+                <label for="serach">{{__('locale.Select alternate carer name')}}</label><br>
+                <div class="input-field">
                 <select name="alternate_carer_code" id="alternate_carer" required>
                 <option value="Select" disabled selected>{{__('locale.Select alternate carer name')}} *</option>
                 @if(isset($carer) && !empty($carer))
@@ -116,7 +118,7 @@
                 <div style="color:red">{{$message}}</div>
                 @enderror
             </div> 
-                
+            </div>   
 
 
 

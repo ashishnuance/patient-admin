@@ -38,7 +38,8 @@
 
               <div class="input-field col s12">
                 <label for="disease">{{__('locale.Select disease')}}</label>
-
+                <br>
+                <div class="input-field">
                  <select name="decease_id" id="disease" required>
                   <option value="Select" disabled selected>{{__('locale.Select disease')}} *</option>
                   @if(isset($deceaseResult) && !empty($deceaseResult))
@@ -52,12 +53,13 @@
                 <div style="color:red">{{$message}}</div>
                 @enderror
              </div> 
-                        
+             </div>          
               <?php //echo '<pre>';print_r($productIds); exit(); ?>
 
               <div class="input-field col s12">
                 <label for="inventory">{{__('locale.Select inventory')}}</label>
-
+                <br>
+                <div class="input-field">
                  <select name="inventory_id" id="inventory" required>
                   <option value="Select" disabled selected>{{__('locale.Select inventory')}} *</option>
                   @if(isset($inventoryResult) && !empty($inventoryResult))
@@ -71,7 +73,7 @@
                 <div style="color:red">{{$message}}</div>
                 @enderror
              </div>  
-           
+             </div>
                           
                 <div class="input-field col s12">
                   <button class="btn waves-effect waves-light right submit" type="submit" name="action">Submit

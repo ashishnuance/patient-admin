@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th>{{__('locale.s.no')}}</th>
-      <th>{{__('locale.decease')}}</th>
+      <th>{{__('locale.disease')}}</th>
       <th>{{__('locale.inventory')}}</th>
       <th>{{__('locale.action')}}</th>
     </tr>

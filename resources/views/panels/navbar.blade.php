@@ -53,7 +53,7 @@
           </a>
         </li>
         <li>
-          <a href="{{asset('logout')}}" class="grey-text text-darken-1" >
+          <a href="{{asset('logout')}}" class="grey-text text-darken-1" onclick="return confirm('Are you sure you want to logout')">
             <i class="material-icons">keyboard_tab</i>
             Logout
           </a>

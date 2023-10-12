@@ -1,7 +1,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th></th>
+      <th>{{__('locale.s.no')}}</th>
       <th>{{__('locale.name')}}</th>
       <th>{{__('locale.symptoms')}}</th>
       <th>{{__('locale.note')}}</th>

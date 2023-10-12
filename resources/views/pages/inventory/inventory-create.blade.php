@@ -42,8 +42,8 @@
 
             <div class="input-field col m12 s12">
                   <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="code" type="text" data-error=".errorTxt1" value="{{(isset($inventoryResult->code)) ? $inventoryResult->code : $companyCode}}" 
-                  <?php echo isset($companyCode) ? "readonly" : "" ?> >
+                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');"  data-error=".errorTxt1" value="{{(isset($inventoryResult->code)) ? $inventoryResult->code : $companyCode}}" 
+                  >
                   <small class="errorTxt1"></small>
             </div>
 

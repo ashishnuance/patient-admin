@@ -46,12 +46,14 @@
                 </div>
 
                 <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.date')}}</label>
                   <input id="name" class="datepic" name="date" type="date" data-error=".errorTxt1" value="{{(isset($stockout_result->date)) ? $stockout_result->date : old('date')}}">
+                  <label for="name">{{__('locale.date')}}</label>
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
+                <label for="disease">{{__('locale.Select patient name')}}</label><br>
+                <div class="input-field">
                   <!-- <input id="name" class="validate" name="inventory_code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}"> -->
                   <select name="patient_code" id="patient" required>
                   <option value="Select" disabled selected>{{__('locale.Select patient name')}}</option>
@@ -67,8 +69,11 @@
                   @enderror
                   
                 </div>
+                </div>
 
                 <div class="input-field col m6 s12">
+                <label for="disease">{{__('locale.Select carer name')}}</label><br>
+                <div class="input-field">
                   <!-- <input id="name" class="validate" name="inventory_code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}"> -->
                   <select name="carer_code" id="carer" required>
                   <option value="Select" disabled selected>{{__('locale.Select carer name')}}</option>
@@ -84,12 +89,15 @@
                   @enderror
                   
                 </div>
+                </div>
 
 
 
                 
 
                 <div class="input-field col m6 s12">
+                <label for="disease">{{__('locale.Select inventory name')}}</label><br>
+                <div class="input-field">
                   <!-- <input id="name" class="validate" name="inventory_code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}"> -->
                   <select name="inventory_code" id="inventory" required>
                   <option value="Select" disabled selected>{{__('locale.Select inventory name')}}</option>
@@ -105,16 +113,17 @@
                   @enderror
                   
                 </div>
+                </div>
 
                 <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.quantity')}}</label>
+                  <label for="name">{{__('locale.quantity')}}</label><br>
                   <input id="name" class="validate" name="quantity" min="0" type="number" data-error=".errorTxt1" value="{{(isset($stockout_result->quantity)) ? $stockout_result->quantity : old('quantity')}}">
                   <small class="errorTxt1"></small>
                 </div>
 
                 
 
-                <div class="input-field col m6 s12">
+                <div class="input-field col m12 s12">
                   <label for="name">{{__('locale.stby')}}</label>
                   <input id="name" class="validate" name="stock_out_by" type="text" data-error=".errorTxt1" value="{{(isset($stockout_result->stock_out_by)) ? $stockout_result->stock_out_by : old('stock_out_by')}}">
                   <small class="errorTxt1"></small>

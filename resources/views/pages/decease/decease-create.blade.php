@@ -42,8 +42,8 @@
 
             <div class="input-field col m12 s12">
                   <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="code" type="text" data-error=".errorTxt1" value="{{(isset($deceaseResult->code)) ? $deceaseResult->code : $companyCode}}" 
-                  <?php echo isset($companyCode) ? "readonly" : "" ?> >
+                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($deceaseResult->code)) ? $deceaseResult->code : $companyCode}}" 
+                  >
                   <small class="errorTxt1"></small>
             </div>
 
@@ -69,12 +69,12 @@
                   <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($deceaseResult->name)) ? $deceaseResult->name : old('name')}}">
                   <small class="errorTxt1"></small>
                 </div>
-                <div class="input-field col m4 s12">
+                <div class="input-field col m6 s12">
                   <label for="address1">{{__('locale.symptoms')}}</label>
                   <input id="address1" type="text" name="symptoms" data-error=".errorTxt3" value="{{(isset($deceaseResult->symptoms)) ? $deceaseResult->symptoms : old('symptoms')}}">
                   <small class="errorTxt3"></small>
                 </div>
-                <div class="input-field col m4 s12">
+                <div class="input-field col m6 s12">
                   <label for="address2">{{__('locale.note')}}</label>
                   <input id="address2" type="text" name="note" data-error=".errorTxt4" value="{{(isset($deceaseResult->note) && $deceaseResult->note!='NULL') ? $deceaseResult->note : old('note')}}">
                   <small class="errorTxt4"></small>

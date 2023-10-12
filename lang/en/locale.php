@@ -65,6 +65,9 @@ return [
     "Select carer name"=>"Select carer name",
     "Select alternate carer name"=>"Select alternate carer name",
     "assign_by"=>"Assign by",
+    "Disease inventory add"=>"Disease inventory add",
+    "master"=>"Master",
+    
     
 
     "Profile"=>"Profile",
@@ -280,6 +283,10 @@ return [
     "buyer_update_success"=>"Buyer Updated Successfully",
     "buyer_type_channel_update_success"=>"Buyer Type Channel Update Success",
     "product_variation_type_update_success"=>"Product Variation Type Update Successfully",
+    "create"=>"Create",
+    "master"=>"Master",
+    "Select patient name"=>"Select patient name",
+    "Disease inventory edit"=>"Disease inventory edit",
 
     "Company Admin"=>"User master",
     "Create"=>"Create",

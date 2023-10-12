@@ -40,12 +40,29 @@
             @csrf()
             <div class="row">
 
-            <div class="input-field col m12 s12">
+            <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="company_code" type="text" data-error=".errorTxt1" value="{{(isset($user_result->company_code)) ? $user_result->company_code : $companyCode}}" 
-                  <?php echo isset($companyCode) ? "readonly" : "" ?> >
+                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($user_result->code)) ? $user_result->code : $companyCode}}" 
+                  >
                   <small class="errorTxt1"></small>
             </div>
+            <div class="col m6 s12">
+                  <label for="type">{{__('locale.select type')}} *</label>
+                  <div class="input-field">
+                  <select name="typeselect" id="myselect">
+                      <?php 
+                      foreach ($roles as $role) {
+                        $isSelected = (isset($user_result->typeselect) && $user_result->typeselect == $role['name']) ? 'selected' : '';
+                        ?>
+                        <option value="<?php echo $role['name'];?>"<?php echo $isSelected; ?>><?php echo $role['name']; ?>
+                        </option>
+                        <?php 
+                      }
+                      ?>
+                    </select>
+                    <small class="errorTxt6"></small>
+                  </div>
+                </div>
 
             @if(isset($userType) && $userType!=config('custom.superadminrole'))
                   <input type="hidden" name="company" value="{{Helper::loginUserCompanyId()}}"/>
@@ -134,7 +151,7 @@
                 </div>
                 <div class="input-field col m6 s12">
                   <label for="phone">{{__('locale.phone')}}*</label>
-                  <input id="phone" type="number" name="phone" data-error=".errorTxt3" value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}">
+                  <input id="phone" type="text" name="phone" data-error=".errorTxt3" value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}">
                   <small class="errorTxt3"></small>
                 </div>
                 
@@ -145,24 +162,7 @@
                   <small class="errorTxt3"></small>
                 </div>
 
-                <div class="col m6 s12">
-                  <label for="type">{{__('locale.select type')}} *</label>
-                  <div class="input-field">
-                  <select name="typeselect" id="myselect">
-                      <?php 
-                      foreach ($roles as $role) {
-                        $isSelected = (isset($user_result->typeselect) && $user_result->typeselect == $role['name']) ? 'selected' : '';
-                        ?>
-                        <option value="<?php echo $role['name']; ?>" <?php echo $isSelected; ?>>
-                          <?php echo $role['name']; ?>
-                        </option>
-                        <?php 
-                      }
-                      ?>
-                    </select>
-                    <small class="errorTxt6"></small>
-                  </div>
-                </div>
+                
 
                 <!-- <div class="input-field col m6 s12">
                   <label for="userLicense">{{__('locale.userLicense')}}*</label>
@@ -185,7 +185,7 @@
 
 
 
-                <div class="input-field col m12 s12">
+                <div class="input-field col m6 s12">
                     <select name="Option">
                     <option value="1" disabled selected>{{__('locale.yes')}}</option>
                     <option value="0">{{__('locale.no')}}</option>

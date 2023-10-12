@@ -25,7 +25,7 @@
       
       
       <div class="col s12">
-        <div id="file-input" class="card card-tabs">
+        <div id="file-input" class="">
           @include('panels.flashMessages')
           <div class="card-content">
             <div class="card-title">
@@ -33,7 +33,7 @@
                 <div class="col s12 m6 l6">
                   <!-- <h4 class="card-title">{{__('locale.imports')}} {{__('locale.users')}}</h4> -->
                 </div>
-                <div class="col s12 m6 l6 add-btn" style="text-align:end;">
+                <div class="col s12 m6 l6 add-btn" style="text-align:end;margin-top:90px;">
                   <div class="btn">
                     <a href="{{route('inventory-create')}}">
                     <i class="material-icons">add</i>
@@ -81,6 +81,7 @@
   
   <div class="users-list-table">
     <div class="card">
+    <h6 style="margin-left:35px;">List</h6>
       <div class="card-content">
         <!-- datatable start -->
           <div class="col s12 m6 l3">

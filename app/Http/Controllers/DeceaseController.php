@@ -28,10 +28,10 @@ class DeceaseController extends Controller
         $deleteUrl = 'decease-delete';
         $perpage = config('app.perpage');
         $breadcrumbs = [
-            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.decease')], ['name' => __('locale.decease').__('locale.List')]];
+            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.disease')], ['name' => __('locale.disease').__('locale.List')]];
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
-        $pageTitle = 'Decease master';
+        $pageTitle = 'Disease master';
         // $usersResult = User::whereHas(
         //     'role', function($q){
         //         $q->where('name', 'company-admin');
@@ -62,14 +62,14 @@ class DeceaseController extends Controller
         $formUrl = 'decease-create';
         $deceaseResult=$states=$cities=false;
         $breadcrumbs = [
-            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.decease')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
+            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.disease')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
         $countries = Country::get(["name", "id"]);
         $companies = Company::get(["company_name", "id","company_code"]);
         $roles=Role::get(["id","name"]);
         $companyCode = Helper::setNumber();
-        $pageTitle = __('locale.decease'); 
+        $pageTitle = __('locale.disease'); 
         if($id!=''){
             //$permission_arr = [];
             $deceaseResult = Decease::find($id);
@@ -98,6 +98,7 @@ class DeceaseController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
             'symptoms' => 'max:250',
+            'code'=>'required|unique:disease',
             
             
         ]);
@@ -152,6 +153,7 @@ class DeceaseController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
             'symptoms' => 'max:250',
+            'code'=>'required|unique:disease',
         ]);
         
         if ($validator->fails()) {
@@ -210,6 +212,7 @@ class DeceaseController extends Controller
         'name' => $request->input('name'),
         'symptoms' => $request->input('symptoms'),
         'note'=>$request->input('note'),
+        'code'=>$request->input('code'),
         // Add other columns and values as needed
     ]);
     

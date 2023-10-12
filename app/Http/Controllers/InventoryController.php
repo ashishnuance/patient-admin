@@ -69,7 +69,7 @@ class InventoryController extends Controller
         $companies = Company::get(["company_name", "id","company_code"]);
         $roles=Role::get(["id","name"]);
         $companyCode = Helper::setNumber();
-        $pageTitle = __('locale.decease'); 
+        $pageTitle = __('locale.inventory'); 
         if($id!=''){
             //$permission_arr = [];
             $inventoryResult = Inventory::find($id);
@@ -97,6 +97,7 @@ class InventoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
             'type' => 'max:250',
+            'code'=>'unique:inventory',
             
             
         ]);
@@ -152,6 +153,7 @@ class InventoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
             'type' => 'max:250',
+            'code'=>'unique:inventory',
         ]);
         
         if ($validator->fails()) {
@@ -210,6 +212,7 @@ class InventoryController extends Controller
         'name' => $request->input('name'),
         'type' => $request->input('type'),
         'option'=>$request->input('option'),
+        'code'=>$request->input('code'),
         // Add other columns and values as needed
     ]);
     

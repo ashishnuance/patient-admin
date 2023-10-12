@@ -61,7 +61,7 @@
          <div class="card padding-4 animate fadeLeft">
             <div class="row">
                <div class="col s5 m5 custom-tab">
-                  <h5 class="mb-0">Paitent</h5>
+                  <h5 class="mb-0">Patient</h5>
                   <p class="mb-0 pt-8">1,12,900</p>
                </div>
                <div class="col s7 m7 right-align">
@@ -144,7 +144,7 @@
       <div class="col s12 m12 l12">
          <div class="card subscriber-list-card animate fadeRight">
             <div class="card-content pb-1">
-               <h4 class="card-title mb-0">Paitent List<i class="material-icons float-right">more_vert</i></h4>
+               <h4 class="card-title mb-0">Patient List<i class="material-icons float-right">more_vert</i></h4>
             </div>
             <table class="subscription-table responsive-table highlight">
                <thead>

@@ -56,7 +56,7 @@ class CompanyController extends Controller
     public function create()
     {
         //echo"hi";die;
-        
+        $formUrl = 'company.create';
         $breadcrumbs = [
             ['link' => "/", 'name' => "Home"], ['link' => "company", 'name' => "Company"], ['name' => "Add"],
         ];
@@ -66,7 +66,7 @@ class CompanyController extends Controller
         $countries = Country::get(["name", "id"]);
         $companyCode = Helper::setNumber();
         // $companies = Company::get(["company_name", "id","company_code"]);
-        return view('pages.company.create',['breadcrumbs' => $breadcrumbs], ['pageConfigs' => $pageConfigs,'pageTitle'=>$pageTitle,'countries'=>$countries,'companyCode'=>$companyCode]);
+        return view('pages.company.create',['breadcrumbs' => $breadcrumbs], ['pageConfigs' => $pageConfigs,'pageTitle'=>$pageTitle,'countries'=>$countries,'companyCode'=>$companyCode,'formUrl'=>$formUrl]);
     }
 
     /**
@@ -81,6 +81,7 @@ class CompanyController extends Controller
          $validator = Validator::make($request->all(), [
             
             'company_name' => 'required|max:250',
+            'company_code'=>'required|unique:companies',
             'address1' => 'required|max:250',
             'address2' => 'max:250',
             'pincode' => 'required',
@@ -123,6 +124,7 @@ class CompanyController extends Controller
     public function edit($id)
     {
         // Breadcrumbs
+        $formUrl = 'company.create';
         $breadcrumbs = [
             ['link' => "/", 'name' => "Home"], ['link' => "buyer", 'name' => "Care home master"], ['name' => "Edit"],
         ];
@@ -137,7 +139,7 @@ class CompanyController extends Controller
         if(!$company_result){
             return redirect('/company')->with('error','Company id not match');
         }
-        return view('pages.company.create',['breadcrumbs' => $breadcrumbs], ['pageConfigs' => $pageConfigs,'pageTitle'=>$pageTitle,'company_result'=>$company_result,'countries'=>$countries,'states'=>$states,'cities'=>$cities,'companyCode'=>$companyCode]);
+        return view('pages.company.create',['breadcrumbs' => $breadcrumbs], ['pageConfigs' => $pageConfigs,'pageTitle'=>$pageTitle,'company_result'=>$company_result,'countries'=>$countries,'states'=>$states,'cities'=>$cities,'companyCode'=>$companyCode,'formUrl'=>$formUrl]);
     }
 
     /**
@@ -151,6 +153,7 @@ class CompanyController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'company_name' => 'required|max:250',
+            'company_code'=>'unique:companies',
             'address1' => 'required|max:250',
             'address2' => 'max:250',
             'country' => 'required',
@@ -170,9 +173,9 @@ class CompanyController extends Controller
         unset($request['_method']);
         unset($request['_token']);
         unset($request['action']);
-        $requestData = $request->except(['company_code']);
+        //$requestData = $request->except(['company_code']);
         // echo '<pre>';print_r($request->input()); exit();
-        $company = Company::where('id',$id)->update($requestData);
+        $company = Company::where('id',$id)->update($request->all());
         if($company){
             return redirect()->route('company.index')->with('success',__('locale.company_update_success'));
         }else{

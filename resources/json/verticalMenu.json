@@ -36,12 +36,54 @@
 
     {
       "for" :["superadmin"], 
-      "url": "superadmin/company-admin-list",
-      "name": "Company Admin",
-      "i18n": "Company Admin",
-      "class": "",
+      "url": "javascript:void(0)",
+      "name": "create",
+      "i18n": "create",
+      "class": "collapsible-header waves-effect waves-cyan",
       "slug": "company-admin",
-      "icon": "person_outline"
+      "icon": "person_outline",
+      
+      "submenu":[
+
+        {
+          
+          "url": "superadmin/company-admin-list",
+          "name": "Company Admin",
+          "i18n": "Company Admin",
+          "slug": "Profile"
+          
+        },
+
+        
+        {
+          
+          "url": "superadmin/patient-list",
+          "name": "patient",
+          "i18n": "Profile",
+          "slug": "Profile"
+          
+        },
+    
+        {
+          
+          "url": "superadmin/carer-list",
+          "name": "carer",
+          "i18n": "Profile",
+          "slug": "Profile"
+          
+        },
+    
+        {
+          
+          "url": "superadmin/manager-list",
+          "name": "manager",
+          "i18n": "Profile",
+          "slug": "Profile"
+          
+        }
+        
+
+      ]
     },
 
 
@@ -74,39 +116,16 @@
         }
       ]
     },
-
-    {
-      "for" :["superadmin"],
-      "url": "superadmin/patient-list",
-      "name": "patient",
-      "i18n": "Profile",
-      "class": "waves-effect waves-cyan",
-      "slug": "Profile",
-      "icon": "person_outline"
-    },
-
-    {
-      "for" :["superadmin"],
-      "url": "superadmin/carer-list",
-      "name": "carer",
-      "i18n": "Profile",
-      "class": "waves-effect waves-cyan",
-      "slug": "Profile",
-      "icon": "person_outline"
-    },
-
-    {
-      "for" :["superadmin"],
-      "url": "superadmin/manager-list",
-      "name": "manager",
-      "i18n": "Profile",
-      "class": "waves-effect waves-cyan",
-      "slug": "Profile",
-      "icon": "person_outline"
-    },
     
-
-    
+    {
+    "for" :["superadmin"], 
+      "url": "javascript:void(0)",
+      "name": "master",
+      "i18n": "master",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "company-admin",
+      "icon": "person_outline",
+      "submenu":[
     {
       "for" :["superadmin"],
       "url": "superadmin/decease-list",
@@ -138,15 +157,7 @@
       "icon": "healing"
     },
 
-    {
-      "for" :["superadmin"],
-      "url": "superadmin/patient-schedule-list",
-      "name": "patientSchedule",
-      "i18n": "Profile",
-      "class": "waves-effect waves-cyan",
-      "slug": "Profile",
-      "icon": "av_timer"
-    },
+    
 
     {
       "for" :["superadmin"],
@@ -176,7 +187,19 @@
       "class": "waves-effect waves-cyan",
       "slug": "Profile",
       "icon": "assignment_returned"
-    },
+    }
+  ]
+  },
+
+  {
+    "for" :["superadmin"],
+    "url": "superadmin/patient-schedule-list",
+    "name": "patientSchedule",
+    "i18n": "Profile",
+    "class": "waves-effect waves-cyan",
+    "slug": "Profile",
+    "icon": "av_timer"
+  },
 
 
 

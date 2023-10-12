@@ -46,8 +46,8 @@
                 </div>
 
                 <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.date')}}</label>
                   <input id="name" class="datepick" name="date" type="date" data-error=".errorTxt1" value="{{(isset($stockin_result->date)) ? $stockin_result->date : old('date')}}">
+                  <label for="name">{{__('locale.date')}}</label>
                   <small class="errorTxt1"></small>
                 </div>
 
@@ -58,6 +58,8 @@
                 </div>
 
                 <div class="input-field col m6 s12">
+                <label for="disease">{{__('locale.Select inventory name')}}</label>
+                <div class="input-field">
                   <!-- <input id="name" class="validate" name="inventory_code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}"> -->
                   <select name="inventory_code" id="inventory" required>
                   <option value="Select" disabled selected>{{__('locale.Select inventory name')}}</option>
@@ -72,6 +74,7 @@
                   <div style="color:red">{{$message}}</div>
                   @enderror
                   
+                </div>
                 </div>
 
                 <div class="input-field col m6 s12">

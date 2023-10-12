@@ -73,7 +73,7 @@ class DeceaseInventoryController extends Controller
         
 
         $pageConfigs = ['pageHeader' => true];
-        $pageTitle = __('locale.Decease inventory add');
+        $pageTitle = __('locale.Disease inventory add');
         return view('pages.inventory-mapping.create',['breadcrumbs' => $breadcrumbs], ['pageConfigs' => $pageConfigs,'pageTitle'=>$pageTitle,'deceaseResult'=>$deceaseResult,'inventoryResult'=>$inventoryResult,'formUrl'=>$formUrl]);
     }
 
@@ -120,7 +120,7 @@ class DeceaseInventoryController extends Controller
         // }
        // echo"<pre>";print_r($mappingResult);die;
         $pageConfigs = ['pageHeader' => true];
-        $pageTitle = __('locale.Decease inventory edit');
+        $pageTitle = __('locale.Disease inventory edit');
         return view('pages.inventory-mapping.create',['breadcrumbs' => $breadcrumbs], ['pageConfigs' => $pageConfigs,'pageTitle'=>$pageTitle,'formUrl'=>$formUrl,'mappingResult'=>$mappingResult,'productIds'=>$productIds,'deceaseResult'=>$deceaseResult,'inventoryResult'=>$inventoryResult]);
     }
     public function update(Request $request, $id)

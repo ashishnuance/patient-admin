@@ -41,8 +41,8 @@
               <div class="row">
               <div class="input-field col m12 s12">
                   <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="company_code" type="text" data-error=".errorTxt1" value="{{(isset($company_result->company_code)) ? $company_result->company_code : $companyCode}}" 
-                  <?php echo isset($companyCode) ? "readonly" : "" ?> >
+                  <input id="name" class="" name="company_code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($company_result->company_code)) ? $company_result->company_code : $companyCode}}" 
+                  >
                   <small class="errorTxt1"></small>
                 </div>
                 <div class="input-field col m12 s12">
@@ -115,7 +115,7 @@
                 </div>
                 <div class="input-field col m6 s12">
                   <label for="phone">{{__('locale.phone')}}*</label>
-                  <input id="phone" type="number" name="phone_no" data-error=".errorTxt3" value="{{(isset($company_result->phone_no)) ? $company_result->phone_no : old('phone_no')}}">
+                  <input id="phone" type="text" name="phone_no" data-error=".errorTxt3" value="{{(isset($company_result->phone_no)) ? $company_result->phone_no : old('phone_no')}}">
                   <small class="errorTxt3"></small>
                 </div>
                
@@ -133,14 +133,14 @@
                 </div>
                 
                 <div class="input-field col m6 s12">
-                  <label for="licensefrom">{{__('locale.licensefrom')}}*</label>
                   <input id="licensefrom" type="date" name="license_from" data-error=".errorTxt3" value="{{(isset($company_result->license_from)) ? $company_result->license_from : old('license_from')}}">
+                  <label for="licensefrom">{{__('locale.licensefrom')}}*</label>
                   <small class="errorTxt3"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
-                  <label for="licenseto">{{__('locale.licenseto')}}*</label>
                   <input id="licenseto" type="date" name="license_to" data-error=".errorTxt3" value="{{(isset($company_result->license_to)) ? $company_result->license_to : old('license_to')}}">
+                  <label for="licenseto">{{__('locale.licenseto')}}*</label>
                   <small class="errorTxt3"></small>
                 </div>
 

@@ -60,13 +60,14 @@
                     <small class="errorTxt2"></small>
                   </div>
                   <div class="col s12 m6 input-field">
-                    <input id="address" name="address" type="text" class="validate" value="{{(isset($user_result->address)) ? $user_result->address : old('address')}}" data-error=".errorTxt3" autocomplete="off">
-                    <label for="address">{{__('locale.address')}}</label>
+                    <input id="address" name="email" type="text" class="validate" value="{{(isset($user_result->email)) ? $user_result->email: old('email')}}" data-error=".errorTxt3" autocomplete="off"
+                    <?php echo isset($user_result->email) ? "readonly" : "" ?>>
+                    <label for="email">{{__('locale.email')}}</label>
                     <small class="errorTxt3"></small>
                   </div>
 
                   <div class="col s12 m6 input-field">
-                    <input id="password" name="password" type="password" class="validate" data-error=".errorTxt4" autocomplete="off">
+                    <input id="password" name="password" type="password" class="validate" data-error=".errorTxt4" autocomplete="off" >
                     <label for="password">{{__('locale.Password')}}</label>
                     <small class="errorTxt4"></small>
                   </div>   

@@ -76,7 +76,8 @@
       <div class="card-content">
         <!-- datatable start -->
           <div class="col s12 m6 l3">
-            <label for="users-list-status">{{__('locale.Search')}}</label>
+          <h6>List</h6>
+            <!-- <label for="users-list-status">{{__('locale.Search')}}</label> -->
             <div class="input-field">
               <label for="serach">{{__('locale.Search')}}</label>
               <input id="serach" type="text" name="serach" data-error=".errorTxt12">
