@@ -106,11 +106,11 @@ Route::group(['middleware' => ['auth']], function () {
         
         /** company admin **/
         Route::get('/company-admin-create', [UserController::class, 'create'])->name('company-admin-create');
-        Route::get('/company-admin-edit/{id}', [UserController::class, 'create'])->name('company-admin-edit');
+        Route::get('/company-admin-edit/{id}', [UserController::class, 'create'])->name('superadmin.company-admin-edit');
         Route::post('/company-admin-update/{id}', [UserController::class, 'update'])->name('company-admin-update');
         Route::get('/company-admin-list', [UserController::class, 'index'])->name('company-admin-list');
         Route::post('/company-admin-create', [UserController::class, 'store'])->name('company-admin-create');
-        Route::get('/company-admin-delete/{id}', [UserController::class, 'destroy'])->name('company-admin-delete');
+        Route::get('/company-admin-delete/{id}', [UserController::class, 'destroy'])->name('superadmin.company-admin-delete');
 
         Route::get('/company-user-create', [UserController::class, 'usersCreate'])->name('superadmin.company-user-create');
         Route::get('/company-user-edit/{id}', [UserController::class, 'usersCreate'])->name('superadmin.company-user-edit');
@@ -123,7 +123,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/admin-list',[UserController::class,'adminList'])->name('superadmin.admin-list');
         /** new route for patient **/
-        Route::get('/patient-list',[UserController::class,'patientList'])->name('superadmin.paitent-list');
+        Route::get('/patient-list',[UserController::class,'patientList'])->name('superadmin.patient-list');
 
         /** new route for carer **/
         Route::get('/carer-list',[UserController::class,'carerList'])->name('superadmin.carer-list');

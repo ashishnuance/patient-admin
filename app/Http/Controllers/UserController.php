@@ -37,7 +37,7 @@ class UserController extends Controller
         $paginationUrl = 'company-admin-list';
        
         
-        $deleteUrl = 'company-admin-delete';
+        $deleteUrl = 'superadmin.company-admin-delete';
         $perpage = config('app.perpage');
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.Company Admin')], ['name' => __('locale.Company Admin').__('locale.List')]];
@@ -50,7 +50,7 @@ class UserController extends Controller
         //     }
         // )->select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
         $usersResult = User::select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
-        $editUrl = 'company-admin-edit';
+        $editUrl = 'superadmin.company-admin-edit';
         if($request->ajax()){
             $usersResult = $usersResult->when($request->seach_term, function($q)use($request){
                 $q->where('id', 'like', '%'.$request->seach_term.'%')
@@ -231,7 +231,10 @@ class UserController extends Controller
 
         $user = User::where('id',$id)->update($request->all());
 
-        return redirect()->route('company-admin-list')->with('success',__('locale.company_admin_update_success'));
+        $backurl = 'superadmin.'.strtolower($request->typeselect).'-list';
+        // superadmin.paitent-list
+        // exit();
+        return redirect()->route($backurl)->with('success',__('locale.company_admin_update_success'));
     }
 
     
@@ -339,6 +342,7 @@ class UserController extends Controller
         }
         $countries = Country::get(["name", "id"]);
         $companies = Company::get(["company_name", "id","company_code"]);
+        $roles=Role::where('name','!=','superadmin')->get(["id","name"]);
         $pageTitle = __('locale.Company User'); 
         if($id!=''){
 
@@ -365,7 +369,7 @@ class UserController extends Controller
             }
         }
    
-        return view('pages.users.users-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'user_result'=>$user_result,'states'=>$states,'cities'=>$cities,'formUrl'=>$formUrl,'userType'=>$userType]);
+        return view('pages.users.users-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'user_result'=>$user_result,'states'=>$states,'cities'=>$cities,'formUrl'=>$formUrl,'userType'=>$userType,'roles'=>$roles]);
     }
 
     public function usersUpdate(Request $request, $id){
@@ -394,7 +398,7 @@ class UserController extends Controller
         unset($request['company']);
         unset($request['importcompany']);
              
-        $listUrl = 'superadmin.company-user-list';
+        $listUrl = 'company-admin-list';
         if($userType!=config('custom.superadminrole')){
             $listUrl = 'company-user-list';
         }
@@ -542,7 +546,7 @@ class UserController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $pageTitle = 'Patient list';
         if(auth()->user()->role()->first()->name=="superadmin"){
-        $paginationUrl = 'superadmin.paitent-list';
+        $paginationUrl = 'superadmin.patient-list';
         }
         
         $editUrl = 'superadmin.company-user-edit';
@@ -578,7 +582,7 @@ class UserController extends Controller
        // echo"carer list";die;
        $paginationUrl='';
         $userType = auth()->user()->role()->first()->name;
-        $deleteUrl = 'superadmin.company-user-delete';
+        $deleteUrl = 'superadmin.company-admin-delete';
         $perpage = config('app.perpage');
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.carer')], ['name' => __('locale.carer').__('locale.List')]];
@@ -588,7 +592,7 @@ class UserController extends Controller
         if(auth()->user()->role()->first()->name=="superadmin"){
         $paginationUrl = 'superadmin.carer-list';
         }
-        $editUrl = 'superadmin.company-user-edit';
+        $editUrl = 'superadmin.company-admin-edit';
 
         $carerResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Carer');
@@ -608,7 +612,7 @@ class UserController extends Controller
        //echo"manager list";die;
        $paginationUrl='';
         $userType = auth()->user()->role()->first()->name;
-        $deleteUrl = 'superadmin.company-user-delete';
+        $deleteUrl = 'superadmin.company-admin-delete';
         $perpage = config('app.perpage');
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.manager')], ['name' => __('locale.manager').__('locale.List')]];
@@ -618,7 +622,7 @@ class UserController extends Controller
         if(auth()->user()->role()->first()->name=="superadmin"){
         $paginationUrl = 'superadmin.manager-list';
         }
-        $editUrl = 'superadmin.company-user-edit';
+        $editUrl = 'superadmin.company-admin-edit';
 
         $managerResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Manager');

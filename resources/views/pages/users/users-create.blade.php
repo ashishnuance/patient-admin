@@ -42,7 +42,7 @@
 
             <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($user_result->code)) ? $user_result->code : $companyCode}}" 
+                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($user_result->code)) ? $user_result->code : ''}}" 
                   >
                   <small class="errorTxt1"></small>
             </div>
@@ -117,12 +117,13 @@
                 </div>
                 <div class="input-field col m6 s12">
                   <label for="state">{{__('locale.state')}}</label>
-                  <input id="" type="text" name="state" data-error=".errorTxt4" value="{{(isset($company_result->state) && $company_result->state!='NULL') ? $company_result->state : old('state')}}">
+                  <input id="" type="text" name="state" data-error=".errorTxt4" value="{{(isset($user_result->state) && $user_result->state!='NULL') ? $user_result->state : old('state')}}">
                   <small class="errorTxt4"></small>
                 </div>
                 <div class="input-field col m6 s12">
+                  
                   <label for="city">{{__('locale.city')}}</label>
-                  <input id="" type="text" name="city" data-error=".errorTxt4" value="{{(isset($company_result->city) && $company_result->city!='NULL') ? $company_result->city : old('city')}}">
+                  <input id="" type="text" name="city" data-error=".errorTxt4" value="{{(isset($user_result->city) && $user_result->city!='NULL') ? $user_result->city : old('city')}}">
                   <small class="errorTxt4"></small>
                 </div>
                 <!-- <div class="col m6 s12">
@@ -173,7 +174,7 @@
                 </div>
                 <div class="input-field col m6 s12">
                   <label for="password">{{__('locale.password')}}*</label>
-                  <input id="" type="text" name="password2" data-error=".errorTxt3" value="{{(isset($user_result->password2)) ? $user_result->password2 : old('password2')}}">
+                  <input id="" type="password" name="password2" data-error=".errorTxt3" value="{{(isset($user_result->password2)) ? $user_result->password2 : old('password2')}}">
                   <small class="errorTxt3"></small>
                 </div>
 
@@ -201,7 +202,7 @@
 
 
                 <div class="input-field col m12 s12">
-                    <select name="option_for_block">
+                    <select name="option_for_block" id="option_for_block">
                     <option value="">Choose {{__('locale.option')}}</option>
                     <option value="1">{{__('locale.yes')}}</option>
                     <option value="0">{{__('locale.no')}}</option>
@@ -243,6 +244,7 @@
     var state_value = "{{(isset($user_result->state) && $user_result->state!='NULL') ? $user_result->state : old('state')}}";
     var city_value = "{{(isset($user_result->city) && $user_result->city!='NULL') ? $user_result->city : old('state')}}";
     var company_value = "{{(isset($user_result->company[0]->id) && $user_result->company[0]->id!='NULL') ? $user_result->company[0]->id : old('company')}}";
+    var option_for_block = "{{(isset($user_result->option_for_block) && $user_result->option_for_block!='NULL') ? $user_result->option_for_block : old('option_for_block')}}";
     console.log(state_value);
     $('#country').val(country_value);
     $('#country').formSelect();
@@ -250,6 +252,8 @@
     $('#state').formSelect();
     $('#city').val(city_value);
     $('#city').formSelect();
+    $('#option_for_block').val(option_for_block);
+    $('#option_for_block').formSelect();
     $('#company').val(company_value);
     if(country_value_edit && country_value_edit!=''){
       $('#company').attr('disabled',true);

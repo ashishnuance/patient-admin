@@ -8,7 +8,7 @@
       <th>{{__('locale.address')}}</th>
       <th>{{__('locale.company_name')}}</th>
       <th>{{__('locale.status')}}</th>
-      <!-- <th>{{__('locale.action')}}</th> -->
+      <th>{{__('locale.action')}}</th>
     </tr>
   </thead>
   <tbody>
@@ -25,15 +25,15 @@
       {{ isset($user_value->company[0]->company_name) ? $user_value->company[0]->company_name : '' }}
       
     </td>
-    <td>{{($user_value->blocked==1) ? 'Blocked' : 'Un-blocked'}}</td>
+    <td>{{($user_value->option_for_block==1) ? 'Blocked' : 'Un-blocked'}}</td>
     
-    <!--td>
+    <td>
       @if($editUrl=='company-user-edit')
         @if(in_array('update',Helper::getUserPermissionsModule('company_user')))
-        <a href="{{route($editUrl,$user_value->id)}}"><i class="material-icons">edit</i></a>
+        <a href="{{route('company-admin-edit',$user_value->id)}}"><i class="material-icons">edit</i></a>
         @endif
       @else
-      <a href="{{route($editUrl,$user_value->id)}}"><i class="material-icons">edit</i></a>
+      <a href="{{route('company-admin-edit',$user_value->id)}}"><i class="material-icons">edit</i></a>
       @endif
       @if($deleteUrl=='company-user-delete')
         @if(in_array('delete',Helper::getUserPermissionsModule('company_user')))
@@ -42,7 +42,7 @@
       @else
         <a href="{{route($deleteUrl,$user_value->id)}}" onclick="return confirm('Are you sure you want to delete this item')"><i class="material-icons">delete</i></a>
       @endif
-    </td-->      
+</td>     
     </tr>
     @endforeach
     @else
