@@ -30,10 +30,10 @@
     <td>
       @if($editUrl=='company-user-edit')
         @if(in_array('update',Helper::getUserPermissionsModule('company_user')))
-        <a href="{{route('company-admin-edit',$user_value->id)}}"><i class="material-icons">edit</i></a>
+        <a href="{{route('superadmin.company-admin-edit',$user_value->id)}}"><i class="material-icons">edit</i></a>
         @endif
       @else
-      <a href="{{route('company-admin-edit',$user_value->id)}}"><i class="material-icons">edit</i></a>
+      <a href="{{route('superadmin.company-admin-edit',$user_value->id)}}"><i class="material-icons">edit</i></a>
       @endif
       @if($deleteUrl=='company-user-delete')
         @if(in_array('delete',Helper::getUserPermissionsModule('company_user')))

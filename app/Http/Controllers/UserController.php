@@ -549,7 +549,7 @@ class UserController extends Controller
         $paginationUrl = 'superadmin.patient-list';
         }
         
-        $editUrl = 'superadmin.company-user-edit';
+        $editUrl = 'superadmin.company-admin-edit';
         
         $patientResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Patient');
