@@ -64,6 +64,7 @@ class CompanyController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $pageTitle = __('locale.Company Add');
         $countries = Country::get(["name", "id"]);
+        
         $companyCode = Helper::setNumber();
         // $companies = Company::get(["company_name", "id","company_code"]);
         return view('pages.company.create',['breadcrumbs' => $breadcrumbs], ['pageConfigs' => $pageConfigs,'pageTitle'=>$pageTitle,'countries'=>$countries,'companyCode'=>$companyCode,'formUrl'=>$formUrl]);

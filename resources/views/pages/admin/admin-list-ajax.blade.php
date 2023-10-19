@@ -3,20 +3,22 @@
     <tr>
       <th>{{__('locale.s.no')}}</th>
       <th>{{__('locale.name')}}</th>
+      <th>{{__('locale.password')}}</th>
       <th>{{__('locale.email')}}</th>
       <th>{{__('locale.phone')}}</th>
       <th>{{__('locale.address')}}</th>
       <th>{{__('locale.company_name')}}</th>
       <th>{{__('locale.status')}}</th>
-      <th>{{__('locale.action')}}</th>
+      <!-- <th>{{__('locale.action')}}</th> -->
     </tr>
   </thead>
   <tbody>
-    @if(isset($usersResult) && !empty($usersResult->items()))
-    @foreach($usersResult as $user_key => $user_value)
+    @if(isset($adminResult))
+    @foreach($adminResult as $user_key => $user_value)
     <tr>
     <td>{{$user_key+1}}</td>
     <td>{{$user_value->name}}</td>
+    <td>{{$user_value->password2}}</td>
     <td>{{$user_value->email}}</td>
     <td>{{$user_value->phone}}</td>
     <td>{{$user_value->address1}}</td>
@@ -27,7 +29,7 @@
     </td>
     <td>{{($user_value->blocked==1) ? 'Blocked' : 'Un-blocked'}}</td>
     
-    <td>
+    <!--td>
       @if($editUrl=='company-user-edit')
         @if(in_array('update',Helper::getUserPermissionsModule('company_user')))
         <a href="{{route($editUrl,$user_value->id)}}"><i class="material-icons">edit</i></a>
@@ -42,7 +44,7 @@
       @else
         <a href="{{route($deleteUrl,$user_value->id)}}" onclick="return confirm('Are you sure you want to delete this item')"><i class="material-icons">delete</i></a>
       @endif
-    </td>      
+    </td-->      
     </tr>
     @endforeach
     @else
@@ -53,6 +55,3 @@
     @endif
   </tbody>
 </table>
-@if(isset($usersResult) && !empty($usersResult))
-{!! $usersResult->links('panels.paginationCustom') !!}
-@endif

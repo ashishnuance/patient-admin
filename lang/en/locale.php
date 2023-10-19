@@ -26,6 +26,7 @@ return [
     "disease_created_successfully"=> "Disease created successfully",
     "inventory"=>"Inventory",
     "option"=>"Option",
+    "user master list"=>'User master list',
     "inventory_created_successfully"=>"Inventory created successfully",
     "patient_schedule"=>"Patient schedule",
     "patient_name"=>"Patient name",
@@ -69,7 +70,7 @@ return [
     "master"=>"Master",
     
     
-
+    "Patient"=>"Patient",
     "Profile"=>"Profile",
     "Profile Edit"=>"Create",
     "Profile List"=>"List",
@@ -374,6 +375,11 @@ return [
     "stoby" => "Stock Out By",
     "Sdoc" => "Supplier Doc No.",
     "Ccode" => "Care Code",
+    "Manager"=>"Manager",
+    "Carer"=>"Carer",
+    "All list"=>"All list",
+    "admin"=>"Admin",
+    "password"=>"Password",
 
 
 ];

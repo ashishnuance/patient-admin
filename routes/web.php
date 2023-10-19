@@ -72,6 +72,27 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('api/fetch-cities', [CompanyController::class, 'fetchCity']);
     Route::get('image/{filename}', [DashboardController::class,'displayImage'])->name('image.displayImage');
     /** new routes start **/
+
+   // Route::get('/admin', [DashboardController::class, 'dashboardadminModern'])->name('admin.dashboard');
+    Route::prefix('admin')->middleware(['admin'])->group(function () { 
+        Route::get('/patient-list',[UserController::class,'patientList'])->name('admin.paitent-list');
+
+        /** new route for carer **/
+        Route::get('/carer-list',[UserController::class,'carerList'])->name('admin.carer-list');
+
+        /** new route for manager **/
+        Route::get('/manager-list',[UserController::class,'managerList'])->name('admin.manager-list');
+        //
+    });
+
+    Route::prefix('manager')->middleware(['manager'])->group(function () { 
+        Route::get('/patient-list',[UserController::class,'patientList'])->name('manager.paitent-list');
+
+        /** new route for carer **/
+        Route::get('/carer-list',[UserController::class,'carerList'])->name('manager.carer-list');
+
+        
+    });
     Route::prefix('superadmin')->middleware(['superadmin'])->group(function () { 
         Route::get('/', [DashboardController::class, 'dashboardSuperadminModern'])->name('superadmin.dashboard');
         Route::get('/login', [LoginController::class, 'showLoginForm']);
@@ -98,6 +119,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/company-user-create', [UserController::class, 'userStore'])->name('superadmin.company-user-create');
         Route::get('/company-user-delete/{id}', [UserController::class, 'destroyUser'])->name('superadmin.company-user-delete');
 
+
+
+        Route::get('/admin-list',[UserController::class,'adminList'])->name('superadmin.admin-list');
         /** new route for patient **/
         Route::get('/patient-list',[UserController::class,'patientList'])->name('superadmin.paitent-list');
 

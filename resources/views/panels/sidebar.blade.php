@@ -59,16 +59,17 @@
               @endif
             </li>
           
-        @elseif( Auth::check() && Auth()->user()->role()->first()->name=='company-admin' && isset($menu->for) && in_array('admin', $menu->for)) {{-- For admin --}}
+        @elseif( Auth::check() && Auth()->user()->role()->first()->name=='Admin' && isset($menu->for) && in_array('Admin', $menu->for)) {{-- For admin --}}
           <?php 
           if(isset($menu->permission_name)){
-            
-            $permission_arr = (isset($menu->permission_name)) ? Helper::getUserPermissionsModule($menu->permission_name) : [];
+            //print_r($menu->permission_name);
+           // print_r(Helper::getUserPermissionsModule($menu->permission_name));            
+          //  $permission_arr = (isset($menu->permission_name)) ? Helper::getUserPermissionsModule($menu->permission_name) : [];
             
           }
+          $permission_arr[] = $menu->name;
           if(in_array($menu->name,['Dashboard','Profile'])){
             
-            $permission_arr[] = $menu->name;
             
           }
           ?> 
@@ -89,7 +90,7 @@
                 @endif
             </li>
           @endif
-          @elseif( Auth::check() && Auth()->user()->role()->first()->name=='company-user' && isset($menu->for) && in_array('user', $menu->for)) {{-- For users --}}
+          @elseif( Auth::check() && Auth()->user()->role()->first()->name=='Manager' && isset($menu->for) && in_array('Manager', $menu->for)) {{-- For users --}}
           
               <li class="bold {{(request()->is($menu->url.'*')) ? 'active' : '' }}">
                 <a class="{{$custom_classes}} {{ (request()->is($menu->url.'*')) ? 'active '.$configData['activeMenuColor'] : ''}}"

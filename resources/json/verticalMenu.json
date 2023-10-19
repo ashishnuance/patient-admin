@@ -37,19 +37,30 @@
     {
       "for" :["superadmin"], 
       "url": "javascript:void(0)",
-      "name": "create",
-      "i18n": "create",
+      "name": "Company Admin",
+      "i18n": "Company Admin",
       "class": "collapsible-header waves-effect waves-cyan",
       "slug": "company-admin",
       "icon": "person_outline",
       
       "submenu":[
 
+        
+
         {
           
           "url": "superadmin/company-admin-list",
-          "name": "Company Admin",
-          "i18n": "Company Admin",
+          "name": "All list",
+          "i18n": "All list",
+          "slug": "Profile"
+          
+        },
+
+        {
+          
+          "url": "superadmin/admin-list",
+          "name": "admin",
+          "i18n": "Profile",
           "slug": "Profile"
           
         },
@@ -214,10 +225,61 @@
     },
     {
       "for" :["admin","user"],
-      "url": "superadmin/profile-edit",
+      "url": "admin/dashboard",
       "name": "Profile",
       "i18n": "Profile",
       "permission_name":"Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    },
+    {
+      "for" :["Admin","user"],
+      "url": "admin/patient-list",
+      "name": "Patient",
+      "i18n": "Patient",
+      "permission_name":"Dashboard",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    },
+    {
+      "for" :["Admin","user"],
+      "url": "admin/manager-list",
+      "name": "Manager",
+      "i18n": "Manager",
+      "permission_name":"Dashboard",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    },
+    {
+      "for" :["Admin","user"],
+      "url": "admin/carer-list",
+      "name": "Carer",
+      "i18n": "Carer",
+      "permission_name":"Dashboard",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    },
+    {
+      "for" :["Manager"],
+      "url": "manager/patient-list",
+      "name": "Patient",
+      "i18n": "Patient",
+      "permission_name":"Dashboard",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "person_outline"
+    },
+    
+    {
+      "for" :["Manager"],
+      "url": "manager/carer-list",
+      "name": "Carer",
+      "i18n": "Carer",
+      "permission_name":"Dashboard",
       "class": "waves-effect waves-cyan",
       "slug": "Profile",
       "icon": "person_outline"

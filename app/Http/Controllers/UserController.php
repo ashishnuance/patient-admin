@@ -14,6 +14,7 @@ use App\Exports\UsersExport;
 use App\Exports\AdminExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Permission;
+use App\Http\Middleware\Admin;
 use Helper;
 
 
@@ -21,7 +22,7 @@ class UserController extends Controller
 {
     function __construct()
     {
-        
+        $this->middleware(Admin::class);
         //  $this->middleware('permission:company-user-create|company-user-list|company-user-edit|company-user-delete', ['only' => ['index','show']]);
         //  $this->middleware('permission:company-user-create', ['only' => ['create','store']]);
         //  $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
@@ -30,9 +31,12 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        //echo"index";die;
+        // echo"index";die;
         $userType = auth()->user()->role()->first()->name;
-        $listUrl = 'company-admin-list';
+       
+        $paginationUrl = 'company-admin-list';
+       
+        
         $deleteUrl = 'company-admin-delete';
         $perpage = config('app.perpage');
         $breadcrumbs = [
@@ -65,7 +69,7 @@ class UserController extends Controller
 
         $usersResult = $usersResult->paginate($perpage);
         
-        return view('pages.users.users-list', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'usersResult'=>$usersResult,'pageTitle'=>$pageTitle,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl]);
+        return view('pages.users.users-list', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'usersResult'=>$usersResult,'pageTitle'=>$pageTitle,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl,'paginationUrl'=>$paginationUrl]);
     }
 
 
@@ -107,10 +111,11 @@ class UserController extends Controller
     
     public function store(Request $request){
         
+        
         //echo '<pre>';print_r($request->all()); exit();
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
+            'password2'=>'required|max:250',
             'email' => 'required|unique:users|max:250',
             'code'=>'required|unique:users',
             'phone' => 'required|max:10',
@@ -124,7 +129,8 @@ class UserController extends Controller
         }
 
         $role = Role::where('name','=',$request['typeselect'])->first();
-        $random_password = Str::random(6);
+        // $random_password = Str::random(6);
+        $random_password ='123456';
         $request['password'] = Hash::make($random_password);
         $user = User::create($request->all());
         
@@ -167,7 +173,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
             'email' => 'required|max:250',
-            'code'=>'required|unique:users',
+           // 'code'=>'required|unique:users',
             'phone' => 'required|max:10',
             'address' => 'max:250',
             
@@ -525,7 +531,8 @@ class UserController extends Controller
     public function patientList(Request $request)
     {
         //echo"patient list";
-
+        //$paginationUrl = 'company-admin-list';
+        $paginationUrl='';
         $userType = auth()->user()->role()->first()->name;
         $deleteUrl = 'superadmin.company-user-delete';
         $perpage = config('app.perpage');
@@ -534,7 +541,10 @@ class UserController extends Controller
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
         $pageTitle = 'Patient list';
+        if(auth()->user()->role()->first()->name=="superadmin"){
         $paginationUrl = 'superadmin.paitent-list';
+        }
+        
         $editUrl = 'superadmin.company-user-edit';
         
         $patientResult=User::with('company')->whereHas('role',function($role_q){
@@ -566,7 +576,7 @@ class UserController extends Controller
     public function carerList()
     {
        // echo"carer list";die;
-
+       $paginationUrl='';
         $userType = auth()->user()->role()->first()->name;
         $deleteUrl = 'superadmin.company-user-delete';
         $perpage = config('app.perpage');
@@ -575,13 +585,15 @@ class UserController extends Controller
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
         $pageTitle = 'Carer list';
-        $paginationUrl = 'superadmin.company-user-list';
+        if(auth()->user()->role()->first()->name=="superadmin"){
+        $paginationUrl = 'superadmin.carer-list';
+        }
         $editUrl = 'superadmin.company-user-edit';
 
         $carerResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Carer');
         })->select(['name','email','phone','address1','image','website_url','id','blocked'])->orderBy('id','DESC')->get();
-
+        
        // echo"<pre>";print_r($patientResult);die;
         // echo $patientResult=User::with('company')->whereHas('role',function($role_q){
         //     $role_q->where('name','Patient');
@@ -594,7 +606,7 @@ class UserController extends Controller
     public function managerList()
     {
        //echo"manager list";die;
-
+       $paginationUrl='';
         $userType = auth()->user()->role()->first()->name;
         $deleteUrl = 'superadmin.company-user-delete';
         $perpage = config('app.perpage');
@@ -603,7 +615,9 @@ class UserController extends Controller
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
         $pageTitle = 'Manager list';
-        $paginationUrl = 'superadmin.company-user-list';
+        if(auth()->user()->role()->first()->name=="superadmin"){
+        $paginationUrl = 'superadmin.manager-list';
+        }
         $editUrl = 'superadmin.company-user-edit';
 
         $managerResult=User::with('company')->whereHas('role',function($role_q){
@@ -617,6 +631,36 @@ class UserController extends Controller
         // die;
 
         return view('pages.manager.manager-list', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'managerResult'=>$managerResult,'pageTitle'=>$pageTitle,'paginationUrl'=>$paginationUrl,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl]);
+    }
+
+    public function adminList()
+    {
+       //echo"admin list";die;
+       $paginationUrl='';
+        $userType = auth()->user()->role()->first()->name;
+        $deleteUrl = 'superadmin.company-user-delete';
+        $perpage = config('app.perpage');
+        $breadcrumbs = [
+            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.admin')], ['name' => __('locale.admin').__('locale.List')]];
+        //Pageheader set true for breadcrumbs
+        $pageConfigs = ['pageHeader' => true];
+        $pageTitle = 'Admin list';
+        if(auth()->user()->role()->first()->name=="superadmin"){
+        $paginationUrl = 'superadmin.admin-list';
+        }
+        $editUrl = 'superadmin.company-user-edit';
+
+        $adminResult=User::with('company')->whereHas('role',function($role_q){
+            $role_q->where('name','Admin');
+        })->select(['name','password2','email','phone','address1','image','website_url','id','blocked'])->orderBy('id','DESC')->get();
+
+       // echo"<pre>";print_r($patientResult);die;
+        // echo $patientResult=User::with('company')->whereHas('role',function($role_q){
+        //     $role_q->where('name','Patient');
+        // })->select(['name','email','phone','address','image','website_url','id','blocked'])->toSql();
+        // die;
+
+        return view('pages.admin.admin-list', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'adminResult'=>$adminResult,'pageTitle'=>$pageTitle,'paginationUrl'=>$paginationUrl,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl]);
     }
 
 }

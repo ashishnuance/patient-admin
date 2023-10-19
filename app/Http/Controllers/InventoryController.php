@@ -95,7 +95,7 @@ class InventoryController extends Controller
        // echo '<pre>';print_r($request->all()); exit();
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:250',
+            'name' => 'required|unique:inventory|max:250',
             'type' => 'max:250',
             'code'=>'unique:inventory',
             

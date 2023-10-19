@@ -96,7 +96,7 @@ class DeceaseController extends Controller
         //echo '<pre>';print_r($request->all()); exit();
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:250',
+            'name' => 'required|unique:disease|max:250',
             'symptoms' => 'max:250',
             'code'=>'required|unique:disease',
             

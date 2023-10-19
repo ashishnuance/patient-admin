@@ -79,7 +79,17 @@
                     <small class="errorTxt6"></small>
                   </div>
                 </div>
-                <div class="col m6 s12">
+                <div class="input-field col m6 s12">
+                  <label for="state">{{__('locale.state')}}</label>
+                  <input id="" type="text" name="state" data-error=".errorTxt4" value="{{(isset($company_result->state) && $company_result->state!='NULL') ? $company_result->state : old('state')}}">
+                  <small class="errorTxt4"></small>
+                </div>
+                <div class="input-field col m6 s12">
+                  <label for="city">{{__('locale.city')}}</label>
+                  <input id="" type="text" name="city" data-error=".errorTxt4" value="{{(isset($company_result->city) && $company_result->city!='NULL') ? $company_result->city : old('city')}}">
+                  <small class="errorTxt4"></small>
+                </div>
+                <!-- <div class="col m6 s12">
                   <label for="state">{{__('locale.state')}} *</label>
                   <div class="input-field">
                     <select class="error" id="state" name="state" data-error=".errorTxt7">
@@ -92,8 +102,8 @@
                     </select>
                     <small class="errorTxt7"></small>
                   </div>
-                </div>
-                <div class="col m6 s12">
+                </div> -->
+                <!-- <div class="col m6 s12">
                   <label for="city">{{__('locale.city')}} *</label>
                   <div class="input-field">
                     <select class="error" id="city" name="city" data-error=".errorTxt8">
@@ -106,7 +116,7 @@
                     </select>
                     <small class="errorTxt8"></small>
                   </div>
-                </div>
+                </div> -->
                 
                 <div class="input-field col m6 s12">
                   <label for="Zip Code">{{__('locale.ZipCode')}}</label>
@@ -148,8 +158,10 @@
 
 
                 <div class="input-field col m12 s12">
-                    <select name="Option">
-                    <option value="1" disabled selected>{{__('locale.yes')}}</option>
+                
+                  <select name="option_for_block">
+                    <option value="">Choose {{__('locale.option')}}</option>
+                    <option value="1">{{__('locale.yes')}}</option>
                     <option value="0">{{__('locale.no')}}</option>
                     </select>
                     <label>{{__('locale.block')}}</label>

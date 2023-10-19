@@ -18,6 +18,9 @@ class DashboardController extends Controller
         if(Auth::user()->role()->first()->id==1){
             return redirect('/superadmin');
         };
+        // if(Auth::user()->role()->first()->id==2){
+        //     return redirect('/admin');
+        // };
         return view('/pages/dashboard-modern');
     }
     public function dashboardSuperadminModern()
@@ -82,4 +85,6 @@ class DashboardController extends Controller
         $data['subcategory'] = ProductSubCategory::where("procat_id",$request->category_id)->get(["subcat_name", "id","procat_id"]);
         return response()->json($data);
     }
+
+   
 }
