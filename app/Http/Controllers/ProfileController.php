@@ -28,6 +28,7 @@ class ProfileController extends Controller
     public function edit($id='')
     {
         $userType = auth()->user()->role()->first()->name;
+       // echo $userType;die;
 
          $login_id = auth()->user()->id;
 
@@ -35,6 +36,10 @@ class ProfileController extends Controller
             ['link' => "modern", 'name' => "Home"], ['link' => "profile", 'name' => __('locale.Profile')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
 
             $formUrl = 'superadmin.profile-edit';
+            if($userType=="Admin")
+            {
+                $formUrl = 'admin.profile-edit'; 
+            }
 
             if($userType!=config('custom.superadminrole')){
                 $formUrl = 'profile-edit';
@@ -52,6 +57,10 @@ class ProfileController extends Controller
             
             if($userType!=config('custom.superadminrole')){
                 $formUrl = 'profile-update';
+            }
+            if($userType=="Admin")
+            {
+                $formUrl = 'admin.profile-update'; 
             }
             
             $user_result = User::find($login_id);
@@ -89,6 +98,9 @@ class ProfileController extends Controller
 
         if($userType!=config('custom.superadminrole')){
             $listUrl = 'profile-edit';
+        }
+        if($userType=="Admin"){
+            $listUrl = 'admin.profile-edit';
         }
 
         if(isset($request['password']) && $request['password']!=''){

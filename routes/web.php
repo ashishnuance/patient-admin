@@ -80,16 +80,22 @@ Route::group(['middleware' => ['auth']], function () {
         /** new route for carer **/
         Route::get('/carer-list',[UserController::class,'carerList'])->name('admin.carer-list');
 
-        /** new route for manager **/
+        /** new route for manager added by admin **/
         Route::get('/manager-list',[UserController::class,'managerList'])->name('admin.manager-list');
-        //
+        Route::get('/admin-manager-create', [UserController::class, 'createManager'])->name('admin-manager-create');
+        Route::post('/admin-manager-create', [UserController::class, 'storeManager'])->name('admin-manager-create');
+        Route::get('/admin-manager-edit/{id}', [UserController::class, 'createManager'])->name('admin-manager-edit');
+        Route::post('/admin-manager-update/{id}', [UserController::class, 'updateManager'])->name('admin-manager-update');
+        Route::get('/admin-manager-delete/{id}', [UserController::class, 'destroyManager'])->name('admin-manager-delete');
+        Route::get('/profile-edit', [ProfileController::class, 'edit'])->name('admin.profile-edit');
+        Route::match(['post', 'patch'], '/profile-update/{id}', [ProfileController::class, 'update'])->name('admin.profile-update');
     });
 
     Route::prefix('manager')->middleware(['manager'])->group(function () { 
         Route::get('/patient-list',[UserController::class,'patientList'])->name('manager.paitent-list');
 
         /** new route for carer **/
-        Route::get('/carer-list',[UserController::class,'carerList'])->name('manager.carer-list');
+       // Route::get('/carer-list',[UserController::class,'carerList'])->name('manager.carer-list');
 
         
     });

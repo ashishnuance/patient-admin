@@ -53,3 +53,6 @@
     @endif
   </tbody>
 </table>
+@if(isset($patientResult) && !empty($patientResult))
+{!! $patientResult->links('panels.paginationCustom') !!}
+@endif

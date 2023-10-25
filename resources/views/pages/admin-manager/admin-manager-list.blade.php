@@ -44,7 +44,7 @@
                 <i class="material-icons right"></i>
             </a> -->
         <div class="responsive-table table-result">
-          @include('pages.manager.manager-list-ajax')
+          @include('pages.admin-manager.admin-manager-list-ajax')
           
         </div>
         <input type="hidden" name="hidden_page" id="hidden_page" value="{{(isset($currentPage) && $currentPage>0) ? $currentPage : 1}}" />

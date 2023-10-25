@@ -19,6 +19,7 @@
           </a>
         </li> --}}
         <li>
+          
           <a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);"
             data-target="profile-dropdown">
             <span class="avatar-status avatar-online">
@@ -47,7 +48,7 @@
       <!-- profile-dropdown-->
       <ul class="dropdown-content" id="profile-dropdown">
         <li>
-          <a class="grey-text text-darken-1" href="{{(Helper::authRole() && Helper::authRole()=='superadmin') ? route('superadmin.profile-edit') : route('profile-edit')}}">
+          <a class="grey-text text-darken-1" href="{{(Helper::authRole() && Helper::authRole()=='superadmin') ? route('superadmin.profile-edit') : route('admin.profile-edit')}}">
             <i class="material-icons">person_outline</i>
             Profile
           </a>

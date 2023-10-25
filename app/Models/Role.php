@@ -15,4 +15,8 @@ class Role extends Model
         return $this->belongsToMany(User::class,'users_roles');
             
     }
+    public function company()
+    {
+    return $this->belongsToMany(Company::class, 'company_user_mappings', 'user_id', 'company_id');//company data we will get by this
+    }
 }

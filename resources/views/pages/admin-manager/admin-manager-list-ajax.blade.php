@@ -8,14 +8,13 @@
       <th>{{__('locale.address')}}</th>
       <th>{{__('locale.company_name')}}</th>
       <th>{{__('locale.status')}}</th>
-      <th>{{__('locale.action')}}</th>
+      <!-- <th>{{__('locale.action')}}</th> -->
     </tr>
   </thead>
   <tbody>
     @if(isset($managerResult))
     @foreach($managerResult as $user_key => $user_value)
     <tr>
-    
     <td>{{$user_key+1}}</td>
     <td>{{$user_value->name}}</td>
     <td>{{$user_value->email}}</td>
@@ -54,6 +53,3 @@
     @endif
   </tbody>
 </table>
-@if(isset($managerResult) && !empty($managerResult))
-{!! $managerResult->links('panels.paginationCustom') !!}
-@endif

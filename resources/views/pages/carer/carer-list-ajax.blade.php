@@ -8,7 +8,7 @@
       <th>{{__('locale.address')}}</th>
       <th>{{__('locale.company_name')}}</th>
       <th>{{__('locale.status')}}</th>
-      <!-- <th>{{__('locale.action')}}</th> -->
+      <th>{{__('locale.action')}}</th>
     </tr>
   </thead>
   <tbody>
@@ -53,3 +53,7 @@
     @endif
   </tbody>
 </table>
+@if(isset($carerResult) && !empty($carerResult))
+{!! $carerResult->links('panels.paginationCustom') !!}
+@endif
+
