@@ -34,8 +34,7 @@ class CompanyController extends Controller
 
         if($request->ajax()){
             $companyResult = $companyResult->when($request->seach_term, function($q)use($request){
-                            $q->where('id', 'like', '%'.$request->seach_term.'%')
-                            ->orWhere('company_name', 'like', '%'.$request->seach_term.'%')
+                            $q->Where('company_name', 'like', '%'.$request->seach_term.'%')
                             ->orWhere('company_code', 'like', '%'.$request->seach_term.'%');
                         })->paginate($perpage);
             return view('pages.company.company-table-list', compact('companyResult'))->render();

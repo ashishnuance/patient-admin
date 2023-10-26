@@ -55,3 +55,6 @@
     @endif
   </tbody>
 </table>
+@if(isset($adminResult) && !empty($adminResult))
+{!! $adminResult->links('panels.paginationCustom') !!}
+@endif

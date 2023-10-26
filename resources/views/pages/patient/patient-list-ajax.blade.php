@@ -38,13 +38,7 @@
       <a href="{{route($editUrl,$user_value->id)}}"><i class="material-icons">edit</i></a>
       @endif
     </td>      
-      <!-- @if($deleteUrl=='company-user-delete')
-        @if(in_array('delete',Helper::getUserPermissionsModule('company_user')))
-        <a href="{{route($deleteUrl,$user_value->id)}}" onclick="return confirm('Are you sure you want to delete this item')"><i class="material-icons">delete</i></a>
-        @endif
-      @else
-        <a href="{{route($deleteUrl,$user_value->id)}}" onclick="return confirm('Are you sure you want to delete this item')"><i class="material-icons">delete</i></a>
-      @endif -->
+      
     </tr>
     @endforeach
     @else

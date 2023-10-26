@@ -135,7 +135,7 @@
         }
         
         $.ajax({ 
-            url:"/superadmin/company?page="+page+"&status="+status+"&seach_term="+seach_term,
+            url:"{{route('company.index')}}?page="+page+"&status="+status+"&seach_term="+seach_term,
             success:function(data){
               console.log(data);
                 $('.table-result').html('');

@@ -618,8 +618,8 @@ class UserController extends Controller
             //                      ->orWhere('name', 'like', '%'.$request->seach_term.'%');
                                 
             //      })->toSql();
-                $carerResult = $carerResult->where('id', 'like', '%'.$request->seach_term.'%')
-                ->orWhere('name', 'like', '%'.$request->seach_term.'%')->paginate($perpage);
+                $carerResult = $carerResult->when($request->seach_term, function($q)use($request){$q->where('id', 'like', '%'.$request->seach_term.'%')
+                ->orWhere('name', 'like', '%'.$request->seach_term.'%');})->paginate($perpage);
                 //  print_r($carerResult);
                 //  die;
                         
@@ -665,17 +665,14 @@ class UserController extends Controller
 
         $managerResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Manager');
-        })->select(['name','email','phone','address1','image','website_url','id','blocked','option_for_block'])->orderBy('id','DESC')->get();
+        })->select(['name','email','phone','address1','image','website_url','id','blocked','option_for_block'])->orderBy('id','DESC');
 
         if (auth()->user()->role()->first()->name == "Admin") {
             $userTypeid =auth()->user()->company()->first()->id; // Assuming 'company_id' is the field on the User model
         
             $managerResult = User::with('company')->whereHas('company', function ($company_q) {
                             $company_q->where('id', '=',auth()->user()->company()->first()->id)->where('typeselect','=','Manager');
-                        })
-                
-                ->select(['name', 'email', 'phone', 'address1', 'image', 'website_url', 'id', 'blocked','option_for_block'])
-                ->orderBy('id', 'DESC');
+                        })->select(['name', 'email', 'phone', 'address1', 'image', 'website_url', 'id', 'blocked','option_for_block'])->orderBy('id', 'DESC');
         
             // Rest of your code...
         }
@@ -891,7 +888,7 @@ class UserController extends Controller
 
 
 
-    public function adminList()
+    public function adminList(Request $request)
     {
        //echo"admin list";die;
        $paginationUrl='';
@@ -910,7 +907,22 @@ class UserController extends Controller
 
         $adminResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Admin');
-        })->select(['name','password2','email','phone','address1','image','website_url','id','blocked'])->orderBy('id','DESC')->get();
+        })->select(['name','password2','email','phone','address1','image','website_url','id','blocked'])->orderBy('id','desc');
+
+        //echo"<pre>";print_r($adminResult);die;
+        
+        if($request->ajax()){
+           //print_r($request->seach_term);
+           
+            $adminResult = $adminResult->when($request->seach_term, function($q)use($request){$q->where('id', 'like', '%'.$request->seach_term.'%')
+                            ->orWhere('name', 'like', '%'.$request->seach_term.'%');
+                            
+            })->paginate($perpage);//search in laravel through relationship
+            //print_r($adminResult);die;     
+            return view('pages.admin.admin-list-ajax', compact('adminResult','editUrl','deleteUrl'))->render();
+        }
+
+        $adminResult = $adminResult->paginate($perpage);//pagination only
 
        // echo"<pre>";print_r($patientResult);die;
         // echo $patientResult=User::with('company')->whereHas('role',function($role_q){
