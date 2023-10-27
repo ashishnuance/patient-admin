@@ -50,16 +50,16 @@
                   <label for="name">{{__('locale.date')}}</label>
                   <small class="errorTxt1"></small>
                 </div>
-
+                
                 <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.suppliercode')}}</label>
-                  <input id="name" class="validate" name="supplier_code" type="text" data-error=".errorTxt1" value="{{(isset($stockin_result->supplier_code)) ? $stockin_result->supplier_code : old('supplier_code')}}">
+                  <input id="name" class="validate" name="supplier_code" type="text" data-error=".errorTxt1" value="{{(isset($stockin_result->supplier_code)) ? $stockin_result->supplier_code : old('supplier_code')}}" style="margin-top:16px;">
                   <small class="errorTxt1"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
-                <label for="disease">{{__('locale.Select inventory name')}}</label>
-                <div class="input-field">
+                  <label for="disease">{{__('locale.Select inventory name')}}*</label>
+                  <div class="input-field">
                   <!-- <input id="name" class="validate" name="inventory_code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}"> -->
                   <select name="inventory_code" id="inventory" required>
                   <option value="Select" disabled selected>{{__('locale.Select inventory name')}}</option>

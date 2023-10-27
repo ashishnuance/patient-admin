@@ -8,6 +8,7 @@
       <th>{{__('locale.address')}}</th>
       <th>{{__('locale.company_name')}}</th>
       <th>{{__('locale.status')}}</th>
+      <th>{{__('locale.type')}}</th>
       <th>{{__('locale.action')}}</th>
     </tr>
   </thead>
@@ -26,7 +27,7 @@
       
     </td>
     <td>{{($user_value->blocked==1) ? 'Blocked' : 'Un-blocked'}}</td>
-    
+    <td>{{$user_value->typeselect}}</td>
     <td>
       @if($editUrl=='company-user-edit')
         @if(in_array('update',Helper::getUserPermissionsModule('company_user')))

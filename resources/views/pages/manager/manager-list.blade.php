@@ -34,7 +34,12 @@
           </div>
           <div class="col s12 m6 l6 add-btn" style="text-align:end;margin-left:232px;">
                   <div class="btn">
-                    <a href="{{route('admin-manager-create')}}">
+                  @if(auth()->user()->role()->first()->name=='superadmin')
+                    <a href="{{route('company-admin-create')}}">
+                    @endif
+                    @if(auth()->user()->role()->first()->name=='Admin')
+                    <a href="{{route('admin-patient-create')}}">
+                    @endif
                     <i class="material-icons">add</i>
                     <span>Add New</span>
                     </a>

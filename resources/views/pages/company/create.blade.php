@@ -40,35 +40,35 @@
             @csrf()
               <div class="row">
               <div class="input-field col m12 s12">
-                  <label for="name">{{__('locale.code')}}</label>
+                  <label for="name">{{__('locale.code')}}*</label>
                   <input id="name" class="" name="company_code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($company_result->company_code)) ? $company_result->company_code : $companyCode}}" 
                   >
                   <small class="errorTxt1"></small>
                 </div>
                 <div class="input-field col m12 s12">
-                  <label for="name">{{__('locale.name')}}</label>
+                  <label for="name">{{__('locale.name')}}*</label>
                   <input id="name" class="validate" name="company_name" type="text" data-error=".errorTxt1" value="{{(isset($company_result->company_name)) ? $company_result->company_name : old('company_name')}}">
                   <small class="errorTxt1"></small>
                 </div>
                 <div class="input-field col m4 s12">
-                  <label for="address1">{{__('locale.address1')}}</label>
+                  <label for="address1">{{__('locale.address1')}}*</label>
                   <input id="address1" type="text" name="address1" data-error=".errorTxt3" value="{{(isset($company_result->address1)) ? $company_result->address1 : old('address1')}}">
                   <small class="errorTxt3"></small>
                 </div>
                 <div class="input-field col m4 s12">
-                  <label for="address2">{{__('locale.address2')}}</label>
-                  <input id="address2" type="text" name="address2" data-error=".errorTxt4" value="{{(isset($company_result->address2) && $company_result->address2!='NULL') ? $company_result->address2 : old('address2')}}">
-                  <small class="errorTxt4"></small>
+                  <label for="address2">{{__('locale.address2')}}*</label>
+                  <input id="address2" type="text" class="error" name="address2" data-error=".errorTxt3" value="{{(isset($company_result->address2) && $company_result->address2!='NULL') ? $company_result->address2 : old('address2')}}">
+                  <small class="errorTxt3"></small>
                 </div>
                 <div class="input-field col m4 s12">
-                  <label for="address3">{{__('locale.address3')}}</label>
-                  <input id="address3" type="text" name="address3" data-error=".errorTxt4" value="{{(isset($company_result->address3) && $company_result->address3!='NULL') ? $company_result->address3 : old('address3')}}">
-                  <small class="errorTxt4"></small>
+                  <label for="address3">{{__('locale.address3')}}*</label>
+                  <input id="address3" type="text" name="address3" data-error=".errorTxt3" value="{{(isset($company_result->address3) && $company_result->address3!='NULL') ? $company_result->address3 : old('address3')}}">
+                  <small class="errorTxt3"></small>
                 </div>
                 <div class="col m12 s12">
                   <label for="country">{{__('locale.country')}} *</label>
                   <div class="input-field">
-                    <select class="error" id="country" name="country" data-error=".errorTxt6">
+                    <select class="error" id="country" name="country" data-error=".errorTxt3">
                       <option value="">Choose {{__('locale.country')}}</option>
                       @if(isset($countries) && !empty($countries))
                         @foreach ($countries as $country_value)
@@ -76,18 +76,18 @@
                         @endforeach
                       @endif
                     </select>
-                    <small class="errorTxt6"></small>
+                    <small class="errorTxt3"></small>
                   </div>
                 </div>
                 <div class="input-field col m6 s12">
-                  <label for="state">{{__('locale.state')}}</label>
+                  <label for="state">{{__('locale.state')}}*</label>
                   <input id="" type="text" name="state" data-error=".errorTxt4" value="{{(isset($company_result->state) && $company_result->state!='NULL') ? $company_result->state : old('state')}}">
-                  <small class="errorTxt4"></small>
+                  <small class="errorTxt3"></small>
                 </div>
                 <div class="input-field col m6 s12">
-                  <label for="city">{{__('locale.city')}}</label>
+                  <label for="city">{{__('locale.city')}}*</label>
                   <input id="" type="text" name="city" data-error=".errorTxt4" value="{{(isset($company_result->city) && $company_result->city!='NULL') ? $company_result->city : old('city')}}">
-                  <small class="errorTxt4"></small>
+                  <small class="errorTxt3"></small>
                 </div>
                 <!-- <div class="col m6 s12">
                   <label for="state">{{__('locale.state')}} *</label>
@@ -119,13 +119,13 @@
                 </div> -->
                 
                 <div class="input-field col m6 s12">
-                  <label for="Zip Code">{{__('locale.ZipCode')}}</label>
+                  <label for="Zip Code">{{__('locale.ZipCode')}}*</label>
                   <input id="zipcode" type="text" name="pincode" data-error=".errorTxt2" value="{{(isset($company_result->pincode)) ? $company_result->pincode : old('pincode')}}">
                   <small class="errorTxt2"></small>
                 </div>
                 <div class="input-field col m6 s12">
                   <label for="phone">{{__('locale.phone')}}*</label>
-                  <input id="phone" type="text" name="phone_no" data-error=".errorTxt3" value="{{(isset($company_result->phone_no)) ? $company_result->phone_no : old('phone_no')}}">
+                  <input id="phone" type="text" class="mobile-valid" name="phone_no" minlength="0" maxlength="10" data-error=".errorTxt3" value="{{(isset($company_result->phone_no)) ? $company_result->phone_no : old('phone_no')}}">
                   <small class="errorTxt3"></small>
                 </div>
                
@@ -252,7 +252,35 @@
                 }
             });
         });
-    });
+
+
+$('.mobile-valid').on('keypress', function(e) {
+
+var $this = $(this);
+var regex = new RegExp("^[0-9\b]+$");
+var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+// for 10 digit number only
+if ($this.val().length > 9) {
+    e.preventDefault();
+    return false;
+}
+if (e.charCode < 54 && e.charCode > 47) {
+    if ($this.val().length == 0) {
+        e.preventDefault();
+        return false;
+    } else {
+        return true;
+    }
+
+}
+if (regex.test(str)) {
+    return true;
+}
+e.preventDefault();
+return false;
+});
+
+});
 </script>
 @endsection
 

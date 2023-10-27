@@ -4,9 +4,9 @@
     <th data-field="company_code">{{__('locale.code')}}</th>
     <th data-field="company_name">{{__('locale.name')}}</th>
     <th data-field="address1">{{__('locale.address')}}</th>
-    <th data-field="city">{{__('locale.city')}}</th>
-    <th data-field="state">{{__('locale.state')}}</th>
     <th data-field="country">{{__('locale.country')}}</th>
+    <th data-field="state">{{__('locale.state')}}</th>
+    <th data-field="city">{{__('locale.city')}}</th>
     <!-- <th data-field="contact_person">{{__('locale.contact_person')}}</th> -->
     <th data-field="licence_valid_till">{{__('locale.licence_valid_till')}}</th>
     <th data-field="blocked">{{__('locale.blocked')}} Status</th>
@@ -21,9 +21,9 @@
         <td>{{$company_value->company_code}}</td>
         <td>{{$company_value->company_name}}</td>
         <td>{{$company_value->address1}}</td>
-        <td>{{(isset($company_value->cityname->name)) ? $company_value->cityname->name : ''}}</td>
-        <td>{{(isset($company_value->statename->name)) ? $company_value->statename->name : ''}}</td>
         <td>{{(isset($company_value->countryname->name)) ? $company_value->countryname->name : ''}}</td>
+        <td>{{(isset($company_value->statename->name)) ? $company_value->statename->name : $company_value->state}}</td>
+        <td>{{(isset($company_value->cityname->name)) ? $company_value->cityname->name : $company_value->city}}</td>
         <!-- <td>{{$company_value->contact_person}}</td> -->
         <td>{{$company_value->license_to}}</td>
         <td>{{($company_value->blocked==1) ? 'Blocked' : 'Un-blocked'}}</td>

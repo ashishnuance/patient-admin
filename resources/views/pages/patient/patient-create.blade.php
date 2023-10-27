@@ -8,6 +8,12 @@
 @section('vendor-style')
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2-materialize.css')}}">
+<!-- Add these in the head section of your HTML file -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 @endsection
 
 {{-- page style --}}
@@ -57,7 +63,7 @@
             </div> 
             </div>
                 <div class="input-field col m6 s12">
-                  <input id="name" class="validate" name="date" type="date" data-error=".errorTxt1" value="{{(isset($patient_schedule_result->date)) ? $patient_schedule_result->date : old('date')}}">
+                  <input id="datepicker" class="validate datepicker" name="date" type="text"  data-error=".errorTxt1" value="{{(isset($patient_schedule_result->date)) ? $patient_schedule_result->date : old('date')}}">
                   <label for="name">{{__('locale.date')}}</label>
                   <small class="errorTxt1"></small>
                 </div>
@@ -158,6 +164,10 @@
 @section('page-script')
 <script src="{{asset('js/scripts/page-users.js')}}"></script>
 <script src="{{asset('js/scripts/form-validation.js')}}"></script>
+<!-- Add these in the head section of your HTML file -->
+
+
+<!-- <script src="{{asset('js/scripts/form-elements.js')}}"></script> -->
 <script>
   window.onload=function(){
     var patient_value = "{{(isset($patient_schedule_result->patient_id) && $patient_schedule_result->patient_id!='NULL') ? $patient_schedule_result->patient_id : old('patient_id')}}";
@@ -183,6 +193,15 @@
     
   }
     $(document).ready(function () {
+
+
+      $("#datepicker").datepicker({
+      dateFormat: "YYYY-MM-DD", // Format the date as needed (e.g., YYYY-MM-DD).
+      changeYear: true, // Enable year dropdown selection.
+      changeMonth: true, // Enable month dropdown selection.
+      // You can add more options as needed.
+    });
+      
       
 
         $('#country').on('change', function () {
@@ -229,6 +248,10 @@
                 }
             });
         });
+
+       
+    
+  
     });
 </script>
 @endsection

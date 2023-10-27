@@ -40,15 +40,15 @@
             @csrf()
             <div class="row">
 
-            <div class="col m6 s12">
+            <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($user_result->code)) ? $user_result->code : $companyCode}}" 
+                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($user_result->code)) ? $user_result->code : ''}}" 
                   >
                   <small class="errorTxt1"></small>
             </div>
             <div class="col m6 s12">
                   <label for="type">{{__('locale.select type')}} *</label>
-                  <div class="">
+                  <div class="input-field">
                   <select name="typeselect" id="myselect">
                       <?php 
                       foreach ($roles as $role) {
@@ -67,7 +67,6 @@
             @if(isset($userType) && $userType!=config('custom.superadminrole'))
                   <input type="hidden" name="company" value="{{Helper::loginUserCompanyId()}}"/>
                   @else
-                  
                   <div class="col s12 input-field">
                     <select class="error" id="company" name="company" data-error=".errorTxt7" required>
                       <option value="">Choose {{__('locale.code')}}</option>
@@ -77,13 +76,13 @@
                         @endforeach
                       @endif
                     </select>
-                    <label for="company">{{__('locale.Care home code')}}*</label>
+                    <label for="company">{{__('locale.Care home code')}}</label>
                     <small class="errorTxt7"></small>
                   </div>
             @endif
            
                 <div class="input-field col m12 s12">
-                  <label for="name">{{__('locale.name')}}*</label>
+                  <label for="name">{{__('locale.name')}}</label>
                   <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($user_result->name)) ? $user_result->name : old('name')}}">
                   <small class="errorTxt1"></small>
                 </div>

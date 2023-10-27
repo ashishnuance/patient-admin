@@ -380,6 +380,8 @@ return [
     "All list"=>"All list",
     "admin"=>"Admin",
     "password"=>"Password",
+    "patient_create_success"=>"Patient created",
+    "patient_update_success"=>"Patient updated successfully",
 
 
 ];

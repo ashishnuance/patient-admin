@@ -65,7 +65,7 @@
             @endif -->
            
                 <div class="input-field col m12 s12">
-                  <label for="name">{{__('locale.name')}}</label>
+                  <label for="name">{{__('locale.name')}}*</label>
                   <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($deceaseResult->name)) ? $deceaseResult->name : old('name')}}">
                   <small class="errorTxt1"></small>
                 </div>

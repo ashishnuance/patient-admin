@@ -49,7 +49,7 @@ class UserController extends Controller
         //         $q->where('name', 'company-admin');
         //     }
         // )->select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
-        $usersResult = User::select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
+        $usersResult = User::select(['id','name','email','phone','address1','image','website_url','blocked','typeselect'])->orderBy('id','DESC');
         $editUrl = 'superadmin.company-admin-edit';
         if($request->ajax()){
             $usersResult = $usersResult->when($request->seach_term, function($q)use($request){
@@ -132,6 +132,9 @@ class UserController extends Controller
         // $random_password = Str::random(6);
         $random_password ='123456';
         $request['password'] = Hash::make($random_password);
+        
+// Insert $date into the database
+
         $user = User::create($request->all());
         
         $id = $user->id;
@@ -539,6 +542,10 @@ class UserController extends Controller
         $paginationUrl='';
         $userType = auth()->user()->role()->first()->name;
         $deleteUrl = 'superadmin.company-user-delete';
+        if(auth()->user()->role()->first()->name=="Admin"){
+            $deleteUrl = 'admin-patient-delete';
+        }
+        
         $perpage = config('app.perpage');
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.patient')], ['name' => __('locale.patient').__('locale.List')]];
@@ -550,6 +557,9 @@ class UserController extends Controller
         }
         
         $editUrl = 'superadmin.company-admin-edit';
+        if(auth()->user()->role()->first()->name=="Admin"){
+            $editUrl = 'admin-patient-edit';
+        }
         
         $patientResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Patient');
@@ -583,6 +593,190 @@ class UserController extends Controller
         // die;
 
         return view('pages.paitent.paitent-list', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'patientResult'=>$patientResult,'pageTitle'=>$pageTitle,'paginationUrl'=>$paginationUrl,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl]);
+    }
+    public function createPatient($id='')
+    {
+       // echo"hi admin patient create";die;
+        $userType = auth()->user()->role()->first()->name;
+        $formUrl = 'admin-patient-create';
+        $user_result=$states=$cities=false;
+        $breadcrumbs = [
+            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.patient')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
+        //Pageheader set true for breadcrumbs
+        $pageConfigs = ['pageHeader' => true];
+        $countries = Country::get(["name", "id"]);
+        $companies = Company::get(["company_name", "id","company_code"]);
+        $roles=Role::where('name','!=','superadmin')->get(["id","name"]);
+        $companyCode = Helper::setNumber();
+        $pageTitle = __('locale.patient'); 
+        if($id!=''){
+            $permission_arr = [];
+            $user_result = User::with(['company','permission'])->find($id);
+            if($user_result->permission->count()>0){
+                foreach($user_result->permission as $permission_val){
+                    $permission_arr[$permission_val->name][] = $permission_val->guard_name;
+                }
+            }
+            $user_result->permission = $permission_arr;
+            // echo '<pre>';print_r($user_result);exit();
+            if($user_result){
+            $states = State::where('country_id',$user_result->country)->get(["name", "id"]);
+            $cities = City::where('state_id',$user_result->state)->get(["name", "id"]);
+            }
+            $formUrl = 'admin-patient-update';
+        }
+        // dd($user_result);
+        return view('pages.admin-patient.admin-patient-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'user_result'=>$user_result,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'companyCode'=>$companyCode,'roles'=>$roles]);
+    }
+    
+    
+    public function storePatient(Request $request){
+        
+        
+        //echo '<pre>';print_r($request->all()); exit();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:250',
+            'password2'=>'required|max:250',
+            'email' => 'required|unique:users|max:250',
+            'code'=>'required|unique:users',
+            'phone' => 'required|max:10',
+            'address' => 'max:250',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $role = Role::where('name','=',$request['typeselect'])->first();
+        // $random_password = Str::random(6);
+        $random_password ='123456';
+        $request['password'] = Hash::make($random_password);
+        $user = User::create($request->all());
+        
+        $id = $user->id;
+        //echo $role->id;die;
+        $user->company()->attach($request->company);
+        $user->role()->attach($role->id);
+        if($request->has('permission_allow')){
+            $i=0;
+            $permissionInsert = [];
+            foreach($request->input('permission_allow') as $key => $permissionVal){
+                // echo '<pre>';print_r($permissionVal['guard_name']);
+                if(isset($permissionVal['guard_name'])){
+                    for($g=0;$g<count($permissionVal['guard_name']);$g++){
+                        $permissionInsert[$i]['user_id'] = $id;
+                        $permissionInsert[$i]['name'] = $key;
+                        $permissionInsert[$i]['guard_name'] = $permissionVal['guard_name'][$g];
+                        $i++;
+                    }
+                }
+            }
+            if(!empty($permissionInsert)){
+                Permission::where('user_id',$user->id)->delete();
+                Permission::insert($permissionInsert);
+            }
+        }
+        
+        return redirect()->route('admin.paitent-list')->with('success',__('locale.patient_create_success'));
+    }
+    public function destroyPatient($id)
+    {   
+         if(User::where('id',$id)->delete()){
+           return redirect()->back()->with('success',__('locale.delete_message'));
+        }
+        else{
+        return redirect()->back()->with('error',__('locale.try_again'));
+        }
+
+        
+        // $companyId = companyUserMapping::where('user_id',$id)->first()->company_id;
+        // if(companyUserMapping::where('company_id',$companyId)->where('user_id','!=',$id)->count()==0){
+        //     if(User::where('id',$id)->delete()){
+        //         return redirect()->back()->with('success',__('locale.delete_message'));
+        //     }else{
+        //         return redirect()->back()->with('error',__('locale.try_again'));
+        //     }
+        // }else{
+        //     return redirect()->back()->with('error',__('locale.company_admin_delete_error_msg'));
+        // }
+    }
+    public function updatePatient(Request $request, $id){
+
+        $userType = auth()->user()->role()->first()->name;
+        $listUrl = 'superadmin.product-subcategory.index';
+        if($userType!=config('custom.superadminrole')){
+            $listUrl = 'product-subcategory.index';
+        }
+        
+        // echo '<pre>'; print_r($request->all()); die;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:250',
+            'email' => 'required|max:250',
+           // 'code'=>'required|unique:users',
+            'phone' => 'required|max:10',
+            'address' => 'max:250',
+            
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+        if(User::where('email',$request->email)->where('id','!=',$id)->count()>0){
+            return redirect()->back()
+            ->with('email','The Email Has Already Been Taken.')
+            ->withInput();
+        }
+        
+        unset($request['_method']);
+        unset($request['_token']);
+        unset($request['action']);
+        unset($request['company']);
+        unset($request['importcompany']);
+        unset($request['company_code']);
+        
+        // dd($request->input('permission_allow'));
+        if ($request->has('permission_allow')) {
+            Permission::where('user_id',$id)->delete();
+            foreach ($request->input('permission_allow') as $key => $permissionVal) {
+                //echo '<pre>'; print_r($permissionVal['guard_name']); die;  
+
+                if (isset($permissionVal['guard_name'])) {
+                    $guardNames = $permissionVal['guard_name'];
+        
+                    foreach ($guardNames as $guardName) {
+                        Permission::updateOrInsert(
+                            [
+                                'name' => $key,
+                                'guard_name' => $guardName,
+                                'user_id' => $id,
+                            ]
+                          
+                        );
+                    }
+                }
+            }
+        }else{
+            Permission::where('user_id',$id)->delete();
+        }
+        
+        unset($request['permission_allow']);
+        if(isset($request['password']) && $request['password']!=''){
+            $request['password'] = Hash::make($request['password']);
+        }else{
+            unset($request['password']);
+        }
+
+        $user = User::where('id',$id)->update($request->all());
+
+        //$backurl = 'superadmin.'.strtolower($request->typeselect).'-list';
+        // superadmin.paitent-list
+        // exit();
+        $backurl='admin.paitent-list';
+        return redirect()->route($backurl)->with('success',__('locale.patient_update_success'));
     }
 
     public function carerList(Request $request)

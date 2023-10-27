@@ -76,6 +76,11 @@ Route::group(['middleware' => ['auth']], function () {
    // Route::get('/admin', [DashboardController::class, 'dashboardadminModern'])->name('admin.dashboard');
     Route::prefix('admin')->middleware(['admin'])->group(function () { 
         Route::get('/patient-list',[UserController::class,'patientList'])->name('admin.paitent-list');
+        Route::get('/admin-patient-create', [UserController::class, 'createPatient'])->name('admin-patient-create');
+        Route::post('/admin-patient-create', [UserController::class, 'storePatient'])->name('admin-patient-create');
+        Route::get('/admin-patient-edit/{id}', [UserController::class, 'createPatient'])->name('admin-patient-edit');
+        Route::post('/admin-patient-update/{id}', [UserController::class, 'updatePatient'])->name('admin-patient-update');
+        Route::get('/admin-patient-delete/{id}', [UserController::class, 'destroyPatient'])->name('admin-patient-delete');
 
         /** new route for carer **/
         Route::get('/carer-list',[UserController::class,'carerList'])->name('admin.carer-list');

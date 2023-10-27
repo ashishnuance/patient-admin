@@ -120,6 +120,7 @@ class PaitentController extends Controller
         // $request['password'] = Hash::make($random_password);
         unset($request['_token']);
         unset($request['action']);
+        $request['date'] = date('Y-m-d', strtotime($_POST['date']));
         $patientschedule = Patient_schedule::create($request->all());
         
         //$id = $user->id;

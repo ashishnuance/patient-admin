@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="input-field col m6 s12">
-                <label for="disease">{{__('locale.Select patient name')}}</label><br>
+                <label for="disease">{{__('locale.Select patient name')}}*</label><br>
                 <div class="input-field">
                   <!-- <input id="name" class="validate" name="inventory_code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}"> -->
                   <select name="patient_code" id="patient" required>
@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="input-field col m6 s12">
-                <label for="disease">{{__('locale.Select carer name')}}</label><br>
+                <label for="disease">{{__('locale.Select carer name')}}*</label><br>
                 <div class="input-field">
                   <!-- <input id="name" class="validate" name="inventory_code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}"> -->
                   <select name="carer_code" id="carer" required>
@@ -96,7 +96,7 @@
                 
 
                 <div class="input-field col m6 s12">
-                <label for="disease">{{__('locale.Select inventory name')}}</label><br>
+                <label for="disease">{{__('locale.Select inventory name')}}*</label><br>
                 <div class="input-field">
                   <!-- <input id="name" class="validate" name="inventory_code" type="text" data-error=".errorTxt1" value="{{(isset($result->name)) ? $result->name : old('name')}}"> -->
                   <select name="inventory_code" id="inventory" required>
@@ -117,7 +117,7 @@
 
                 <div class="input-field col m6 s12">
                   <label for="name">{{__('locale.quantity')}}</label><br>
-                  <input id="name" class="validate" name="quantity" min="0" type="number" data-error=".errorTxt1" value="{{(isset($stockout_result->quantity)) ? $stockout_result->quantity : old('quantity')}}">
+                  <input id="name" class="validate" name="quantity" min="0" type="number" data-error=".errorTxt1" value="{{(isset($stockout_result->quantity)) ? $stockout_result->quantity : old('quantity')}}" style="margin-top:15px;">
                   <small class="errorTxt1"></small>
                 </div>
 

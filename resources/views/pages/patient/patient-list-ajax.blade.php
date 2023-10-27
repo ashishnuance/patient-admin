@@ -1,7 +1,7 @@
 <table class="table">
   <thead>
     <tr>
-      
+      <th>{{__('locale.s.no')}}</th>
       <th>{{__('locale.patient_name')}}</th>
       <th>{{__('locale.date')}}</th>
       <th>{{__('locale.time')}}</th>
@@ -15,14 +15,16 @@
     @if(isset($patientscheduleResult))
     @foreach($patientscheduleResult as $user_key => $user_value)
     <tr>
-    
+    <td>{{$user_key+1}}</td>
     <td>{{$user_value->patientname->name}}</td>
     <td>{{$user_value->date}}</td>
     <td>{{$user_value->time}}</td>
     @if(isset($user_value->carername->name)&& $user_value->carername->name!='')
     <td>{{$user_value->carername->name}}</td>
     @endif
+    @if(isset($user_value->role->name)&& $user_value->role->name!='')
     <td>{{$user_value->role->name}}</td>
+    @endif
     @if(isset($user_value->alternatecarername->name)&& $user_value->alternatecarername->name!='')
     <td>{{$user_value->alternatecarername->name}}</td>
     @endif

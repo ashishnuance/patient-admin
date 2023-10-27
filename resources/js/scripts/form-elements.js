@@ -16,6 +16,7 @@ $(function () {
       ampmclickable: true, // make AM PM clickable
       aftershow: function () { } //Function for after opening timepicker
    });
+   
 
    var slider = document.getElementById("test-slider");
    noUiSlider.create(slider, {

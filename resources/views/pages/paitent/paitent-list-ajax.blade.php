@@ -28,13 +28,17 @@
     <td>{{($user_value->option_for_block==1) ? 'Blocked' : 'Un-blocked'}}</td>
     
     <td>
+      
       @if($editUrl=='company-user-edit')
         @if(in_array('update',Helper::getUserPermissionsModule('company_user')))
         <a href="{{route('superadmin.company-admin-edit',$user_value->id)}}"><i class="material-icons">edit</i></a>
         @endif
+      @elseif($editUrl=='admin-patient-edit')
+      <a href="{{route('admin-patient-edit',$user_value->id)}}"><i class="material-icons">edit</i></a>
       @else
       <a href="{{route('superadmin.company-admin-edit',$user_value->id)}}"><i class="material-icons">edit</i></a>
       @endif
+      
       @if($deleteUrl=='company-user-delete')
         @if(in_array('delete',Helper::getUserPermissionsModule('company_user')))
         <a href="{{route($deleteUrl,$user_value->id)}}" onclick="return confirm('Are you sure you want to delete this item')"><i class="material-icons">delete</i></a>

@@ -83,8 +83,9 @@ class CompanyController extends Controller
             'company_name' => 'required|max:250',
             'company_code'=>'required|unique:companies',
             'address1' => 'required|max:250',
-            'address2' => 'max:250',
+            'address2' => 'required|max:250',
             'pincode' => 'required',
+            
         //     //'contact_person' => 'required|max:250',
         //     //'contact_mobile' => 'required|max:20',
         //     //'licence_valid_till' => 'required|date'
