@@ -382,6 +382,10 @@ return [
     "password"=>"Password",
     "patient_create_success"=>"Patient created",
     "patient_update_success"=>"Patient updated successfully",
+    "manager_create_success"=> "Manager created successfully",
+    "manager_update_success"=>"Manager updated successfully",
+    "carer_create_success"=>"Carer created successfully",
+    "carer_update_success"=>"Carer updated successfully",
 
 
 ];

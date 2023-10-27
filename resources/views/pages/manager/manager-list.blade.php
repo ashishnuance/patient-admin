@@ -38,7 +38,7 @@
                     <a href="{{route('company-admin-create')}}">
                     @endif
                     @if(auth()->user()->role()->first()->name=='Admin')
-                    <a href="{{route('admin-patient-create')}}">
+                    <a href="{{route('admin-manager-create')}}">
                     @endif
                     <i class="material-icons">add</i>
                     <span>Add New</span>

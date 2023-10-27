@@ -75,6 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
 
    // Route::get('/admin', [DashboardController::class, 'dashboardadminModern'])->name('admin.dashboard');
     Route::prefix('admin')->middleware(['admin'])->group(function () { 
+
         Route::get('/patient-list',[UserController::class,'patientList'])->name('admin.paitent-list');
         Route::get('/admin-patient-create', [UserController::class, 'createPatient'])->name('admin-patient-create');
         Route::post('/admin-patient-create', [UserController::class, 'storePatient'])->name('admin-patient-create');
@@ -84,6 +85,11 @@ Route::group(['middleware' => ['auth']], function () {
 
         /** new route for carer **/
         Route::get('/carer-list',[UserController::class,'carerList'])->name('admin.carer-list');
+        Route::get('/admin-carer-create', [UserController::class, 'createCarer'])->name('admin-carer-create');
+        Route::post('/admin-carer-create', [UserController::class, 'storeCarer'])->name('admin-carer-create');
+        Route::get('/admin-carer-edit/{id}', [UserController::class, 'createCarer'])->name('admin-carer-edit');
+        Route::post('/admin-carer-update/{id}', [UserController::class, 'updateCarer'])->name('admin-carer-update');
+        Route::get('/admin-carer-delete/{id}', [UserController::class, 'destroyCarer'])->name('admin-carer-delete');
 
         /** new route for manager added by admin **/
         Route::get('/manager-list',[UserController::class,'managerList'])->name('admin.manager-list');

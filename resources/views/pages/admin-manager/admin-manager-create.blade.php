@@ -40,15 +40,15 @@
             @csrf()
             <div class="row">
 
-            <div class="input-field col m6 s12">
+            <div class="col m6 s12">
                   <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($user_result->code)) ? $user_result->code : ''}}" 
+                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($user_result->code)) ? $user_result->code : $companyCode}}" 
                   >
                   <small class="errorTxt1"></small>
             </div>
             <div class="col m6 s12">
-                  <label for="type">{{__('locale.select type')}} *</label>
-                  <div class="input-field">
+                  <label for="type">{{__('locale.select type')}}*</label>
+                  <div class="input-field" style="margin-top:0px;">
                   <select name="typeselect" id="myselect">
                       <?php 
                       foreach ($roles as $role) {
@@ -82,7 +82,7 @@
             @endif
            
                 <div class="input-field col m12 s12">
-                  <label for="name">{{__('locale.name')}}</label>
+                  <label for="name">{{__('locale.name')}}*</label>
                   <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($user_result->name)) ? $user_result->name : old('name')}}">
                   <small class="errorTxt1"></small>
                 </div>
@@ -162,7 +162,7 @@
                 </div>
                 <div class="input-field col m6 s12">
                   <label for="phone">{{__('locale.phone')}}*</label>
-                  <input id="phone" type="text" name="phone" data-error=".errorTxt3" value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}">
+                  <input id="phone" type="text" class="mobile-valid" name="phone" data-error=".errorTxt3" value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}">
                   <small class="errorTxt3"></small>
                 </div>
                 
@@ -307,6 +307,34 @@
                 }
             });
         });
-    });
+
+
+
+$('.mobile-valid').on('keypress', function(e) {
+
+var $this = $(this);
+var regex = new RegExp("^[0-9\b]+$");
+var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+// for 10 digit number only
+if ($this.val().length > 9) {
+    e.preventDefault();
+    return false;
+}
+if (e.charCode < 54 && e.charCode > 47) {
+    if ($this.val().length == 0) {
+        e.preventDefault();
+        return false;
+    } else {
+        return true;
+    }
+
+}
+if (regex.test(str)) {
+    return true;
+}
+e.preventDefault();
+return false;
+});
+});
 </script>
 @endsection

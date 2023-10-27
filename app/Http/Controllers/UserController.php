@@ -564,28 +564,40 @@ class UserController extends Controller
         $patientResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Patient');
         })->select(['name','email','phone','address1','image','website_url','id','blocked'])->orderBy('id','DESC');
-        if($request->ajax()){
+        if (auth()->user()->role()->first()->name == "Admin") {
             
-           // $currentPage = $request->get('page');
-        //    $patientResult = $patientResult->whereHas('company', function($q)use($request){
-        //         $q->where('id', 'like', '%'.$request->seach_term.'%')
-        //                     ->orWhere('name', 'like', '%'.$request->seach_term.'%')
-        //                     ->orWhere('email', 'like', '%'.$request->seach_term.'%')
-        //                     ->orWhere('phone', 'like', '%'.$request->seach_term.'%')
-        //                     ->orWhere('address', 'like', '%'.$request->seach_term.'%');
-        //                 })->paginate($perpage);
-                        
-        //     return view('pages.paitent.paitent-list-ajax', compact('patientResult','editUrl','deleteUrl'))->render();
-        $patientResult = $patientResult->where('id', 'like', '%'.$request->seach_term.'%')
-                        ->orWhere('name', 'like', '%'.$request->seach_term.'%')
-                        ->orWhere('email', 'like', '%'.$request->seach_term.'%')
-                        ->orWhere('phone', 'like', '%'.$request->seach_term.'%')
-                        ->orWhere('address', 'like', '%'.$request->seach_term.'%')
-                    ->paginate($perpage);
+            $userTypeid =auth()->user()->company()->first()->id; // Assuming 'company_id' is the field on the User model
+        
+            $patientResult = User::with('company')->whereHas('company', function ($company_q) {
+                            $company_q->where('id', '=',auth()->user()->company()->first()->id)->where('typeselect','=','Patient');
+                        })->select(['name', 'email', 'phone', 'address1', 'image', 'website_url', 'id', 'blocked','option_for_block'])->orderBy('id', 'DESC');
+                        // Rest of your code...
+            }
                     
-        return view('pages.paitent.paitent-list-ajax', compact('patientResult','editUrl','deleteUrl'))->render();
-        }
-        $patientResult = $patientResult->paginate($perpage);
+            if($request->ajax()){
+                
+                // $currentPage = $request->get('page');
+                //    $patientResult = $patientResult->whereHas('company', function($q)use($request){
+                //         $q->where('id', 'like', '%'.$request->seach_term.'%')
+                //                     ->orWhere('name', 'like', '%'.$request->seach_term.'%')
+                //                     ->orWhere('email', 'like', '%'.$request->seach_term.'%')
+                //                     ->orWhere('phone', 'like', '%'.$request->seach_term.'%')
+                //                     ->orWhere('address', 'like', '%'.$request->seach_term.'%');
+                //                 })->paginate($perpage);
+                
+                //     return view('pages.paitent.paitent-list-ajax', compact('patientResult','editUrl','deleteUrl'))->render();
+                // echo $patientResult->toSql(); exit();
+                $patientResult = $patientResult->where(function($q) use($request){
+                    $q->where('id', 'like', '%'.$request->seach_term.'%')
+                    ->orWhere('name', 'like', '%'.$request->seach_term.'%')
+                    ->orWhere('email', 'like', '%'.$request->seach_term.'%')
+                    ->orWhere('phone', 'like', '%'.$request->seach_term.'%')
+                    ->orWhere('address', 'like', '%'.$request->seach_term.'%');
+                })->paginate($perpage);
+        
+                return view('pages.paitent.paitent-list-ajax', compact('patientResult','editUrl','deleteUrl'))->render();
+            }
+            $patientResult = $patientResult->paginate($perpage);
        // echo"<pre>";print_r($patientResult);die;
         // echo $patientResult=User::with('company')->whereHas('role',function($role_q){
         //     $role_q->where('name','Patient');
@@ -785,6 +797,9 @@ class UserController extends Controller
        $paginationUrl='';
         $userType = auth()->user()->role()->first()->name;
         $deleteUrl = 'superadmin.company-admin-delete';
+        if(auth()->user()->role()->first()->name=="Admin"){
+            $deleteUrl = 'admin-carer-delete';
+        }
         $perpage = config('app.perpage');
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.carer')], ['name' => __('locale.carer').__('locale.List')]];
@@ -795,10 +810,23 @@ class UserController extends Controller
         $paginationUrl = 'superadmin.carer-list';
         }
         $editUrl = 'superadmin.company-admin-edit';
+        if(auth()->user()->role()->first()->name=="Admin"){
+            $editUrl = 'admin-carer-edit';
+        }
 
         $carerResult=User::with('company')->whereHas('role',function($role_q){
             $role_q->where('name','Carer');
-        })->select(['name','email','phone','address1','image','website_url','id','blocked'])->orderBy('id','DESC');
+        })->select(['name','email','phone','address1','image','website_url','id','blocked','option_for_block'])->orderBy('id','DESC');
+
+        if (auth()->user()->role()->first()->name == "Admin") {
+            
+            $userTypeid =auth()->user()->company()->first()->id; // Assuming 'company_id' is the field on the User model
+        
+            $carerResult = User::with('company')->whereHas('company', function ($company_q) {
+                            $company_q->where('id', '=',auth()->user()->company()->first()->id)->where('typeselect','=','Carer');
+                        })->select(['name', 'email', 'phone', 'address1', 'image', 'website_url', 'id', 'blocked','option_for_block'])->orderBy('id', 'DESC');
+                        // Rest of your code...
+            }
 
         if($request->ajax()){
           
@@ -812,8 +840,10 @@ class UserController extends Controller
             //                      ->orWhere('name', 'like', '%'.$request->seach_term.'%');
                                 
             //      })->toSql();
-                $carerResult = $carerResult->when($request->seach_term, function($q)use($request){$q->where('id', 'like', '%'.$request->seach_term.'%')
-                ->orWhere('name', 'like', '%'.$request->seach_term.'%');})->paginate($perpage);
+                $carerResult = $carerResult->where(function($q)use($request)
+                {$q->where('id', 'like', '%'.$request->seach_term.'%')
+                ->orWhere('name', 'like', '%'.$request->seach_term.'%');
+                })->paginate($perpage);
                 //  print_r($carerResult);
                 //  die;
                         
@@ -830,6 +860,191 @@ class UserController extends Controller
 
         return view('pages.carer.carer-list', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'carerResult'=>$carerResult,'pageTitle'=>$pageTitle,'paginationUrl'=>$paginationUrl,'userType'=>$userType,'editUrl'=>$editUrl,'deleteUrl'=>$deleteUrl]);
     }
+    public function createCarer($id='')
+    {
+      // echo"hi admin carer create";die;
+        $userType = auth()->user()->role()->first()->name;
+        $formUrl = 'admin-carer-create';
+        $user_result=$states=$cities=false;
+        $breadcrumbs = [
+            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.carer')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
+        //Pageheader set true for breadcrumbs
+        $pageConfigs = ['pageHeader' => true];
+        $countries = Country::get(["name", "id"]);
+        $companies = Company::get(["company_name", "id","company_code"]);
+        $roles=Role::where('name','!=','superadmin')->get(["id","name"]);
+        $companyCode = Helper::setNumber();
+        $pageTitle = __('locale.Carer'); 
+        if($id!=''){
+            $permission_arr = [];
+            $user_result = User::with(['company','permission'])->find($id);
+            if($user_result->permission->count()>0){
+                foreach($user_result->permission as $permission_val){
+                    $permission_arr[$permission_val->name][] = $permission_val->guard_name;
+                }
+            }
+            $user_result->permission = $permission_arr;
+            // echo '<pre>';print_r($user_result);exit();
+            if($user_result){
+            $states = State::where('country_id',$user_result->country)->get(["name", "id"]);
+            $cities = City::where('state_id',$user_result->state)->get(["name", "id"]);
+            }
+            $formUrl = 'admin-carer-update';
+        }
+        // dd($user_result);
+        return view('pages.admin-carer.admin-carer-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'user_result'=>$user_result,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'companyCode'=>$companyCode,'roles'=>$roles]);
+    }
+    
+    
+    public function storeCarer(Request $request){
+        
+        
+        //echo '<pre>';print_r($request->all()); exit();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:250',
+            'password2'=>'required|max:250',
+            'email' => 'required|unique:users|max:250',
+            'code'=>'required|unique:users',
+            'phone' => 'required|max:10',
+            'address' => 'max:250',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $role = Role::where('name','=',$request['typeselect'])->first();
+        // $random_password = Str::random(6);
+        $random_password ='123456';
+        $request['password'] = Hash::make($random_password);
+        $user = User::create($request->all());
+        
+        $id = $user->id;
+        //echo $role->id;die;
+        $user->company()->attach($request->company);
+        $user->role()->attach($role->id);
+        if($request->has('permission_allow')){
+            $i=0;
+            $permissionInsert = [];
+            foreach($request->input('permission_allow') as $key => $permissionVal){
+                // echo '<pre>';print_r($permissionVal['guard_name']);
+                if(isset($permissionVal['guard_name'])){
+                    for($g=0;$g<count($permissionVal['guard_name']);$g++){
+                        $permissionInsert[$i]['user_id'] = $id;
+                        $permissionInsert[$i]['name'] = $key;
+                        $permissionInsert[$i]['guard_name'] = $permissionVal['guard_name'][$g];
+                        $i++;
+                    }
+                }
+            }
+            if(!empty($permissionInsert)){
+                Permission::where('user_id',$user->id)->delete();
+                Permission::insert($permissionInsert);
+            }
+        }
+        
+        return redirect()->route('admin.carer-list')->with('success',__('locale.carer_create_success'));
+    }
+    public function destroyCarer($id)
+    {   
+         if(User::where('id',$id)->delete()){
+           return redirect()->back()->with('success',__('locale.delete_message'));
+        }
+        else{
+        return redirect()->back()->with('error',__('locale.try_again'));
+        }
+
+        
+        // $companyId = companyUserMapping::where('user_id',$id)->first()->company_id;
+        // if(companyUserMapping::where('company_id',$companyId)->where('user_id','!=',$id)->count()==0){
+        //     if(User::where('id',$id)->delete()){
+        //         return redirect()->back()->with('success',__('locale.delete_message'));
+        //     }else{
+        //         return redirect()->back()->with('error',__('locale.try_again'));
+        //     }
+        // }else{
+        //     return redirect()->back()->with('error',__('locale.company_admin_delete_error_msg'));
+        // }
+    }
+    public function updateCarer(Request $request, $id){
+
+        $userType = auth()->user()->role()->first()->name;
+        $listUrl = 'superadmin.product-subcategory.index';
+        if($userType!=config('custom.superadminrole')){
+            $listUrl = 'product-subcategory.index';
+        }
+        
+        // echo '<pre>'; print_r($request->all()); die;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:250',
+            'email' => 'required|max:250',
+           // 'code'=>'required|unique:users',
+            'phone' => 'required|max:10',
+            'address' => 'max:250',
+            
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+        if(User::where('email',$request->email)->where('id','!=',$id)->count()>0){
+            return redirect()->back()
+            ->with('email','The Email Has Already Been Taken.')
+            ->withInput();
+        }
+        
+        unset($request['_method']);
+        unset($request['_token']);
+        unset($request['action']);
+        unset($request['company']);
+        unset($request['importcompany']);
+        unset($request['company_code']);
+        
+        // dd($request->input('permission_allow'));
+        if ($request->has('permission_allow')) {
+            Permission::where('user_id',$id)->delete();
+            foreach ($request->input('permission_allow') as $key => $permissionVal) {
+                //echo '<pre>'; print_r($permissionVal['guard_name']); die;  
+
+                if (isset($permissionVal['guard_name'])) {
+                    $guardNames = $permissionVal['guard_name'];
+        
+                    foreach ($guardNames as $guardName) {
+                        Permission::updateOrInsert(
+                            [
+                                'name' => $key,
+                                'guard_name' => $guardName,
+                                'user_id' => $id,
+                            ]
+                          
+                        );
+                    }
+                }
+            }
+        }else{
+            Permission::where('user_id',$id)->delete();
+        }
+        
+        unset($request['permission_allow']);
+        if(isset($request['password']) && $request['password']!=''){
+            $request['password'] = Hash::make($request['password']);
+        }else{
+            unset($request['password']);
+        }
+
+        $user = User::where('id',$id)->update($request->all());
+
+        //$backurl = 'superadmin.'.strtolower($request->typeselect).'-list';
+        // superadmin.paitent-list
+        // exit();
+        $backurl='admin.carer-list';
+        return redirect()->route($backurl)->with('success',__('locale.carer_update_success'));
+    }
+
 
     public function managerList(Request $request)
     {
@@ -978,8 +1193,8 @@ class UserController extends Controller
                 Permission::insert($permissionInsert);
             }
         }
-        
-        return redirect()->route('admin.manager-list')->with('success',__('locale.company_admin_create_success'));
+        //echo"here";die;
+        return redirect()->route('admin.manager-list')->with('success',__('locale.manager_create_success'));
     }
 
     public function destroyManager($id)
@@ -1077,7 +1292,7 @@ class UserController extends Controller
         // superadmin.paitent-list
         // exit();
         $backurl='admin.manager-list';
-        return redirect()->route($backurl)->with('success',__('locale.company_admin_update_success'));
+        return redirect()->route($backurl)->with('success',__('locale.manager_update_success'));
     }
 
 
