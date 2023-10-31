@@ -30,7 +30,7 @@ class CompanyController extends Controller
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
         $pageTitle = __('locale.Companies');
-        $companyResult = Company::with(['countryname','statename', 'cityname'])->select(['id','company_name','company_code','address1','country','state','city','contact_person','contact_mobile','licence_valid_till','blocked','phone_no','license_to'])->orderBy('id','DESC');
+        $companyResult = Company::with(['countryname','statename', 'cityname'])->select(['id','company_name','company_code','address1','country','state','city','contact_person','contact_mobile','licence_valid_till','blocked','phone_no','license_to','option_for_block'])->orderBy('id','DESC');
 
         if($request->ajax()){
             $companyResult = $companyResult->when($request->seach_term, function($q)use($request){
@@ -77,7 +77,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-       
+      // echo"<pre>";print_r($request->all());die;
          $validator = Validator::make($request->all(), [
             
             'company_name' => 'required|max:250',
@@ -97,6 +97,8 @@ class CompanyController extends Controller
             ->withInput();
         }
         // echo '<pre>';print_r($request->all());  exit();
+        $request['license_from']=date('Y-m-d',strtotime($request['license_from']));
+        $request['license_to']=date('Y-m-d',strtotime($request['license_to']));
         $company = Company::create($request->all());
         if($company){
             return redirect()->route('company.index')->with('success',__('locale.company_create_success'));
@@ -152,9 +154,15 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        // echo '<pre>';print_r($request->all()); exit();
+        $company = Company::find($id);
+        if ($request->has('company_code') && $request->input('company_code') != $company->company_code) {
+            $company->company_code = $request->input('company_code');
+        }
         $validator = Validator::make($request->all(), [
             'company_name' => 'required|max:250',
-            'company_code'=>'unique:companies',
+            //'company_code'=>'unique:companies',
             'address1' => 'required|max:250',
             'address2' => 'max:250',
             'country' => 'required',
@@ -175,7 +183,7 @@ class CompanyController extends Controller
         unset($request['_token']);
         unset($request['action']);
         //$requestData = $request->except(['company_code']);
-        // echo '<pre>';print_r($request->input()); exit();
+        
         $company = Company::where('id',$id)->update($request->all());
         if($company){
             return redirect()->route('company.index')->with('success',__('locale.company_update_success'));

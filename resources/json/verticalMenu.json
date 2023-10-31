@@ -235,13 +235,51 @@
     },
     {
       "for" :["Admin","user"],
-      "url": "admin/patient-list",
+      "url": "javascript:void(0)",
       "name": "Patient",
       "i18n": "Patient",
       "permission_name":"Dashboard",
-      "class": "waves-effect waves-cyan",
+      "class": "collapsible-header waves-effect waves-cyan",
       "slug": "Profile",
-      "icon": "person_outline"
+      "icon": "person_outline",
+      "submenu":[
+        {
+          "for" :["Admin"],
+          "url": "admin/patient-list",
+          "name": "Patient profile",
+          "i18n": "Patient profile",
+          "class": "waves-effect waves-cyan",
+          "slug": "Profile",
+          "icon": "healing"
+        },
+        {
+          "for" :["Admin"],
+          "url": "admin/patient-disease-list",
+          "name": "Patient disease",
+          "i18n": "Patient disease",
+          "class": "waves-effect waves-cyan",
+          "slug": "Profile",
+          "icon": "healing"
+        },
+        {
+          "for" :["Admin"],
+          "url": "admin/m",
+          "name": "Patient medicine",
+          "i18n": "Patient medicine",
+          "class": "waves-effect waves-cyan",
+          "slug": "Profile",
+          "icon": "healing"
+        },
+        {
+          "for" :["Admin"],
+          "url": "admin/s",
+          "name": "Patient schedule",
+          "i18n": "Patient schedule",
+          "class": "waves-effect waves-cyan",
+          "slug": "Profile",
+          "icon": "healing"
+        }
+      ]
     },
     {
       "for" :["Admin","user"],

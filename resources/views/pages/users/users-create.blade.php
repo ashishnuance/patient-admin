@@ -158,12 +158,12 @@
                 
                 <div class="input-field col m6 s12">
                   <label for="Zip Code">{{__('locale.ZipCode')}}</label>
-                  <input id="zipcode" type="text" name="zipcode" data-error=".errorTxt2" value="{{(isset($user_result->zipcode)) ? $user_result->zipcode : old('company_code')}}">
+                  <input id="zipcode" type="text" name="zipcode" class="zip-valid" minlength="0" maxlength="6" data-error=".errorTxt2" value="{{(isset($user_result->zipcode)) ? $user_result->zipcode : old('company_code')}}">
                   <small class="errorTxt2"></small>
                 </div>
                 <div class="input-field col m6 s12">
                   <label for="phone">{{__('locale.phone')}}*</label>
-                  <input id="phone" type="text" name="phone" data-error=".errorTxt3" value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}">
+                  <input id="phone" type="text" name="phone" class="mobile-valid" minlength="0" maxlength="13" data-error=".errorTxt3" value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}">
                   <small class="errorTxt3"></small>
                 </div>
                 
@@ -308,6 +308,60 @@
                 }
             });
         });
-    });
+
+$('.zip-valid').on('keypress', function(e) {
+
+var $this = $(this);
+var regex = new RegExp("^[0-9\b]+$");
+var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+// for 10 digit number only
+if ($this.val().length > 9) {
+    e.preventDefault();
+    return false;
+}
+if (e.charCode < 52 && e.charCode > 47) {
+    if ($this.val().length == 0) {
+        e.preventDefault();
+        return false;
+    } else {
+        return true;
+    }
+
+}
+if (regex.test(str)) {
+    return true;
+}
+e.preventDefault();
+return false;
+});
+
+$('.mobile-valid').on('keypress', function(e) {
+
+var $this = $(this);
+var regex = new RegExp("^[0-9\b]+$");
+var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+// for 10 digit number only
+if ($this.val().length > 13) {
+    e.preventDefault();
+    return false;
+}
+if (e.charCode < 54 && e.charCode > 47) {
+    if ($this.val().length == 0) {
+        e.preventDefault();
+        return false;
+    } else {
+        return true;
+    }
+
+}
+if (regex.test(str)) {
+    return true;
+}
+e.preventDefault();
+return false;
+});
+
+    
+});
 </script>
 @endsection

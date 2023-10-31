@@ -20,12 +20,70 @@
 @section('content')
 <!-- users list start -->
 <section class="users-list-wrapper section">
-  
+  <div class="users-list-filter">
+    <div class="row">
+      
+      
+      <div class="col s12">
+        <div id="file-input" class="">
+          @include('panels.flashMessages')
+          <div class="card-content">
+            <div class="card-title">
+              <div class="row">
+                <div class="col s12 m6 l6">
+                  <!-- <h4 class="card-title">{{__('locale.imports')}} {{__('locale.users')}}</h4> -->
+                </div>
+                <div class="col s12 m6 l6 add-btn" style="text-align:end;margin-top:90px;">
+                  <div class="btn">
+                    <a href="{{route('admin-patient-disease-create')}}">
+                    <i class="material-icons">add</i>
+                    <span>Add New</span>
+                    </a>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <!-- <div id="view-file-input">
+              <div class="row">
+                <div class="col s12">
+                  <form action="{{asset('company-user-import')}}" method="post" enctype="multipart/form-data">
+                    @csrf()
+                    <div class="file-field input-field">
+                      <div class="btn">
+
+                        <span>File</span>
+                        <input type="file" name="importcompany" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                      </div>
+                      <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                      </div>
+                    </div>
+                    <a class="waves-effect waves-light left submit" target="_blank" href="{{asset('data-import-files/company-user-importt.csv')}}" download>{{__('locale.download_sample_file')}}
+                        <i class="material-icons">download</i>
+                    </a>
+                    <button class="btn waves-effect waves-light right submit" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div> -->
+            
+          </div>
+        </div>
+      </div>
+    
+        
+        
+    </div>
+  </div>
   
   <div class="users-list-table">
     <div class="card">
+      <h6 style="margin-left:35px;">List</h6>
       <div class="card-content">
-      @include('panels.flashMessages')
+        
         <!-- datatable start -->
           <div class="col s12 m6 l3">
             <div class="input-field">
@@ -33,24 +91,11 @@
               <input id="serach" type="text" name="serach" data-error=".errorTxt12">
             </div>
           </div>
-          <div class="col s12 m6 l6 add-btn" style="text-align:end;margin-left:232px;">
-                  <div class="btn">
-                  @if(auth()->user()->role()->first()->name=='superadmin')
-                    <a href="{{route('company-admin-create')}}">
-                    @endif
-                    @if(auth()->user()->role()->first()->name=='Admin')
-                    <a href="{{route('admin-manager-create')}}">
-                    @endif
-                    <i class="material-icons">add</i>
-                    <span>Add New</span>
-                    </a>
-                  </div>
-                </div>
           <!-- <a class="btn waves-effect waves-light right" href="{{route('company-user-export',[$userType])}}">{{__('locale.export_users')}}
                 <i class="material-icons right"></i>
             </a> -->
         <div class="responsive-table table-result">
-          @include('pages.manager.manager-list-ajax')
+          @include('pages.patient-disease.patient-disease-list-ajax')
           
         </div>
         <input type="hidden" name="hidden_page" id="hidden_page" value="{{(isset($currentPage) && $currentPage>0) ? $currentPage : 1}}" />
@@ -73,7 +118,7 @@
 <script src="{{asset('js/scripts/page-users.js')}}"></script>
 <script>
   $(document).ready(function(){
-    var paginationUrl = '{{(isset($paginationUrl) && $paginationUrl!='') ? route($paginationUrl) : route("admin.manager-list") }}';
+    var paginationUrl = '{{(isset($paginationUrl) && $paginationUrl!='') ? route($paginationUrl) : route("admin.patient-disease-list") }}';
     const fetch_data = (page, status, seach_term) => {
         if(status === undefined){
             status = "";

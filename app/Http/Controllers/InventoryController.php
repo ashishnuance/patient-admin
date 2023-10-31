@@ -148,12 +148,16 @@ class InventoryController extends Controller
         if($userType!=config('custom.superadminrole')){
             $listUrl = 'product-subcategory.index';
         }
+        $inventory = Inventory::find($id);
+        if ($request->has('code') && $request->input('code') != $inventory->code) {
+            $inventory->code = $request->input('code');
+        }
         
         // echo '<pre>'; print_r($request->all()); die;
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
             'type' => 'max:250',
-            'code'=>'unique:inventory',
+            //'code'=>'unique:inventory',
         ]);
         
         if ($validator->fails()) {
@@ -212,7 +216,7 @@ class InventoryController extends Controller
         'name' => $request->input('name'),
         'type' => $request->input('type'),
         'option'=>$request->input('option'),
-        'code'=>$request->input('code'),
+        'code'=>$inventory->code,
         // Add other columns and values as needed
     ]);
     

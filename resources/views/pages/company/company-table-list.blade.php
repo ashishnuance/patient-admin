@@ -26,7 +26,7 @@
         <td>{{(isset($company_value->cityname->name)) ? $company_value->cityname->name : $company_value->city}}</td>
         <!-- <td>{{$company_value->contact_person}}</td> -->
         <td>{{$company_value->license_to}}</td>
-        <td>{{($company_value->blocked==1) ? 'Blocked' : 'Un-blocked'}}</td>
+        <td>{{($company_value->option_for_block==1) ? 'Blocked' : 'Un-blocked'}}</td>
         <td>
             <a href="{{route('company.edit',$company_value->id)}}"><i class="material-icons" >edit</i></a>
             <a href="{{route('company.destroy',$company_value->id)}}" onclick="return confirm('Are you sure you want to delete this item')"><i class="material-icons">delete</i></a>

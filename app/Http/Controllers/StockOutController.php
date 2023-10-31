@@ -41,6 +41,7 @@ class StockOutController extends Controller
         $roles=Role::get(["id","name"]);
         // $stockResult = Stockout::with('inventoryname')->select('*')->orderBy('id','DESC');
         $stockoutResult = Stockout::with(['patientname','inventorynameout','carername'])->select('*')->orderBy('id','DESC');
+        //echo"<pre>";print_r($stockResult);die;
         $editUrl = 'stockout-edit';
         if($request->ajax()){
                 // $stockoutResult = $stockoutResult->when($request->seach_term, function($q)use($request){

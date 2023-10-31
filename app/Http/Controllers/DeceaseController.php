@@ -149,11 +149,18 @@ class DeceaseController extends Controller
             $listUrl = 'product-subcategory.index';
         }
         
+        $decease = Decease::find($id);
+        if ($request->has('code') && $request->input('code') != $decease->code) {
+            $decease->code = $request->input('code');
+        }
+
+       //die;
+        
         // echo '<pre>'; print_r($request->all()); die;
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
             'symptoms' => 'max:250',
-            'code'=>'required|unique:disease',
+            //'code'=>'unique:disease',
         ]);
         
         if ($validator->fails()) {
@@ -207,12 +214,16 @@ class DeceaseController extends Controller
 
         //$decease = Decease::where('id',$id)->update($request->all());
 
-       // return redirect()->route('decease-list')->with('success',__('locale.company_admin_update_success'));
-       $decease = Decease::where('id', $id)->update([
+       
+        // return redirect()->route('decease-list')->with('success',__('locale.company_admin_update_success'));
+        // if ($request->has('code') && $request->input('code') != $decease->code) {
+        //     $decease->code = $request->input('code');
+        // }
+        $decease = Decease::where('id', $id)->update([
         'name' => $request->input('name'),
         'symptoms' => $request->input('symptoms'),
         'note'=>$request->input('note'),
-        'code'=>$request->input('code'),
+        'code'=>$decease->code,
         // Add other columns and values as needed
     ]);
     

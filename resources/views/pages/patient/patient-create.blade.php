@@ -92,23 +92,23 @@
             </div> 
             </div>
 
-                <div class="input-field col m6 s12">
+            
+                  <input id="name" class="validate" name="carer_assigned_by" type="hidden" data-error=".errorTxt1" value="{{auth()->user()->id}}" readonly>
+                  
+                 
+
+                <!-- <div class="input-field col m6 s12">
                 <label for="serach">{{__('locale.assign_by')}}</label><br>
                 <div class="input-field">
                   <select name="carer_assigned_by" id="carer_assign">
-                  <option value="Select" disabled selected>{{__('locale.assign_by')}}*</option>
+                  <option value="Select" disabled selected>{{__('locale.assign_by')}}*</option> -->
                   <!-- <input id="name" class="validate" name="carer_assigned_by" type="text" data-error=".errorTxt1" value="{{auth()->user()->id}}"> -->
-                  <?php 
-                  foreach ($roles as $role) {
-                  ?>
-                  <option value="<?php echo $role['id']; ?>"><?php echo $role['name']; ?></option>
-                  <?php }
-                  ?>
-                      </select>
+                  
+                      <!-- </select>
                   <small class="errorTxt1"></small>
                 </div>
-                </div>
-                <div class="input-field col s12">
+                </div> -->
+                <div class="input-field col m6 s12">
                 <label for="serach">{{__('locale.Select alternate carer name')}}</label><br>
                 <div class="input-field">
                 <select name="alternate_carer_code" id="alternate_carer" required>

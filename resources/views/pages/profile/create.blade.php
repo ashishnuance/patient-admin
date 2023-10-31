@@ -55,7 +55,7 @@
                   </div>
                  
                   <div class="col s12 m6 input-field">
-                    <input id="phonenumber" type="text" name="phone" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" class="validate"  value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}" data-error=".errorTxt2">
+                    <input id="phonenumber" type="text" name="phone" class="mobile-valid" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" class="validate"  value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}" data-error=".errorTxt2">
                     <label for="phonenumber">{{__('locale.phone')}}</label>
                     <small class="errorTxt2"></small>
                   </div>
@@ -97,4 +97,35 @@
 @section('vendor-script')
 <script src="{{asset('vendors/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('vendors/jquery-validation/jquery.validate.min.js')}}"></script>
+
+<script>
+
+  $('.mobile-valid').on('keypress', function(e) {
+
+    var $this = $(this);
+    var regex = new RegExp("^[0-9\b]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    // for 10 digit number only
+    if ($this.val().length > 9) {
+      e.preventDefault();
+    return false;
+  }
+if (e.charCode < 54 && e.charCode > 47) {
+    if ($this.val().length == 0) {
+      e.preventDefault();
+        return false;
+      } else {
+        return true;
+      }
+      
+}
+if (regex.test(str)) {
+  return true;
+}
+e.preventDefault();
+return false;
+});
+
+
+</script>
 @endsection

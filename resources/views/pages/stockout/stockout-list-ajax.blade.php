@@ -1,7 +1,7 @@
 <table class="table">
   <thead>
     <tr>
-      
+      <th>{{__('locale.s.no')}}</th>
       <th>{{__('locale.doc_number')}}</th>
       <th>{{__('locale.date')}}</th>
       <th>{{__('locale.patient_name')}}</th>
@@ -16,19 +16,20 @@
     @if(isset($stockoutResult))
     @foreach($stockoutResult as $stock_key => $stock_value)
     <tr>
-    
+    <td>{{$stock_key+1}}</td>
     <td>{{$stock_value->doc_no}}</td>
     <td>{{$stock_value->date}}</td>
     <td>{{$stock_value->patientname->name}}</td>
     @if(isset($stock_value->carername->name) && $stock_value->carername->name!='')
     <td>{{$stock_value->carername->name}}</td>
     @endif
+    @if(isset($stock_value->inventorynameout->name) && $stock_value->inventorynameout->name!='')
     <td>{{$stock_value->inventorynameout->name}}</td>
+    @endif
     <td>{{$stock_value->quantity}}</td>
+    @if(isset($stock_value->stock_out_by) && $stock_value->stock_out_by!='')
     <td>{{$stock_value->stock_out_by}}</td>
-    
-    
-    
+    @endif
     <td>
       @if($editUrl=='stockout-edit')
       <a href="{{route($editUrl,$stock_value->id)}}"><i class="material-icons">edit</i></a>

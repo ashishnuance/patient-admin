@@ -79,7 +79,7 @@
                     <small class="errorTxt3"></small>
                   </div>
                 </div>
-                <div class="input-field col m6 s12">
+                <!-- <div class="input-field col m6 s12">
                   <label for="state">{{__('locale.state')}}*</label>
                   <input id="" type="text" name="state" data-error=".errorTxt4" value="{{(isset($company_result->state) && $company_result->state!='NULL') ? $company_result->state : old('state')}}">
                   <small class="errorTxt3"></small>
@@ -88,8 +88,8 @@
                   <label for="city">{{__('locale.city')}}*</label>
                   <input id="" type="text" name="city" data-error=".errorTxt4" value="{{(isset($company_result->city) && $company_result->city!='NULL') ? $company_result->city : old('city')}}">
                   <small class="errorTxt3"></small>
-                </div>
-                <!-- <div class="col m6 s12">
+                </div> -->
+                <div class="col m6 s12">
                   <label for="state">{{__('locale.state')}} *</label>
                   <div class="input-field">
                     <select class="error" id="state" name="state" data-error=".errorTxt7">
@@ -102,8 +102,8 @@
                     </select>
                     <small class="errorTxt7"></small>
                   </div>
-                </div> -->
-                <!-- <div class="col m6 s12">
+                </div>
+                <div class="col m6 s12">
                   <label for="city">{{__('locale.city')}} *</label>
                   <div class="input-field">
                     <select class="error" id="city" name="city" data-error=".errorTxt8">
@@ -116,16 +116,16 @@
                     </select>
                     <small class="errorTxt8"></small>
                   </div>
-                </div> -->
+                </div>
                 
                 <div class="input-field col m6 s12">
                   <label for="Zip Code">{{__('locale.ZipCode')}}*</label>
-                  <input id="zipcode" type="text" name="pincode" data-error=".errorTxt2" value="{{(isset($company_result->pincode)) ? $company_result->pincode : old('pincode')}}">
+                  <input id="zipcode" type="text" class="zip-valid" name="pincode" data-error=".errorTxt2" minlength="0" maxlength="6" value="{{(isset($company_result->pincode)) ? $company_result->pincode : old('pincode')}}">
                   <small class="errorTxt2"></small>
                 </div>
                 <div class="input-field col m6 s12">
                   <label for="phone">{{__('locale.phone')}}*</label>
-                  <input id="phone" type="text" class="mobile-valid" name="phone_no" minlength="0" maxlength="10" data-error=".errorTxt3" value="{{(isset($company_result->phone_no)) ? $company_result->phone_no : old('phone_no')}}">
+                  <input id="phone" type="text" class="mobile-valid" name="phone_no" minlength="0" maxlength="13" data-error=".errorTxt3" value="{{(isset($company_result->phone_no)) ? $company_result->phone_no : old('phone_no')}}">
                   <small class="errorTxt3"></small>
                 </div>
                
@@ -143,13 +143,13 @@
                 </div>
                 
                 <div class="input-field col m6 s12">
-                  <input id="licensefrom" type="date" name="license_from" data-error=".errorTxt3" value="{{(isset($company_result->license_from)) ? $company_result->license_from : old('license_from')}}">
+                  <input id="termination_datepicker_from" type="text" class="validate datepicker" name="license_from" data-error=".errorTxt3" value="{{(isset($company_result->license_from)) ? $company_result->license_from : old('license_from')}}">
                   <label for="licensefrom">{{__('locale.licensefrom')}}*</label>
                   <small class="errorTxt3"></small>
                 </div>
 
                 <div class="input-field col m6 s12">
-                  <input id="licenseto" type="date" name="license_to" data-error=".errorTxt3" value="{{(isset($company_result->license_to)) ? $company_result->license_to : old('license_to')}}">
+                  <input id="termination_datepicker_to" type="text" class="validate datepicker" name="license_to" data-error=".errorTxt3" value="{{(isset($company_result->license_to)) ? $company_result->license_to : old('license_to')}}">
                   <label for="licenseto">{{__('locale.licenseto')}}*</label>
                   <small class="errorTxt3"></small>
                 </div>
@@ -205,7 +205,20 @@
     $('#city').val(city_value);
     $('#city').formSelect();
   }
-    $(document).ready(function () {
+
+  
+  
+  $(document).ready(function () {
+   $( "#termination_datepicker_from" ).datepicker({ 
+          maxDate: new Date('2024-10-12'),
+          onSelect: function(selectdate){
+           console.log(selectdate)
+             $("#termination_datepicker_to").datepicker({
+                minDate: selectdate
+             });
+             console.log(selectdate)
+          }
+    });
       
 
         $('#country').on('change', function () {
@@ -260,7 +273,7 @@ var $this = $(this);
 var regex = new RegExp("^[0-9\b]+$");
 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
 // for 10 digit number only
-if ($this.val().length > 9) {
+if ($this.val().length > 13) {
     e.preventDefault();
     return false;
 }
@@ -280,7 +293,38 @@ e.preventDefault();
 return false;
 });
 
+$('.zip-valid').on('keypress', function(e) {
+
+var $this = $(this);
+var regex = new RegExp("^[0-9\b]+$");
+var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+// for 10 digit number only
+if ($this.val().length > 9) {
+    e.preventDefault();
+    return false;
+}
+if (e.charCode < 52 && e.charCode > 47) {
+    if ($this.val().length == 0) {
+        e.preventDefault();
+        return false;
+    } else {
+        return true;
+    }
+
+}
+if (regex.test(str)) {
+    return true;
+}
+e.preventDefault();
+return false;
+});
+
+
+
+
 });
 </script>
+
+
 @endsection
 

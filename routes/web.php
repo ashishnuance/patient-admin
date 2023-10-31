@@ -39,6 +39,7 @@ use App\Http\Controllers\PaitentController;
 use App\Http\Controllers\supplierController;
 use App\Http\Controllers\StockInController;
 use App\Http\Controllers\StockOutController;
+use App\Http\Controllers\PatientdiseaseController;
 
 
 
@@ -75,6 +76,13 @@ Route::group(['middleware' => ['auth']], function () {
 
    // Route::get('/admin', [DashboardController::class, 'dashboardadminModern'])->name('admin.dashboard');
     Route::prefix('admin')->middleware(['admin'])->group(function () { 
+
+        Route::get('/patient-disease-list',[PatientdiseaseController::class,'patientdiseaseList'])->name('admin.patient-disease-list');
+        Route::get('/admin-patient-disease-create', [PatientdiseaseController::class, 'createPatientdisease'])->name('admin-patient-disease-create');
+        Route::post('/admin-patient-disease-create', [PatientdiseaseController::class, 'storePatientdisease'])->name('admin-patient-disease-create');
+        Route::get('/admin-patient-disease-edit/{id}', [PatientdiseaseController::class, 'createPatientdisease'])->name('admin-patient-disease-edit');
+        Route::post('/admin-patient-disease-update/{id}', [PatientdiseaseController::class, 'updatePatientdisease'])->name('admin-patient-disease-update');
+        Route::get('/admin-patient-disease-delete/{id}', [PatientdiseaseController::class, 'destroyPatientdisease'])->name('admin-patient-disease-delete');
 
         Route::get('/patient-list',[UserController::class,'patientList'])->name('admin.paitent-list');
         Route::get('/admin-patient-create', [UserController::class, 'createPatient'])->name('admin-patient-create');
@@ -265,7 +273,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/buyer/export/{type}', [BuyerUserController::class,'buyerExport'])->name('superadmin.buyer.export');
 
 
-        /** profile admin side **/
+        /** profile superadmin side **/
 
         Route::get('/profile-edit', [ProfileController::class, 'edit'])->name('superadmin.profile-edit');
 

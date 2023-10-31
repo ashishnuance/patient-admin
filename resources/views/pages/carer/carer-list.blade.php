@@ -25,6 +25,7 @@
   <div class="users-list-table">
     <div class="card">
       <div class="card-content">
+      @include('panels.flashMessages')
         <!-- datatable start -->
           <div class="col s12 m6 l3">
             <div class="input-field">

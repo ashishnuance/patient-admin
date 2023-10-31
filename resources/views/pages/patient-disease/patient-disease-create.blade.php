@@ -8,9 +8,6 @@
 @section('vendor-style')
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2-materialize.css')}}">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 @endsection
 
 {{-- page style --}}
@@ -32,9 +29,9 @@
           <!-- users edit media object ends -->
           <!-- users edit account form start -->
           @include('panels.flashMessages')
-          @if(isset($user_result->id))
+          @if(isset($deceaseResponse->id))
           <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-update'; ?>
-            <form class="formValidate" action="{{route($formUrl,$user_result->id)}}" id="formValidateCompany" method="post">
+            <form class="formValidate" action="{{route($formUrl,$deceaseResponse->id)}}" id="formValidateCompany" method="post">
             {!! method_field('post') !!}
             @else
             <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-create'; ?>
@@ -43,33 +40,11 @@
             @csrf()
             <div class="row">
 
-            <div class="input-field col m6 s12">
-                  <label for="name">{{__('locale.code')}}</label>
-                  <input id="name" class="" name="code" type="text" maxlength="8" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');" data-error=".errorTxt1" value="{{(isset($user_result->code)) ? $user_result->code : $companyCode}}" 
-                  >
-                  <small class="errorTxt1"></small>
-            </div>
-            <div class="col m6 s12">
-                  <label for="type">{{__('locale.select type')}} *</label>
-                  <div class="input-field" style="margin-top:-8px;">
-                  <select name="typeselect" id="myselect">
-                      <?php 
-                      foreach ($roles as $role) {
-                        $isSelected = (isset($user_result->typeselect) && $user_result->typeselect == $role['name']) ? 'selected' : '';
-                        ?>
-                        <option value="<?php echo $role['name'];?>"<?php echo $isSelected; ?>><?php echo $role['name']; ?>
-                        </option>
-                        <?php 
-                      }
-                      ?>
-                    </select>
-                    <small class="errorTxt6"></small>
-                  </div>
-                </div>
-
             
-                
-                <input type="hidden" name="company" value="{{Helper::loginUserCompanyId()}}"/>
+
+            <!-- @if(isset($userType) && $userType!=config('custom.superadminrole'))
+                  <input type="hidden" name="company" value="{{Helper::loginUserCompanyId()}}"/>
+                  @else
                   <div class="col s12 input-field">
                     <select class="error" id="company" name="company" data-error=".errorTxt7" required>
                       <option value="">Choose {{__('locale.code')}}</option>
@@ -82,24 +57,69 @@
                     <label for="company">{{__('locale.Care home code')}}</label>
                     <small class="errorTxt7"></small>
                   </div>
-            
+            @endif -->
+            <div class="input-field col  m6 s12">
+                <label for="disease">{{__('locale.Select disease')}}</label>
+                <br>
+                <div class="input-field">
+                 <select name="disease_code" id="disease" required>
+                  <option value="Select" disabled selected>{{__('locale.Select disease')}} *</option>
+                  @if(isset($deceaseResult) && !empty($deceaseResult))
+                  @foreach($deceaseResult as $decease_val)
+                  
+                  <option value="{{ $decease_val->id }}">{{ $decease_val->name}}</option>
+                    @endforeach
+                  @endif
+                </select>
+                @error('company_id')
+                <div style="color:red">{{$message}}</div>
+                @enderror
+             </div> 
+             </div>
+
+             <div class="input-field col m6 s12">
+                <label for="disease">{{__('locale.Select patient')}}</label>
+                <br>
+                <div class="input-field">
+                 <select name="patient_code" id="patient" required>
+                  <option value="Select" disabled selected>{{__('locale.Select patient')}} *</option>
+                  @if(isset($patientResult) && !empty($patientResult))
+                  @foreach($patientResult as $decease_val)
+                  
+                  <option value="{{ $decease_val->id }}">{{ $decease_val->name}}</option>
+                    @endforeach
+                  @endif
+                </select>
+                @error('company_id')
+                <div style="color:red">{{$message}}</div>
+                @enderror
+             </div> 
+             </div>
+             
+             <input type="hidden" name="c_home_code" value="{{Helper::loginUserCompanyId()}}"/>
+                  <div class="col s12 input-field">
+                    <select class="error" id="company" name="c_home_code" data-error=".errorTxt7" required>
+                      <option value="">Choose {{__('locale.care_home_code')}}</option>
+                      @if(isset($companies) && !empty($companies))
+                        @foreach ($companies as $company_value)
+                          <option value="{{$company_value->id}}">{{$company_value->company_name}} ({{$company_value->company_code}})</option>
+                        @endforeach
+                      @endif
+                    </select>
+                    <label for="company">{{__('locale.Care home code')}}*</label>
+                    <small class="errorTxt7"></small>
+                  </div>
+</div>
            
                 <div class="input-field col m12 s12">
-                  <label for="name">{{__('locale.name')}}*</label>
-                  <input id="name" class="validate" name="name" type="text" data-error=".errorTxt1" value="{{(isset($user_result->name)) ? $user_result->name : old('name')}}">
+                  <label for="name">{{__('locale.remark')}}*</label>
+                  <input id="name" class="validate" name="remark" type="text" data-error=".errorTxt1" value="{{(isset($deceaseResponse->remark)) ? $deceaseResponse->remark : old('remark')}}">
                   <small class="errorTxt1"></small>
                 </div>
-                <div class="input-field col m4 s12">
-                  <label for="address1">{{__('locale.address1')}}</label>
-                  <input id="address1" type="text" name="address1" data-error=".errorTxt3" value="{{(isset($user_result->address1)) ? $user_result->address1 : old('address1')}}">
-                  <small class="errorTxt3"></small>
-                </div>
-                <div class="input-field col m4 s12">
-                  <label for="address2">{{__('locale.address2')}}</label>
-                  <input id="address2" type="text" name="address2" data-error=".errorTxt4" value="{{(isset($user_result->address2) && $user_result->address2!='NULL') ? $user_result->address2 : old('address2')}}">
-                  <small class="errorTxt4"></small>
-                </div>
-                <div class="input-field col m4 s12">
+
+                <input id="name" class="validate" name="updated_by_user" type="hidden" data-error=".errorTxt1" value="{{auth()->user()->id}}" readonly>
+                
+                <!-- <div class="input-field col m4 s12">
                   <label for="address2">{{__('locale.address3')}}</label>
                   <input id="address2" type="text" name="address3" data-error=".errorTxt4" value="{{(isset($user_result->address3) && $user_result->address3!='NULL') ? $user_result->address3 : old('address3')}}">
                   <small class="errorTxt4"></small>
@@ -118,18 +138,7 @@
                     <small class="errorTxt6"></small>
                   </div>
                 </div>
-                <div class="input-field col m6 s12">
-                  <label for="state">{{__('locale.state')}}</label>
-                  <input id="" type="text" name="state" data-error=".errorTxt4" value="{{(isset($user_result->state) && $user_result->state!='NULL') ? $user_result->state : old('state')}}">
-                  <small class="errorTxt4"></small>
-                </div>
-                <div class="input-field col m6 s12">
-                  
-                  <label for="city">{{__('locale.city')}}</label>
-                  <input id="" type="text" name="city" data-error=".errorTxt4" value="{{(isset($user_result->city) && $user_result->city!='NULL') ? $user_result->city : old('city')}}">
-                  <small class="errorTxt4"></small>
-                </div>
-                <!-- <div class="col m6 s12">
+                <div class="col m6 s12">
                   <label for="state">{{__('locale.state')}} *</label>
                   <div class="input-field">
                     <select class="error" id="state" name="state" data-error=".errorTxt7">
@@ -156,7 +165,7 @@
                     </select>
                     <small class="errorTxt8"></small>
                   </div>
-                </div> -->
+                </div>
                 
                 <div class="input-field col m6 s12">
                   <label for="Zip Code">{{__('locale.ZipCode')}}</label>
@@ -165,7 +174,7 @@
                 </div>
                 <div class="input-field col m6 s12">
                   <label for="phone">{{__('locale.phone')}}*</label>
-                  <input id="phone" type="text" class="mobile-valid" name="phone" data-error=".errorTxt3" value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}">
+                  <input id="phone" type="number" name="phone" data-error=".errorTxt3" value="{{(isset($user_result->phone)) ? $user_result->phone : old('phone')}}">
                   <small class="errorTxt3"></small>
                 </div>
                 
@@ -175,45 +184,27 @@
                   <input id="email" type="email" name="email" data-error=".errorTxt3" value="{{(isset($user_result->email)) ? $user_result->email : old('email')}}">
                   <small class="errorTxt3"></small>
                 </div>
-                <div class="input-field col m6 s12">
-                  <label for="password">{{__('locale.password')}}*</label>
-                  <input id="" type="password" name="password2" data-error=".errorTxt3" value="{{(isset($user_result->password2)) ? $user_result->password2 : old('password2')}}">
-                  <small class="errorTxt3"></small>
-                </div>
-                <div class="input-field col m6 s12">
-                  <label for="Zip Code">{{__('locale.Father/Husband name')}}</label>
-                  <input id="zipcode" type="text" name="father_husband_name" data-error=".errorTxt2" value="{{(isset($usermeta[0]->father_husband_name)) ? $usermeta[0]->father_husband_name : old('father_husband_name')}}">
-                  <small class="errorTxt2"></small>
-                </div>
-                <div class="input-field col m6 s12">
-                  <input id="datepicker" class="validate datepicker" name="dob" type="text"  data-error=".errorTxt1" value="{{(isset($usermeta[0]->dob)) ? $usermeta[0]->dob : old('dob')}}">
-                  <label for="name">{{__('locale.dob')}}</label>
-                  <small class="errorTxt1"></small>
-                </div>
-                <div class="input-field col m6 s12">
-                    <select name="marital_status" id="marital_status">
-                    <option value="">Choose {{__('locale.marital_status')}}</option>
-                    <option value="married">{{__('locale.married')}}</option>
-                    <option value="unmarried">{{__('locale.unmarried')}}</option>
+
+                <div class="col m6 s12">
+                  <label for="type">{{__('locale.select type')}} *</label>
+                  <div class="input-field">
+                  <select name="typeselect" id="myselect">
+                      <?php 
+                     // foreach ($roles as $role) {
+                       // $isSelected = (isset($user_result->typeselect) && $user_result->typeselect == $role['name']) ? 'selected' : '';
+                        ?>
+                        <option value="<?php //echo $role['name']; ?>" <?php// echo $isSelected; ?>>
+                          <?php// echo $role['name']; ?>
+                        </option>
+                        <?php 
+                     // }
+                      ?>
                     </select>
-                    <label>{{__('locale.marital_status')}}</label>
+                    <small class="errorTxt6"></small>
+                  </div>
                 </div>
-                <div class="input-field col m6 s12">
-                  <label for="Zip Code">{{__('locale.anniversary')}}</label>
-                  <input id="" type="text" name="anniversary"  id="datepicker" class="validate datepicker" data-error=".errorTxt2" value="{{(isset($usermeta[0]->anniversary)) ? $usermeta[0]->anniversary : old('anniversary')}}">
-                  <small class="errorTxt2"></small>
-                </div>
-                <div class="input-field col m6 s12">
-                  <label for="Zip Code">{{__('locale.special_instructions')}}</label>
-                  <input id="" type="text" name="special_instructions"  data-error=".errorTxt2" value="{{(isset($usermeta[0]->special_instructions)) ? $usermeta[0]->special_instructions : old('special_instructions')}}">
-                  <small class="errorTxt2"></small>
-                </div>
-                
 
-
-                
-
-                <!-- <div class="input-field col m6 s12">
+                 <div class="input-field col m6 s12">
                   <label for="userLicense">{{__('locale.userLicense')}}*</label>
                   <input id="userLicense" type="text" name="address1" data-error=".errorTxt3" value="{{(isset($company_result->userLicense)) ? $company_result->userLicense : old('userLicense')}}">
                   <small class="errorTxt3"></small>
@@ -231,17 +222,16 @@
                   <small class="errorTxt3"></small>
                 </div> -->
 
+ 
 
 
-
-                <div class="input-field col m6 s12">
-                    <select name="option_for_block" id="option_for_block">
-                    <option value="">Choose {{__('locale.option')}}</option>
-                    <option value="1">{{__('locale.yes')}}</option>
+                <!-- <div class="input-field col m12 s12">
+                    <select name="Option">
+                    <option value="1" disabled selected>{{__('locale.yes')}}</option>
                     <option value="0">{{__('locale.no')}}</option>
                     </select>
                     <label>{{__('locale.block')}}</label>
-                </div>
+                </div> -->
                 
                 <div class="input-field col s12">
                   <button class="btn waves-effect waves-light right submit" type="submit" name="action">Submit
@@ -264,38 +254,34 @@
 @section('vendor-script')
 <script src="{{asset('vendors/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('vendors/jquery-validation/jquery.validate.min.js')}}"></script>
-
 @endsection
 
 {{-- page scripts --}}
 @section('page-script')
 <script src="{{asset('js/scripts/page-users.js')}}"></script>
 <script src="{{asset('js/scripts/form-validation.js')}}"></script>
+<?php //print_r($deceaseResult[0]->code) ?>
 <script>
   window.onload=function(){
-    var country_value = "{{(isset($user_result->country) && $user_result->country!='NULL') ? $user_result->country : old('country')}}";
-    var country_value_edit = "{{(isset($user_result->country) && $user_result->country!='NULL') ? $user_result->country : ''}}";
-    var state_value = "{{(isset($user_result->state) && $user_result->state!='NULL') ? $user_result->state : old('state')}}";
-    var city_value = "{{(isset($user_result->city) && $user_result->city!='NULL') ? $user_result->city : old('state')}}";
-    var company_value = "{{(isset($user_result->company[0]->id) && $user_result->company[0]->id!='NULL') ? $user_result->company[0]->id : old('company')}}";
-    var option_for_block = "{{(isset($user_result->option_for_block) && $user_result->option_for_block!='NULL') ? $user_result->option_for_block : old('option_for_block')}}";
-    var marital_status = "{{(isset($usermeta[0]->marital_status) && $usermeta[0]->marital_status!='NULL') ? $usermeta[0]->marital_status : old('marital_status')}}";
-    console.log(state_value);
-    $('#country').val(country_value);
-    $('#country').formSelect();
-    $('#state').val(state_value);
-    $('#state').formSelect();
-    $('#city').val(city_value);
-    $('#city').formSelect();
-    $('#option_for_block').val(option_for_block);
-    $('#option_for_block').formSelect();
-    $('#marital_status').val(marital_status);
-    $('#marital_status').formSelect();
-    $('#company').val(company_value);
-    if(country_value_edit && country_value_edit!=''){
-      $('#company').attr('disabled',true);
-    }
+    var disease = "{{(isset($deceaseResponse->disease_code) && $deceaseResponse->disease_code!='') ? $deceaseResponse->disease_code : old('disease_code')}}";
+    console.log('disease',disease);
+
+    var patient = "{{(isset($deceaseResponse->patient_code) && $deceaseResponse->patient_code!='NULL') ? $deceaseResponse->patient_code : old('patient_code')}}";
+
+    var carehome = "{{(isset($deceaseResponse->c_home_code) && $deceaseResponse->c_home_code!='NULL') ? $deceaseResponse->c_home_code : old('c_home_code')}}";
+    
+    
+    $('#disease').val(disease);
+    $('#disease').formSelect();
+    $('#patient').val(patient);
+    $('#patient').formSelect();
+    $('#company').val(carehome);
     $('#company').formSelect();
+    
+    // if(country_value_edit && country_value_edit!=''){
+    //   $('#company').attr('disabled',true);
+    // }
+    // $('#company').formSelect();
   }
     $(document).ready(function () {
       
@@ -344,35 +330,6 @@
                 }
             });
         });
-
-$('.mobile-valid').on('keypress', function(e) {
-
-var $this = $(this);
-var regex = new RegExp("^[0-9\b]+$");
-var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-// for 10 digit number only
-if ($this.val().length > 9) {
-    e.preventDefault();
-    return false;
-}
-if (e.charCode < 54 && e.charCode > 47) {
-    if ($this.val().length == 0) {
-        e.preventDefault();
-        return false;
-    } else {
-        return true;
-    }
-
-}
-if (regex.test(str)) {
-    return true;
-}
-e.preventDefault();
-return false;
-});
-
-
-
-});
+    });
 </script>
 @endsection

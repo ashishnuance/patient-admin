@@ -144,7 +144,7 @@
       <div class="col s12 m12 l12">
          <div class="card subscriber-list-card animate fadeRight">
             <div class="card-content pb-1">
-               <h4 class="card-title mb-0">Patient List<i class="material-icons float-right">more_vert</i></h4>
+               <!-- <h4 class="card-title mb-0">Patient List<i class="material-icons float-right">more_vert</i></h4> -->
             </div>
             <table class="subscription-table responsive-table highlight">
                <thead>
@@ -202,7 +202,7 @@
       <div class="col s12 m12 l12">
          <div class="card subscriber-list-card animate fadeRight">
             <div class="card-content pb-1">
-               <h4 class="card-title mb-0">Admin List<i class="material-icons float-right">more_vert</i></h4>
+               <!-- <h4 class="card-title mb-0">Admin List<i class="material-icons float-right">more_vert</i></h4> -->
             </div>
             <table class="subscription-table responsive-table highlight">
                <thead>

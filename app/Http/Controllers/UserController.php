@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use App\Models\{Country, State, City};
+use App\Models\{Country, State, City,Usermeta};
 use App\Models\{User,Role};
 use App\Models\Company;
 use App\Models\CompanyUserMapping;
@@ -40,7 +40,7 @@ class UserController extends Controller
         $deleteUrl = 'superadmin.company-admin-delete';
         $perpage = config('app.perpage');
         $breadcrumbs = [
-            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.Company Admin')], ['name' => __('locale.Company Admin').__('locale.List')]];
+            ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.Company Admin')], ['name' => __('locale.Company Admin').__('locale.list')]];
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
         $pageTitle = 'User master';
@@ -112,7 +112,7 @@ class UserController extends Controller
     public function store(Request $request){
         
         
-        //echo '<pre>';print_r($request->all()); exit();
+        echo '<pre>';print_r($request->all()); exit();
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
             'password2'=>'required|max:250',
@@ -134,7 +134,7 @@ class UserController extends Controller
         $request['password'] = Hash::make($random_password);
         
 // Insert $date into the database
-
+        
         $user = User::create($request->all());
         
         $id = $user->id;
@@ -611,7 +611,7 @@ class UserController extends Controller
        // echo"hi admin patient create";die;
         $userType = auth()->user()->role()->first()->name;
         $formUrl = 'admin-patient-create';
-        $user_result=$states=$cities=false;
+        $user_result=$states=$cities=$usermeta=false;
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.patient')], ['name' => (($id!='') ? __('locale.Edit') : __('locale.Create') )]];
         //Pageheader set true for breadcrumbs
@@ -623,7 +623,10 @@ class UserController extends Controller
         $pageTitle = __('locale.patient'); 
         if($id!=''){
             $permission_arr = [];
+            //echo $id;
             $user_result = User::with(['company','permission'])->find($id);
+            $usermeta=Usermeta::where('u_id','=',$id)->get();
+            
             if($user_result->permission->count()>0){
                 foreach($user_result->permission as $permission_val){
                     $permission_arr[$permission_val->name][] = $permission_val->guard_name;
@@ -632,20 +635,20 @@ class UserController extends Controller
             $user_result->permission = $permission_arr;
             // echo '<pre>';print_r($user_result);exit();
             if($user_result){
-            $states = State::where('country_id',$user_result->country)->get(["name", "id"]);
-            $cities = City::where('state_id',$user_result->state)->get(["name", "id"]);
+                $states = State::where('country_id',$user_result->country)->get(["name", "id"]);
+                $cities = City::where('state_id',$user_result->state)->get(["name", "id"]);
             }
             $formUrl = 'admin-patient-update';
         }
-        // dd($user_result);
-        return view('pages.admin-patient.admin-patient-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'user_result'=>$user_result,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'companyCode'=>$companyCode,'roles'=>$roles]);
+       // dd($usermeta);
+        return view('pages.admin-patient.admin-patient-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'user_result'=>$user_result,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'companyCode'=>$companyCode,'roles'=>$roles,'usermeta'=>$usermeta]);
     }
     
     
     public function storePatient(Request $request){
         
         
-        //echo '<pre>';print_r($request->all()); exit();
+       //echo '<pre>';print_r($request->all()); exit();
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:250',
             'password2'=>'required|max:250',
@@ -666,6 +669,17 @@ class UserController extends Controller
         $random_password ='123456';
         $request['password'] = Hash::make($random_password);
         $user = User::create($request->all());
+       // echo"<pre>";print_r($user);die;
+        $usermeta= new Usermeta;
+        $usermeta->u_id=$user['id'];
+        $usermeta->care_home_code=$request['company'];
+        $usermeta->father_husband_name=$request['father_husband_name'];
+        $usermeta->dob=$request['dob'];
+        $usermeta->marital_status=$request['marital_status'];
+        $usermeta->anniversary=$request['anniversary'];
+        $usermeta->special_instructions=$request['special_instructions'];
+        $usermeta->updated_by_user=auth()->user()->id;
+        $usermeta->save();
         
         $id = $user->id;
         //echo $role->id;die;
@@ -782,7 +796,30 @@ class UserController extends Controller
             unset($request['password']);
         }
 
-        $user = User::where('id',$id)->update($request->all());
+        $user = User::where('id',$id)->update([
+            "code"=>$request['code'],
+            "typeselect"=>$request['typeselect'],
+            "name"=>$request['name'],
+            "address1"=>$request['address1'],
+            "address2"=>$request['address2'],
+            "address3"=>$request['address3'],
+            "country"=>$request['country'],
+            "state"=>$request['state'],
+            "city"=>$request['city'],
+            "zipcode"=>$request['zipcode'],
+            "phone"=>$request['phone'],
+            "email"=>$request['email'],
+            "password2"=>$request['password2'],
+            "option_for_block"=>$request['option_for_block']
+        ]);
+        $usermeta = Usermeta::where('u_id',$id)->update([
+            "father_husband_name"=>$request['father_husband_name'],
+            "dob"=>$request['dob'],
+            "marital_status"=>$request['marital_status'],
+            "anniversary"=>$request['anniversary'],
+            "special_instructions"=>$request['special_instructions'],
+        ]);
+
 
         //$backurl = 'superadmin.'.strtolower($request->typeselect).'-list';
         // superadmin.paitent-list
