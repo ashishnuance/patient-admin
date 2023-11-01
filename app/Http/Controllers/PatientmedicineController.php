@@ -131,7 +131,7 @@ class PatientmedicineController extends Controller
         unset($request['_token']);
         unset($request['_method']);
         unset($request['action']);
-        $patient_disease = Patient_disease::where('id',$id)->update($request->all());
+        $patient_disease = Patient_medicine::where('id',$id)->update($request->all());
         // dd($request->all());
         // $MappingData = [];
         // for($p=0;$p<count($request->inventory_id);$p++){
@@ -142,7 +142,7 @@ class PatientmedicineController extends Controller
         //     DeceaseInventoryMapping::insert($MappingData);
         //     return redirect()->route('inventory-mapping.index')->with('success',__('locale.success common update'));
         // }
-        return redirect()->route('admin.patient-disease-list')->with('success',__('locale.patient_disease_update'));
+        return redirect()->route('admin.patient-medicine-list')->with('success',__('locale.patient_medicine_update'));
     }
 
     public function destroyPatientmedicine($id)
