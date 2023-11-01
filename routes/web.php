@@ -40,6 +40,8 @@ use App\Http\Controllers\supplierController;
 use App\Http\Controllers\StockInController;
 use App\Http\Controllers\StockOutController;
 use App\Http\Controllers\PatientdiseaseController;
+use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\PatientmedicineController;
 
 
 
@@ -76,6 +78,13 @@ Route::group(['middleware' => ['auth']], function () {
 
    // Route::get('/admin', [DashboardController::class, 'dashboardadminModern'])->name('admin.dashboard');
     Route::prefix('admin')->middleware(['admin'])->group(function () { 
+
+        Route::get('/patient-medicine-list',[PatientmedicineController::class,'patientmedicineList'])->name('admin.patient-medicine-list');
+        Route::get('/admin-patient-medicine-create', [PatientmedicineController::class, 'createPatientmedicine'])->name('admin-patient-medicine-create');
+        Route::post('/admin-patient-medicine-create', [PatientmedicineController::class, 'storePatientmedicine'])->name('admin-patient-medicine-create');
+        Route::get('/admin-patient-medicine-edit/{id}', [PatientmedicineController::class, 'createPatientmedicine'])->name('admin-patient-medicine-edit');
+        Route::post('/admin-patient-medicine-update/{id}', [PatientmedicineController::class, 'updatePatientmedicine'])->name('admin-patient-medicine-update');
+        Route::get('/admin-patient-medicine-delete/{id}', [PatientmedicineController::class, 'destroyPatientmedicine'])->name('admin-patient-medicine-delete');
 
         Route::get('/patient-disease-list',[PatientdiseaseController::class,'patientdiseaseList'])->name('admin.patient-disease-list');
         Route::get('/admin-patient-disease-create', [PatientdiseaseController::class, 'createPatientdisease'])->name('admin-patient-disease-create');
@@ -171,6 +180,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/inventory-edit/{id?}', [InventoryController::class, 'create'])->name('inventory-edit');
         Route::post('/inventory-update/{id?}', [InventoryController::class, 'update'])->name('inventory-update');
         Route::get('/inventory-delete/{id}', [InventoryController::class, 'destroy'])->name('inventory-delete');
+
+         /* new route for medicine */
+         Route::get('/medicine-list', [MedicineController::class, 'index'])->name('medicine-list');
+         Route::get('/medicine-create', [MedicineController::class, 'create'])->name('medicine-create');
+         Route::post('/medicine-create', [MedicineController::class, 'store'])->name('medicine-create');
+         Route::get('/medicine-edit/{id?}', [MedicineController::class, 'create'])->name('medicine-edit');
+         Route::post('/medicine-update/{id?}', [MedicineController::class, 'update'])->name('medicine-update');
+         Route::get('/medicine-delete/{id}', [MedicineController::class, 'destroy'])->name('medicine-delete');
 
         /* new route for decease inventory mapping */
 

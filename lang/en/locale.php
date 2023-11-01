@@ -405,6 +405,15 @@ return [
     "remark"=>"Remark",
     "create_patient_disease"=>"Patient disease",
     "patient_disease_update"=>"Patient disease updated successfully",
+    "medicinemaster"=>"Medicine master",
+    "medicine_name"=>"Medicine name",
+    "medicine_created_successfully"=>"Medicine created successfully",
+    "medicine_update_success"=>"Medicine updated successfully",
+    "patient_medicine"=>"Patient medicine",
+    "Select medicine"=>"Select medicine",
+    "doses"=>"Doses",
+    "create_patient_medicine"=>"Create patient medicine",
+    "patient_medicine_created_successfully"=>"Patient medicine created successfully",
 
 
 

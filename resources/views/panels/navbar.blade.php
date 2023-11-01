@@ -54,7 +54,7 @@
           </a>
         </li>
         <li>
-          <a href="{{asset('logout')}}" class="grey-text text-darken-1" onclick="return confirm('Are you sure you want to logout')">
+          <a href="#LogoutModal" class="grey-text text-darken-1 modal-trigger" >
             <i class="material-icons">keyboard_tab</i>
             Logout
           </a>
@@ -230,3 +230,36 @@
     </a>
   </li>
 </ul>
+<div id="LogoutModal" class="modal fade admin-modal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <!-- Modal content-->
+      <div class="modal-header" style="display:none;"><h6 class="business-name">Logout</h6>
+          <button class="modal-close btn">
+                <i class="material-icons">close</i>
+        </button></div>
+      <div class="modal-content">
+          <div class="modal-body">
+              <div class="InnerContentLogout">
+
+                  <!-- <i class="material-icons">new_releases</i> -->
+
+                  <div class="text-center textStyle">
+                      <h3>Are you leaving? </h2>
+                          <p>Are you sure you want to logout</p>
+                  </div>
+                  <div class="Btns">
+                  
+                      <a href="javascript:void();" class="modal-close btn">Cancel</a>
+                      <a href="{{route('logout')}}" class="btn btn-primary btn-theme">Logout</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+  </script>

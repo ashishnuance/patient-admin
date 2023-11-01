@@ -168,6 +168,16 @@
       "icon": "healing"
     },
 
+    {
+      "for" :["superadmin"],
+      "url": "superadmin/medicine-list",
+      "name": "medicinemaster",
+      "i18n": "Profile",
+      "class": "waves-effect waves-cyan",
+      "slug": "Profile",
+      "icon": "healing"
+    },
+
     
 
     {
@@ -263,7 +273,7 @@
         },
         {
           "for" :["Admin"],
-          "url": "admin/m",
+          "url": "admin/patient-medicine-list",
           "name": "Patient medicine",
           "i18n": "Patient medicine",
           "class": "waves-effect waves-cyan",

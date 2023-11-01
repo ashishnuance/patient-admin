@@ -56,6 +56,7 @@ License: You must have a valid license purchased only from themeforest(the above
   </div>
   {{-- vendor scripts and page scripts included --}}
   @include('panels.scripts')
+ 
 
 </body>
 

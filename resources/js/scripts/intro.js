@@ -4,7 +4,7 @@ $(window).on('load', function () {
         'onOpenEnd': initCarouselModal,
     });
 
-    setTimeout(function () { $('.modal').modal('open'); }, 1800)
+    // setTimeout(function () { $('.modal').modal('open'); }, 1800)
 
 
     $('.btn-next').on('click', function (e) {
