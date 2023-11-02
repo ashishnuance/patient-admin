@@ -39,8 +39,8 @@ class PatientscheduleController extends Controller
         // )->select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
         $roles=Role::get(["id","name"]);
         $patientscheduleResult = Patient_schedule::with(['patientname','carername','alternatecarername','role','comp'])->where(function ($company_q) {
-            $company_q->where('carer_assigned_by', '=',auth()->user()->id);})->select(['patient_schedule.id','patient_id','date','time','carer_code','carer_assigned_by','alternate_carer_code','remarks','attended','attended_remarks','attended_on_time'])->get();
-       echo"<pre>";print_r($patientscheduleResult);die;
+            $company_q->where('carer_assigned_by', '=',auth()->user()->id);})->select(['patient_schedule.id','patient_id','date','time','carer_code','carer_assigned_by','alternate_carer_code','remarks','attended','attended_remarks','attended_on_time','company'])->orderBy('id','desc');
+       //echo"<pre>";print_r($patientscheduleResult);die;
         $editUrl = 'admin-patient-schedule-edit';
         if($request->ajax()){
             // $patientscheduleResult = $patientscheduleResult->when($request->seach_term, function($q)use($request){
@@ -81,7 +81,7 @@ class PatientscheduleController extends Controller
         $pageTitle = __('locale.Patient schedule name'); 
         if($id!=''){
             //$permission_arr = [];
-            $patient_schedule_result = Patient_schedule::with('company')->find($id);
+            $patient_schedule_result = Patient_schedule::with('comp')->find($id);
             // if($user_result->permission->count()>0){
             //     foreach($user_result->permission as $permission_val){
             //         $permission_arr[$permission_val->name][] = $permission_val->guard_name;

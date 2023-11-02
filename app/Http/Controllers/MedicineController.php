@@ -37,7 +37,7 @@ class MedicineController extends Controller
         //         $q->where('name', 'company-admin');
         //     }
         // )->select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
-        $medicineResult = Medicine::select(['id','medicine_name'])->orderBy('id','DESC');
+        $medicineResult = Medicine::select(['id','medicine_name','quantity','company'])->orderBy('id','DESC');
         $editUrl = 'medicine-edit';
         if($request->ajax()){
             $medicineResult = $medicineResult->when($request->seach_term, function($q)use($request){
@@ -83,7 +83,7 @@ class MedicineController extends Controller
            // }
             $formUrl = 'medicine-update';
         }
-        // dd($user_result);
+        // dd($medicineResult);
         return view('pages.medicine.medicine-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'medicineResult'=>$medicineResult,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'companyCode'=>$companyCode,'roles'=>$roles]);
     }
     public function store(Request $request){
@@ -206,6 +206,8 @@ class MedicineController extends Controller
         // return redirect()->route('decease-list')->with('success',__('locale.company_admin_update_success'));
         $medicine = Medicine::where('id', $id)->update([
          'medicine_name' => $request->input('medicine_name'),
+         'company'=>$request->input('company'),
+         'quantity'=>$request->input('quantity'),
         //  'type' => $request->input('type'),
         //  'option'=>$request->input('option'),
         //  'code'=>$inventory->code,

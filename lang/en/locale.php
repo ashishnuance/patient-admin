@@ -418,6 +418,10 @@ return [
     "attended"=>"Attended",
     "remarks"=>"Remarks",
     "attended_remarks"=>"Attended remarks",
+    "supplier"=>"Supplier",
+    "supplier_created_successfully"=>"Supplier created successfully",
+    "supplier_update_success"=>"Supplier updated successfully",
+    "zipcode"=>"Zipcode",
 
 
 

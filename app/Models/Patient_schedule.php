@@ -33,7 +33,7 @@ class Patient_schedule extends Model
 
     public function comp()
     {
-        return $this->hasOne(User::class, 'id','patient_id','company');
+        return $this->belongsTo(Company::class, 'company');
     }
 
 

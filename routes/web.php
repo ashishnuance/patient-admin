@@ -128,10 +128,20 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('manager')->middleware(['manager'])->group(function () { 
-        Route::get('/patient-list',[UserController::class,'patientList'])->name('manager.paitent-list');
+        Route::get('/manager-patient-list',[UserController::class,'managerpatientList'])->name('manager.paitent-list');
+        Route::get('/manager-patient-create', [UserController::class, 'managercreatePatient'])->name('manager-patient-create');
+        Route::post('/manager-patient-create', [UserController::class, 'managerstorePatient'])->name('manager-patient-create');
+        Route::get('/manager-patient-edit/{id}', [UserController::class, 'managercreatePatient'])->name('manager-patient-edit');
+        Route::post('/manager-patient-update/{id}', [UserController::class, 'managerupdatePatient'])->name('manager-patient-update');
+        Route::get('/manager-patient-delete/{id}', [UserController::class, 'managerdestroyPatient'])->name('manager-patient-delete');
 
         /** new route for carer **/
-       // Route::get('/carer-list',[UserController::class,'carerList'])->name('manager.carer-list');
+        Route::get('/manager-carer-list',[UserController::class,'managercarerList'])->name('manager.carer-list');
+        Route::get('/manager-carer-create', [UserController::class, 'managercreateCarer'])->name('manager-carer-create');
+        Route::post('/manager-carer-create', [UserController::class, 'managerstoreCarer'])->name('manager-carer-create');
+        Route::get('/manager-carer-edit/{id}', [UserController::class, 'managercreateCarer'])->name('manager-carer-edit');
+        Route::post('/manager-carer-update/{id}', [UserController::class, 'managerupdateCarer'])->name('manager-carer-update');
+        Route::get('/manager-carer-delete/{id}', [UserController::class, 'managerdestroyCarer'])->name('manager-carer-delete');
 
         
     });
@@ -160,7 +170,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/company-user-list', [UserController::class, 'usersList'])->name('superadmin.company-user-list');
         Route::post('/company-user-create', [UserController::class, 'userStore'])->name('superadmin.company-user-create');
         Route::get('/company-user-delete/{id}', [UserController::class, 'destroyUser'])->name('superadmin.company-user-delete');
-
+        
+        /* new route for supplier master*/
+        Route::get('/supplier-list', [supplierController::class, 'index'])->name('supplier-list');
+        Route::get('/supplier-create', [supplierController::class, 'create'])->name('supplier-create');
+        Route::post('/supplier-create', [supplierController::class, 'store'])->name('supplier-create');
+        Route::get('/supplier-edit/{id}', [supplierController::class, 'create'])->name('supplier-edit');
+        Route::post('/supplier-update/{id}', [supplierController::class, 'update'])->name('supplier-update');
+        Route::get('/supplier-delete/{id}', [supplierController::class, 'destroy'])->name('supplier-delete');
 
 
         Route::get('/admin-list',[UserController::class,'adminList'])->name('superadmin.admin-list');
@@ -244,7 +261,7 @@ Route::group(['middleware' => ['auth']], function () {
        // Route::get('/paitent-create', [PaitentController::class, 'paitent'])->name('superadmin.paitent-create');
 
         /** Supplier routes  */
-        Route::get('/supplier-create', [supplierController::class, 'supplier'])->name('superadmin.supplier-create');
+        //Route::get('/supplier-create', [supplierController::class, 'supplier'])->name('superadmin.supplier-create');
 
          /** StockIn routes  */
          //Route::get('/stockin-create', [StockInController::class, 'stockin'])->name('superadmin.stockin-create');

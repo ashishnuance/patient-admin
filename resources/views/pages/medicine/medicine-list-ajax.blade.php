@@ -3,8 +3,8 @@
     <tr>
       <th>{{__('locale.s.no')}}</th>
       <th>{{__('locale.name')}}</th>
-      <!-- <th>{{__('locale.type')}}</th>
-      <th>{{__('locale.option')}}</th> -->
+      <th>{{__('locale.care_home_code')}}</th>
+      <th>{{__('locale.quantity')}}</th>
       <th>{{__('locale.action')}}</th>
     </tr>
   </thead>
@@ -14,8 +14,10 @@
     <tr>
     <td>{{$user_key+1}}</td>
     <td>{{$user_value->medicine_name}}</td>
-    <!-- <td>{{$user_value->type}}</td>
-    <td>{{(isset($user_value->option)) ? $user_value->option : ''}}</td> -->
+    @if(isset($user_value->comp->company_name) && $user_value->comp->company_name!='')
+    <td>{{$user_value->comp->company_name}}</td>
+    @endif
+    <td>{{$user_value->quantity}}</td>
     
     
     

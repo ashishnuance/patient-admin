@@ -9,5 +9,10 @@ class Medicine extends Model
 {
     use HasFactory;
     protected $table="medicine";
-    protected $fillable=["medicine_name"];
+    protected $fillable=["company","medicine_name","quantity"];
+
+    public function comp()
+    {
+        return $this->belongsTo(Company::class, 'company');
+    }
 }

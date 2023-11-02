@@ -182,7 +182,7 @@
 
     {
       "for" :["superadmin"],
-      "url": "superadmin/supplier-create",
+      "url": "superadmin/supplier-list",
       "name": "supplierMaster",
       "i18n": "Profile",
       "class": "waves-effect waves-cyan",
@@ -313,7 +313,7 @@
     },
     {
       "for" :["Manager"],
-      "url": "manager/patient-list",
+      "url": "manager/manager-patient-list",
       "name": "Patient",
       "i18n": "Patient",
       "permission_name":"Dashboard",
@@ -324,7 +324,7 @@
     
     {
       "for" :["Manager"],
-      "url": "manager/carer-list",
+      "url": "manager/manager-carer-list",
       "name": "Carer",
       "i18n": "Carer",
       "permission_name":"Dashboard",
