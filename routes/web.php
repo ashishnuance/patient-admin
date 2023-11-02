@@ -42,6 +42,7 @@ use App\Http\Controllers\StockOutController;
 use App\Http\Controllers\PatientdiseaseController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientmedicineController;
+use App\Http\Controllers\PatientscheduleController;
 
 
 
@@ -78,6 +79,13 @@ Route::group(['middleware' => ['auth']], function () {
 
    // Route::get('/admin', [DashboardController::class, 'dashboardadminModern'])->name('admin.dashboard');
     Route::prefix('admin')->middleware(['admin'])->group(function () { 
+
+        Route::get('/patient-schedule-list',[PatientscheduleController::class,'patientscheduleList'])->name('admin.patient-schedule-list');
+        Route::get('/admin-patient-schedule-create', [PatientscheduleController::class, 'createPatientschedule'])->name('admin-patient-schedule-create');
+        Route::post('/admin-patient-schedule-create', [PatientscheduleController::class, 'storePatientschedule'])->name('admin-patient-schedule-create');
+        Route::get('/admin-patient-schedule-edit/{id}', [PatientscheduleController::class, 'createPatientschedule'])->name('admin-patient-schedule-edit');
+        Route::post('/admin-patient-schedule-update/{id}', [PatientscheduleController::class, 'updatePatientschedule'])->name('admin-patient-schedule-update');
+        Route::get('/admin-patient-schedule-delete/{id}', [PatientscheduleController::class, 'destroyPatientschedule'])->name('admin-patient-schedule-delete');
 
         Route::get('/patient-medicine-list',[PatientmedicineController::class,'patientmedicineList'])->name('admin.patient-medicine-list');
         Route::get('/admin-patient-medicine-create', [PatientmedicineController::class, 'createPatientmedicine'])->name('admin-patient-medicine-create');

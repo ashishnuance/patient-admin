@@ -282,7 +282,7 @@
         },
         {
           "for" :["Admin"],
-          "url": "admin/s",
+          "url": "admin/patient-schedule-list",
           "name": "Patient schedule",
           "i18n": "Patient schedule",
           "class": "waves-effect waves-cyan",

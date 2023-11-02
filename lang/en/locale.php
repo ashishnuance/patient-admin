@@ -415,6 +415,9 @@ return [
     "create_patient_medicine"=>"Create patient medicine",
     "patient_medicine_created_successfully"=>"Patient medicine created successfully",
     "patient_medicine_update"=>"Patient medicine created successfully",
+    "attended"=>"Attended",
+    "remarks"=>"Remarks",
+    "attended_remarks"=>"Attended remarks",
 
 
 

@@ -14,9 +14,15 @@
     @foreach($medicineResult as $user_key => $user_value)
     <tr>
     <td>{{$user_key+1}}</td>
+    @if(isset($user_value->medicine->medicine_name) && $user_value->medicine->medicine_name!='')
     <td>{{$user_value->medicine->medicine_name}}</td>
+    @endif
+    @if(isset($user_value->patientname->name) && $user_value->patientname->name!='')
     <td>{{$user_value->patientname->name}}</td>
+    @endif
+    @if(isset($user_value->carehome->company_name) && $user_value->carehome->company_name!='')
     <td>{{$user_value->carehome->company_name}}</td>
+    @endif
     <td>{{$user_value->remark}}</td>
     
     

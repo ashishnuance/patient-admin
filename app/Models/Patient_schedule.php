@@ -9,7 +9,7 @@ class Patient_schedule extends Model
 {
     use HasFactory;
     protected $table="patient_schedule";
-    protected $fillable=['patient_id','date','time','carer_code','carer_assigned_by','alternate_carer_code'];
+    protected $fillable=['patient_id','date','time','carer_code','carer_assigned_by','alternate_carer_code','remarks','attended_remarks','attended','attended_on_time','company'];
 
     public function patientname()
     {
@@ -29,6 +29,11 @@ class Patient_schedule extends Model
     public function role()
     {
         return $this->hasOne(User::class, 'id', 'carer_assigned_by');
+    }
+
+    public function comp()
+    {
+        return $this->hasOne(User::class, 'id','patient_id','company');
     }
 
 
