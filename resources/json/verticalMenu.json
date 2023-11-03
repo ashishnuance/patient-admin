@@ -365,17 +365,18 @@
       
     },
     {
-      "for" :["admin"], 
+      "for" :["Admin"], 
         "url": "javascript:void(0)",
         "name": "master",
         "i18n": "master",
+        "permission_name":"Dashboard",
         "class": "collapsible-header waves-effect waves-cyan",
         "slug": "company-admin",
         "icon": "person_outline",
         "submenu":[
       {
-        "for" :["admin"],
-        "url": "superadmin/decease-list",
+        "for" :["Admin"],
+        "url": "admin/admin-decease-list",
         "name": "diseasemaster",
         "i18n": "Profile",
         "class": "waves-effect waves-cyan",
@@ -384,8 +385,8 @@
       },
   
       {
-        "for" :["admin"],
-        "url": "superadmin/inventory-list",
+        "for" :["Admin"],
+        "url": "admin/admin-inventory-list",
         "name": "inventorymaster",
         "i18n": "Profile",
         "class": "waves-effect waves-cyan",
@@ -395,7 +396,7 @@
       
   
       {
-        "for" :["admin"],
+        "for" :["Admin"],
         "url": "superadmin/inventory-mapping",
         "name": "disease-inventory",
         "i18n": "Profile",
@@ -405,7 +406,7 @@
       },
   
       {
-        "for" :["admin"],
+        "for" :["Admin"],
         "url": "superadmin/medicine-list",
         "name": "medicinemaster",
         "i18n": "Profile",
@@ -417,8 +418,8 @@
       
   
       {
-        "for" :["admin"],
-        "url": "superadmin/supplier-list",
+        "for" :["Admin"],
+        "url": "admin/admin-supplier-list",
         "name": "supplierMaster",
         "i18n": "Profile",
         "class": "waves-effect waves-cyan",
@@ -427,7 +428,7 @@
       },
   
       {
-        "for" :["admin"],
+        "for" :["Admin"],
         "url": "superadmin/stockin-list",
         "name": "stockIn",
         "i18n": "Profile",
@@ -437,7 +438,7 @@
       },
   
       {
-        "for" :["admin"],
+        "for" :["Admin"],
         "url": "superadmin/stockout-list",
         "name": "stockOut",
         "i18n": "Profile",

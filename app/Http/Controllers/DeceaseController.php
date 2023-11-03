@@ -25,7 +25,15 @@ class DeceaseController extends Controller
         //echo"index";die;
         $userType = auth()->user()->role()->first()->name;
         $listUrl = 'company-admin-list';
+        if($userType=="Admin")
+        {
+            $listUrl = 'admin-decease-list';
+        }
         $deleteUrl = 'decease-delete';
+        if($userType=="Admin")
+        {
+            $deleteUrl = 'admin-decease-delete';
+        }
         $perpage = config('app.perpage');
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.disease')], ['name' => __('locale.disease').__('locale.List')]];
@@ -38,7 +46,15 @@ class DeceaseController extends Controller
         //     }
         // )->select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
         $deceaseResult = Decease::select(['id','code','name','symptoms','note'])->orderBy('id','DESC');
+        if(auth()->user()->role()->first()->name=="Admin")
+        {
+            $deceaseResult=Decease::select(['id','code','name','symptoms','note'])->orderBy('id','DESC');
+        }
         $editUrl = 'decease-edit';
+        if($userType=="Admin")
+        {
+            $editUrl = 'admin-decease-edit';
+        }
         if($request->ajax()){
             $deceaseResult = $deceaseResult->when($request->seach_term, function($q)use($request){
                 $q->where('id', 'like', '%'.$request->seach_term.'%')
@@ -83,8 +99,16 @@ class DeceaseController extends Controller
            // if($user_result){
             //$states = State::where('country_id',$user_result->country)->get(["name", "id"]);
            // $cities = City::where('state_id',$user_result->state)->get(["name", "id"]);
+           if($userType=="superadmin")
+            {
+                $formUrl = 'decease-update';
+            }
+            if($userType=="Admin")
+            {
+            $formUrl = 'admin-decease-update';
+            }
            // }
-            $formUrl = 'decease-update';
+           // $formUrl = 'decease-update';
         }
         // dd($user_result);
         return view('pages.decease.decease-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'deceaseResult'=>$deceaseResult,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'companyCode'=>$companyCode,'roles'=>$roles]);
@@ -137,8 +161,16 @@ class DeceaseController extends Controller
         //         Permission::insert($permissionInsert);
         //     }
         // }
+        if(auth()->user()->role()->first()->name=="superadmin")
+        {
+            $backUrl='decease-list';
+        }
+        if(auth()->user()->role()->first()->name=="Admin")
+        {
+            $backUrl='admin-decease-list';
+        }
         
-        return redirect()->route('decease-list')->with('success',__('locale.disease_created_successfully'));
+        return redirect()->route($backUrl)->with('success',__('locale.disease_created_successfully'));
     }
 
     public function update(Request $request,$id){
@@ -226,13 +258,17 @@ class DeceaseController extends Controller
         'code'=>$decease->code,
         // Add other columns and values as needed
     ]);
-    
+    if(auth()->user()->role()->first()->name=="superadmin")
+        {
+            $backUrl='decease-list';
+        }
+        if(auth()->user()->role()->first()->name=="Admin")
+        {
+            $backUrl='admin-decease-list';
+        }
     // Check if the update was successful
-    if ($decease) {
-        return redirect()->route('decease-list')->with('success', __('locale.company_admin_update_success'));
-    } else {
-        return redirect()->back()->with('error', 'Failed to update decease')->withInput();
-    }
+    return redirect()->route($backUrl)->with('success', __('locale.company_admin_update_success'));
+    
     
     }
 

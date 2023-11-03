@@ -25,7 +25,15 @@ class InventoryController extends Controller
         //echo"index inventory";die;
         $userType = auth()->user()->role()->first()->name;
         $listUrl = 'company-admin-list';
+        if($userType=="Admin")
+        {
+            $listUrl = 'admin-inventory-list';
+        }
         $deleteUrl = 'inventory-delete';
+        if($userType=="Admin")
+        {
+            $deleteUrl = 'admin-inventory-delete';
+        }
         $perpage = config('app.perpage');
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.inventory')], ['name' => __('locale.inventory').__('locale.List')]];
@@ -38,7 +46,16 @@ class InventoryController extends Controller
         //     }
         // )->select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
         $inventoryResult = Inventory::select(['id','code','name','type','option'])->orderBy('id','DESC');
+        if(auth()->user()->role()->first()->name=="Admin")
+        {
+          $inventoryResult = Inventory::select(['id','code','name','type','option'])->orderBy('id','DESC');
+
+        }
         $editUrl = 'inventory-edit';
+        if($userType=="Admin")
+        {
+            $editUrl = 'admin-inventory-edit';
+        }
         if($request->ajax()){
             $inventoryResult = $inventoryResult->when($request->seach_term, function($q)use($request){
                 $q->where('id', 'like', '%'.$request->seach_term.'%')
@@ -73,6 +90,14 @@ class InventoryController extends Controller
         if($id!=''){
             //$permission_arr = [];
             $inventoryResult = Inventory::find($id);
+            if($userType=="superadmin")
+            {
+                $formUrl = 'inventory-update';
+            }
+            if($userType=="Admin")
+            {
+            $formUrl = 'admin-inventory-update';
+            }
             // if($user_result->permission->count()>0){
             //     foreach($user_result->permission as $permission_val){
             //         $permission_arr[$permission_val->name][] = $permission_val->guard_name;
@@ -84,7 +109,7 @@ class InventoryController extends Controller
             //$states = State::where('country_id',$user_result->country)->get(["name", "id"]);
            // $cities = City::where('state_id',$user_result->state)->get(["name", "id"]);
            // }
-            $formUrl = 'inventory-update';
+            
         }
         // dd($user_result);
         return view('pages.inventory.inventory-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'inventoryResult'=>$inventoryResult,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'companyCode'=>$companyCode,'roles'=>$roles]);
@@ -136,8 +161,16 @@ class InventoryController extends Controller
         //         Permission::insert($permissionInsert);
         //     }
         // }
+        if(auth()->user()->role()->first()->name=="superadmin")
+        {
+            $backUrl='inventory-list';
+        }
+        if(auth()->user()->role()->first()->name=="Admin")
+        {
+            $backUrl='admin-inventory-list';
+        }
         
-        return redirect()->route('inventory-list')->with('success',__('locale.inventory_created_successfully'));
+        return redirect()->route($backUrl)->with('success',__('locale.inventory_created_successfully'));
     }
 
     public function update(Request $request,$id)
@@ -219,13 +252,18 @@ class InventoryController extends Controller
         'code'=>$inventory->code,
         // Add other columns and values as needed
     ]);
+    if(auth()->user()->role()->first()->name=="superadmin")
+        {
+            $backUrl='inventory-list';
+        }
+        if(auth()->user()->role()->first()->name=="Admin")
+        {
+            $backUrl='admin-inventory-list';
+        }
     
     // Check if the update was successful
-    if ($inventory) {
-        return redirect()->route('inventory-list')->with('success', __('locale.company_admin_update_success'));
-    } else {
-        return redirect()->back()->with('error', 'Failed to update decease')->withInput();
-    }
+    return redirect()->route($backUrl)->with('success', __('locale.company_admin_update_success'));
+    
     
     }
     

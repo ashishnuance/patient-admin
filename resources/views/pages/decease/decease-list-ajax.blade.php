@@ -24,7 +24,14 @@
         
       <a href="{{route($editUrl,$user_value->id)}}"><i class="material-icons">edit</i></a>
       @endif
+      @if($editUrl=='admin-decease-edit')
+        
+        <a href="{{route($editUrl,$user_value->id)}}"><i class="material-icons">edit</i></a>
+      @endif
       @if($deleteUrl=='decease-delete')
+      <a href="{{route($deleteUrl,$user_value->id)}}" onclick="return confirm('Are you sure you want to delete this item')"><i class="material-icons">delete</i></a>
+      @endif
+      @if($deleteUrl=='admin-decease-delete')
       <a href="{{route($deleteUrl,$user_value->id)}}" onclick="return confirm('Are you sure you want to delete this item')"><i class="material-icons">delete</i></a>
       @endif
     </td>      

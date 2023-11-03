@@ -26,9 +26,18 @@ class supplierController extends Controller
         $userType = auth()->user()->role()->first()->name;
        
         $paginationUrl = 'supplier-list';
+        $listUrl='supplier-list';
+        if($userType=="Admin")
+        {
+            $listUrl = 'admin-supplier-list';
+        }
        
         
         $deleteUrl = 'supplier-delete';
+        if($userType=="Admin")
+        {
+            $deleteUrl = 'admin-supplier-delete';
+        }
         $perpage = config('app.perpage');
         $breadcrumbs = [
             ['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => __('locale.supplier')], ['name' => __('locale.supplier').__('locale.list')]];
@@ -41,7 +50,16 @@ class supplierController extends Controller
         //     }
         // )->select(['id','name','email','phone','address1','image','website_url','blocked'])->orderBy('id','DESC');
         $supplierResult = Supplier::with(['countryname','statename', 'cityname'])->select(['id','code','name','email','phone','address1','country','state','city','zipcode'])->orderBy('id','DESC');
+        if(auth()->user()->role()->first()->name=="Admin")
+        {
+            $supplierResult = Supplier::with(['countryname','statename', 'cityname'])->select(['id','code','name','email','phone','address1','country','state','city','zipcode'])->orderBy('id','DESC');
+
+        }
         $editUrl = 'supplier-edit';
+        if($userType=="Admin")
+        {
+            $editUrl = 'admin-supplier-edit';
+        }
         if($request->ajax()){
             $supplierResult = $supplierResult->when($request->seach_term, function($q)use($request){
                 $q->where('id', 'like', '%'.$request->seach_term.'%')
@@ -95,7 +113,15 @@ class supplierController extends Controller
             // $states = State::where('country_id',$user_result->country)->get(["name", "id"]);
             // $cities = City::where('state_id',$user_result->state)->get(["name", "id"]);
             // }
-            $formUrl = 'supplier-update';
+            if($userType=="superadmin")
+            {
+                $formUrl = 'supplier-update';
+            }
+            if($userType=="Admin")
+            {
+            $formUrl = 'admin-supplier-update';
+            }
+            
         }
         //dd($states);
         return view('pages.supplier.supplier-create', ['pageConfigs' => $pageConfigs], ['breadcrumbs' => $breadcrumbs,'countries'=>$countries,'pageTitle'=>$pageTitle,'companies'=>$companies,'user_result'=>$user_result,'states'=>$states,'cities'=>$cities,'userType'=>$userType,'formUrl'=>$formUrl,'companyCode'=>$companyCode,'roles'=>$roles,'supplierResult'=>$supplierResult]);
@@ -153,12 +179,21 @@ class supplierController extends Controller
                 Permission::insert($permissionInsert);
             }
         }
+        if(auth()->user()->role()->first()->name=="superadmin")
+        {
+            $backUrl='supplier-list';
+        }
+        if(auth()->user()->role()->first()->name=="Admin")
+        {
+            $backUrl='admin-supplier-list';
+        }
         
-        return redirect()->route('supplier-list')->with('success',__('locale.supplier_created_successfully'));
+        return redirect()->route($backUrl)->with('success',__('locale.supplier_created_successfully'));
     }
 
     public function update(Request $request, $id){
-
+        
+        //$backurl='';
         $userType = auth()->user()->role()->first()->name;
         $listUrl = 'superadmin.product-subcategory.index';
         if($userType!=config('custom.superadminrole')){
@@ -230,8 +265,21 @@ class supplierController extends Controller
         //$backurl = 'superadmin.'.strtolower($request->typeselect).'-list';
         // superadmin.paitent-list
         // exit();
-        $backurl='supplier-list';
-        return redirect()->route($backurl)->with('success',__('locale.supplier_update_success'));
+        //$backurl='';
+        if(auth()->user()->role()->first()->name=="superadmin")
+        {
+            $backUrl='supplier-list';
+            return redirect()->route($backUrl)->with('success',__('locale.supplier_update_success'));
+        }
+        if(auth()->user()->role()->first()->name=="Admin")
+        {
+            $backUrl='admin-supplier-list';
+            return redirect()->route($backUrl)->with('success',__('locale.supplier_update_success'));
+        }
+    
+    // Check if the update was successful
+    
+        //return redirect()->route($backurl)->with('success',__('locale.supplier_update_success'));
     }
 
     public function destroy($id)

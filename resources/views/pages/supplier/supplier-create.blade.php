@@ -35,7 +35,7 @@
             {!! method_field('post') !!}
             @else
             <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-create'; ?>
-          <form id="accountForm" action="{{route($formUrl)}}" method="post">
+          <form id="accountForm" action="" method="post">
             @endif
             @csrf()
             <div class="row">

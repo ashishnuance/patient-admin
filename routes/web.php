@@ -134,7 +134,34 @@ Route::group(['middleware' => ['auth']], function () {
          Route::get('/admin-patient-carer-map-edit/{id?}', [PatientcarermapController::class, 'create'])->name('admin-patient-carer-map-edit');
          Route::post('/admin-patient-carer-map-update/{id?}', [PatientcarermapController::class, 'update'])->name('admin-patient-carer-map-update');
          Route::get('/admin-patient-carer-map-delete/{id}', [PatientcarermapController::class, 'destroy'])->name('admin-patient-carer-map-delete');
-    });
+    
+         Route::get('/admin-decease-list', [DeceaseController::class, 'index'])->name('admin-decease-list');
+         Route::get('/admin-decease-create', [DeceaseController::class, 'create'])->name('admin-decease-create');
+         Route::post('/admin-decease-create', [DeceaseController::class, 'store'])->name('admin-decease-create');
+         Route::get('/admin-decease-edit/{id?}', [DeceaseController::class, 'create'])->name('admin-decease-edit');
+         Route::post('/admin-decease-update/{id?}', [DeceaseController::class, 'update'])->name('admin-decease-update');
+         Route::get('/admin-decease-delete/{id}', [DeceaseController::class, 'destroy'])->name('admin-decease-delete');
+    
+    
+        Route::get('/admin-inventory-list', [InventoryController::class, 'index'])->name('admin-inventory-list');
+        Route::get('/admin-inventory-create', [InventoryController::class, 'create'])->name('admin-inventory-create');
+        Route::post('/admin-inventory-create', [InventoryController::class, 'store'])->name('admin-inventory-create');
+        Route::get('/admin-inventory-edit/{id?}', [InventoryController::class, 'create'])->name('admin-inventory-edit');
+        Route::post('/admin-inventory-update/{id?}', [InventoryController::class, 'update'])->name('admin-inventory-update');
+        Route::get('/admin-inventory-delete/{id}', [InventoryController::class, 'destroy'])->name('admin-inventory-delete');
+    
+        Route::get('/admin-supplier-list', [supplierController::class, 'index'])->name('admin-supplier-list');
+        Route::get('/admin-supplier-create', [supplierController::class, 'create'])->name('admin-supplier-create');
+        Route::post('/admin-supplier-create', [supplierController::class, 'store'])->name('admin-supplier-create');
+        Route::get('/admin-supplier-edit/{id}', [supplierController::class, 'create'])->name('admin-supplier-edit');
+        Route::post('/admin-supplier-update/{id}', [supplierController::class, 'update'])->name('admin-supplier-update');
+        Route::get('/admin-supplier-delete/{id}', [supplierController::class, 'destroy'])->name('admin-supplier-delete');
+    
+    
+    
+    
+    
+        });
 
     Route::prefix('manager')->middleware(['manager'])->group(function () { 
         Route::get('/manager-patient-list',[UserController::class,'managerpatientList'])->name('manager.paitent-list');
