@@ -422,6 +422,12 @@ return [
     "supplier_created_successfully"=>"Supplier created successfully",
     "supplier_update_success"=>"Supplier updated successfully",
     "zipcode"=>"Zipcode",
+    "patient_carer"=>"Patient carer mapping",
+    "patient_carer_map"=>"Patient carer mapping",
+    "patient_carer_map_list"=>"Patient carer map list",
+    "Patient carer map"=>"Patient carer mapping",
+    "mapped_successfully"=>"Mapped successfully",
+    
 
 
 

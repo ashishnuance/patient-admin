@@ -31,11 +31,11 @@
           @include('panels.flashMessages')
           @if(isset($user_result->id))
           <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-update'; ?>
-            <form class="formValidate" action="{{route($formUrl,$user_result->id)}}" id="formValidateCompany" method="post">
+            <form class="formValidate form" action="{{route($formUrl,$user_result->id)}}" id="formValidateCompany" method="post">
             {!! method_field('post') !!}
             @else
             <?php //$formUrl = (isset($formUrl) && $formUrl!='') ? $formUrl : 'company-admin-create'; ?>
-          <form id="accountForm" action="{{route($formUrl)}}" method="post">
+          <form class="form" id="accountForm" action="{{route($formUrl)}}" method="post">
             @endif
             @csrf()
             <div class="row">
@@ -246,7 +246,9 @@
                   </button>
                 </div>
               </div>
+              <!-- <button class="add-more">Add More</button> -->
           </form>
+          
           <!-- users edit account form ends -->
         </div>
       </div>
@@ -290,6 +292,7 @@
     }
     $('#company').formSelect();
   }
+  
     $(document).ready(function () {
       
 
@@ -338,7 +341,11 @@
             });
         });
 
-
+        // $(".add-more").click(function() {
+        //         var formClone = $(".form:last").clone();
+        //         formClone.find('input').val(''); // Clear input values in the cloned form
+        //         $("#account").append(formClone);
+        //     });
 
 $('.mobile-valid').on('keypress', function(e) {
 

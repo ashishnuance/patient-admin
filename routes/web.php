@@ -43,6 +43,7 @@ use App\Http\Controllers\PatientdiseaseController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientmedicineController;
 use App\Http\Controllers\PatientscheduleController;
+use App\Http\Controllers\PatientcarermapController;
 
 
 
@@ -125,6 +126,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/admin-manager-delete/{id}', [UserController::class, 'destroyManager'])->name('admin-manager-delete');
         Route::get('/profile-edit', [ProfileController::class, 'edit'])->name('admin.profile-edit');
         Route::match(['post', 'patch'], '/profile-update/{id}', [ProfileController::class, 'update'])->name('admin.profile-update');
+
+        /** new route for patient carer mapping on admin side */
+         Route::get('/admin-patient-carer-map-list', [PatientcarermapController::class, 'index'])->name('admin-patient-carer-map-list');
+         Route::get('/admin-patient-carer-map-create', [PatientcarermapController::class, 'create'])->name('admin-patient-carer-map-create');
+         Route::post('/admin-patient-carer-map-create', [PatientcarermapController::class, 'store'])->name('admin-patient-carer-map-create');
+         Route::get('/admin-patient-carer-map-edit/{id?}', [PatientcarermapController::class, 'create'])->name('admin-patient-carer-map-edit');
+         Route::post('/admin-patient-carer-map-update/{id?}', [PatientcarermapController::class, 'update'])->name('admin-patient-carer-map-update');
+         Route::get('/admin-patient-carer-map-delete/{id}', [PatientcarermapController::class, 'destroy'])->name('admin-patient-carer-map-delete');
     });
 
     Route::prefix('manager')->middleware(['manager'])->group(function () { 
@@ -142,6 +151,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/manager-carer-edit/{id}', [UserController::class, 'managercreateCarer'])->name('manager-carer-edit');
         Route::post('/manager-carer-update/{id}', [UserController::class, 'managerupdateCarer'])->name('manager-carer-update');
         Route::get('/manager-carer-delete/{id}', [UserController::class, 'managerdestroyCarer'])->name('manager-carer-delete');
+
+        Route::get('/manager-patient-carer-map-list', [PatientcarermapController::class, 'index'])->name('manager-patient-carer-map-list');
+         Route::get('/manager-patient-carer-map-create', [PatientcarermapController::class, 'create'])->name('manager-patient-carer-map-create');
+         Route::post('/manager-patient-carer-map-create', [PatientcarermapController::class, 'store'])->name('manager-patient-carer-map-create');
+         Route::get('/manager-patient-carer-map-edit/{id?}', [PatientcarermapController::class, 'create'])->name('manager-patient-carer-map-edit');
+         Route::post('/manager-patient-carer-map-update/{id?}', [PatientcarermapController::class, 'update'])->name('manager-patient-carer-map-update');
+         Route::get('/manager-patient-carer-map-delete/{id}', [PatientcarermapController::class, 'destroy'])->name('manager-patient-carer-map-delete');
 
         
     });
@@ -219,6 +235,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/inventory-mapping',DeceaseInventoryController::class);
         Route::get('/inventory-mapping/destroy/{id}',[DeceaseInventoryController::class,'destroy'])->name('inventory-mapping.delete');
         
+        /* new route for patient carer mapping */
+        Route::get('/patient-carer-map-list', [PatientcarermapController::class, 'index'])->name('patient-carer-map-list');
+         Route::get('/patient-carer-map-create', [PatientcarermapController::class, 'create'])->name('patient-carer-map-create');
+         Route::post('/patient-carer-map-create', [PatientcarermapController::class, 'store'])->name('patient-carer-map-create');
+         Route::get('/patient-carer-map-edit/{id?}', [PatientcarermapController::class, 'create'])->name('patient-carer-map-edit');
+         Route::post('/patient-carer-map-update/{id?}', [PatientcarermapController::class, 'update'])->name('patient-carer-map-update');
+         Route::get('/patient-carer-map-delete/{id}', [PatientcarermapController::class, 'destroy'])->name('patient-carer-map-delete');
+
         /* new route for patient schedule*/
         Route::get('/patient-schedule-list', [PaitentController::class, 'index'])->name('patient-schedule-list');
         Route::get('/patient-schedule-create', [PaitentController::class, 'create'])->name('patient-schedule-create');
