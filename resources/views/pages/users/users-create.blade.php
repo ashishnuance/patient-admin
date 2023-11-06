@@ -210,6 +210,81 @@
                     </select>
                     <label>{{__('locale.block')}}</label>
                 </div>
+
+                
+                <!-- permission start -->
+                <div class="col s12 users-permission-section {{(isset($user_result->typeselect) && $user_result->typeselect!='' && in_array($user_result->typeselect,config('custom.admin_manager_role'))) ? 'hide-section' : ''}}">
+                    <table class="mt-1">
+                      <thead>
+                        <tr>
+                          <th>Module Permission</th>
+                          <th><label>
+                            <input type="checkbox" id="check_all_permission"/>
+                              <span></span>
+                          </label>All</th>
+                          <th>Read</th>
+                          <th>Create</th>
+                          <th>Update</th>
+                          <th>Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                      <?php //echo '<pre>'; print_r($user_result); die; ?>
+                        @if(config('custom.modulePermissionArray') && is_array(config('custom.modulePermissionArray')))
+                        @foreach(config('custom.modulePermissionArray') as $key => $moduleValue)
+                        
+                        <?php //echo '<pre>'; print_r($user_result->permission); ?>
+                        <tr class="checkthis-tr">
+                          <td>{{ucwords(str_replace('_',' ',$moduleValue))}}</td>
+                          <td>
+                            <label>
+                            <input type="checkbox" class="checkthis"/>
+                              <span></span>
+                          </label>
+                          </td>
+                          <td>
+                            <label>
+                            <input type="checkbox" name="permission_allow[{{ $moduleValue }}][guard_name][]" value="read" {{ (isset($user_result->permission[$moduleValue]) && !empty($user_result->permission[$moduleValue]) && in_array('read',$user_result->permission[$moduleValue])) ? 'checked="checked"' :'' }}/>
+                              <span></span>
+                          </label>
+                          </td>
+                         
+                          <?php //echo '<pre>'; print_r($user_result->permission[$key]->name); ?>
+                          <td>
+                            <label>
+                              
+                              <input type="checkbox" name="permission_allow[{{ $moduleValue }}][guard_name][]" value="create" {{ (isset($user_result->permission[$moduleValue]) && !empty($user_result->permission[$moduleValue]) && in_array('create',$user_result->permission[$moduleValue])) ? 'checked="checked"' :'' }}/>
+                              
+                              <span></span>
+                            </label>
+                          </td>
+                          <td>
+                            <label>
+                             
+                              <input type="checkbox" name="permission_allow[{{ $moduleValue }}][guard_name][]" value="update" {{ (isset($user_result->permission[$moduleValue]) && !empty($user_result->permission[$moduleValue]) && in_array('update',$user_result->permission[$moduleValue])) ? 'checked="checked"' :'' }}/>
+                             
+                              <span></span>
+                            </label>
+                          </td>
+                          <td>
+                            <label>
+                             
+                              <input type="checkbox" name="permission_allow[{{ $moduleValue }}][guard_name][]" value="delete" {{ (isset($user_result->permission[$moduleValue]) && !empty($user_result->permission[$moduleValue]) && in_array('delete',$user_result->permission[$moduleValue])) ? 'checked="checked"' :'' }}/>
+                              
+                              <span></span>
+                            </label>
+                          </td>
+                        </tr>
+                        @endforeach
+                        @endif
+                      
+                      </tbody>
+                    </table>
+                    <!-- </div> -->
+                  </div>
+                  <!-- permission end -->
+
                 
                 <div class="input-field col s12">
                   <button class="btn waves-effect waves-light right submit" type="submit" name="action">Submit
@@ -263,6 +338,33 @@
   }
     $(document).ready(function () {
       
+      $('#myselect').on('change',function(){
+        let current_role = $(this).val();
+        let users_roles = ['admin','Admin','manager','Manager'];
+        console.log('users_roles',current_role);
+        if(users_roles.includes(current_role)){
+          $('.users-permission-section').removeClass('hide-section');
+        }else{
+          $('.users-permission-section').addClass('hide-section');
+        }
+      })
+
+      $('#check_all_permission').on('click',function(){
+        if($(this).is(':checked')){
+          $('.checkthis-tr').find('input[type=checkbox]').prop('checked',true);
+        }else{
+          $('.checkthis-tr').find('input[type=checkbox]').prop('checked',false);
+        }
+      })
+
+      $('.checkthis').on('click',function(){
+        console.log('click');
+        if($(this).is(':checked')){
+          $(this).closest('tr').find('input[type=checkbox]').prop('checked',true);
+        }else{
+          $(this).closest('tr').find('input[type=checkbox]').prop('checked',false);
+        }
+      })
 
         $('#country').on('change', function () {
             var idCountry = this.value;

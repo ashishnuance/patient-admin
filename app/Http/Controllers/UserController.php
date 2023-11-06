@@ -118,7 +118,7 @@ class UserController extends Controller
             'password2'=>'required|max:250',
             'email' => 'required|unique:users|max:250',
             'code'=>'required|unique:users',
-            'phone' => 'required|max:10',
+            'phone' => 'required|max:13',
             'address' => 'max:250',
         ]);
         
