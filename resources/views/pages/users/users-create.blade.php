@@ -211,6 +211,11 @@
                     <label>{{__('locale.block')}}</label>
                 </div>
 
+
+
+
+
+                
                 
                 <!-- permission start -->
                 <div class="col s12 users-permission-section {{(isset($user_result->typeselect) && $user_result->typeselect!='' && in_array($user_result->typeselect,config('custom.admin_manager_role'))) ? 'hide-section' : ''}}">
