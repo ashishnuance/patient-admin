@@ -17,4 +17,9 @@ class Decease extends Model
        
     ];
 
+    public function comp()
+    {
+        return $this->belongsTo(Company::class, 'company');
+    }
+
 }

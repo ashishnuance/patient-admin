@@ -35,7 +35,12 @@
                 </div>
                 <div class="col s12 m6 l6 add-btn" style="text-align:end;margin-top:90px;">
                   <div class="btn">
+                  @if(auth()->user()->role()->first()->name=="superadmin")
                     <a href="{{route('inventory-create')}}">
+                  @endif
+                  @if(auth()->user()->role()->first()->name=="Admin")
+                    <a href="{{route('admin-inventory-create')}}">
+                  @endif
                     <i class="material-icons">add</i>
                     <span>Add New</span>
                     </a>
@@ -117,8 +122,9 @@
 <script src="{{asset('js/scripts/page-users.js')}}"></script>
 <script>
   $(document).ready(function(){
-    var paginationUrl = '{{(isset($paginationUrl) && $paginationUrl!='') ? route($paginationUrl) : route("inventory-list") }}';
-    const fetch_data = (page, status, seach_term) => {
+   // var paginationUrl = '{{(isset($paginationUrl) && $paginationUrl!='') ? route($paginationUrl) : route("inventory-list") }}';
+   var paginationUrl = '{{(isset(auth()->user()->role()->first()->name) && auth()->user()->role()->first()->name=="superadmin") ? route("inventory-list") : route("admin-inventory-list") }}';
+   const fetch_data = (page, status, seach_term) => {
         if(status === undefined){
             status = "";
         }
